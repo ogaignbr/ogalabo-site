@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codex操作マニュアル | ogalabo</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{font-family:'Noto Sans JP','Inter',sans-serif;background:#fff;color:#0f172a;line-height:1.85;-webkit-font-smoothing:antialiased;font-feature-settings:"palt";overflow-x:hidden}
+main,header,footer{width:100%;max-width:100vw;overflow-x:hidden}
+.light-grid{background-image:linear-gradient(rgba(14,165,233,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(14,165,233,.07) 1px,transparent 1px);background-size:42px 42px}
+.card{background:#fff;border:1px solid rgba(14,165,233,.13);box-shadow:0 1px 3px rgba(15,23,42,.06),0 10px 28px rgba(14,165,233,.06);border-radius:8px}
+.visual-img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;border:1px solid rgba(14,165,233,.14);box-shadow:0 18px 44px rgba(15,23,42,.10)}
+.grad-text{background:linear-gradient(120deg,#2563eb,#0891b2 45%,#059669);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.h-hero{font-size:clamp(2rem,1.35rem + 3.15vw,4.25rem);line-height:1.08}
+.h-sec{font-size:clamp(1.5rem,1.14rem + 1.65vw,2.55rem);line-height:1.25}
+.pill{border:1px solid rgba(14,165,233,.18);background:rgba(255,255,255,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.fade-up{opacity:0;transform:translateY(22px);transition:opacity .65s cubic-bezier(.2,.7,.3,1),transform .65s cubic-bezier(.2,.7,.3,1)}
+.fade-up.visible{opacity:1;transform:none}
+.code-box{font-family:'Inter','Noto Sans JP',sans-serif;background:#0f172a;color:#e2e8f0;border-radius:8px;border:1px solid rgba(148,163,184,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+p,h1,h2,h3,li,td,th,a{overflow-wrap:anywhere}
+.flex-1,.min-w-0{min-width:0}
+.board-row{display:grid;grid-template-columns:2rem minmax(0,1fr);align-items:start}
+.board-row p{min-width:0}
+@media (max-width:640px){body{word-break:break-word}.h-hero{font-size:clamp(1.85rem,1.45rem + 2vw,2.2rem)}.hero-line{display:block}.card,p,h1,h2,h3{max-width:100%}.table-scroll{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}.wide-table{min-width:760px}}
+</style>
+</head>
+<body>
+
+<!-- ogalabo 共通ナビ (data-current切り替え) -->
+<style>
+  #og-sidebar{transition:transform .35s cubic-bezier(.2,.7,.3,1)}
+  #og-backdrop{transition:opacity .3s ease}
+  .og-acc[open] > summary .og-chev{transform:rotate(90deg)}
+  .og-chev{transition:transform .25s ease}
+  .og-page-card{transition:all .2s ease}
+  .og-page-card:hover{transform:translateY(-1px)}
+  details > summary{list-style:none;cursor:pointer}
+  details > summary::-webkit-details-marker{display:none}
+  body.og-menu-open{overflow:hidden}
+</style>
+
+<header data-current="operation" class="fixed top-0 inset-x-0 z-50 bg-white/92 backdrop-blur border-b border-slate-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
+    <button id="og-menu-btn" aria-label="メニューを開く" class="w-11 h-11 rounded-xl flex items-center justify-center hover:bg-slate-100 text-slate-700 transition-colors">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h16M3 11h16M3 16h16"/></svg>
+    </button>
+    <a href="ogalabo_organization.html" class="flex items-center gap-2 ml-1">
+      <span class="font-bold tracking-wide text-slate-900" style="font-family:Inter,sans-serif">ogalabo</span>
+    </a>
+    <span class="hidden sm:inline-flex items-center gap-1.5 ml-2 px-2.5 py-1 rounded-full text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200">
+      <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>操作ガイド
+    </span>
+    <div class="ml-auto hidden md:flex items-center gap-4 text-xs font-medium text-slate-400">
+      <a href="ogalabo_organization.html" class="hover:text-indigo-600 transition-colors">組織図</a>
+      <a href="codex_beginner_guide.html" class="hover:text-emerald-600 transition-colors">初心者ガイド</a>
+      <a href="portfolio_ai_proposals.html" class="hover:text-rose-600 transition-colors">ポートフォリオ</a>
+    </div>
+  </div>
+</header>
+
+<div id="og-backdrop" class="fixed inset-0 bg-slate-900/45 z-[80] opacity-0 pointer-events-none"></div>
+<aside id="og-sidebar" class="fixed top-0 left-0 h-full w-[88vw] max-w-[360px] bg-white shadow-2xl z-[90] -translate-x-full flex flex-col">
+  <div class="px-4 py-3 border-b border-slate-100 flex items-center gap-3 shrink-0">
+    <button id="og-sidebar-close" aria-label="メニューを閉じる" class="w-11 h-11 rounded-xl flex items-center justify-center hover:bg-slate-100 text-slate-700 transition-colors">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h16M3 11h16M3 16h16"/></svg>
+    </button>
+    <div class="flex items-center gap-2">
+      <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="sblogG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#22d3ee"/></linearGradient></defs>
+        <rect width="32" height="32" rx="8" fill="url(#sblogG)"/>
+        <text x="16" y="22" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="14" fill="white">og</text>
+      </svg>
+      <span class="font-bold text-slate-900" style="font-family:Inter,sans-serif">ogalabo</span>
+    </div>
+  </div>
+  <nav id="og-nav-list" class="flex-1 overflow-y-auto p-3 space-y-2"></nav>
+  <div class="px-4 py-3 border-t border-slate-100 text-xs text-slate-400 shrink-0">© 2026 ogalabo</div>
+</aside>
+
+<script>
+(function(){
+  const OG_PAGES = [
+    {id:'org',href:'ogalabo_organization.html',title:'組織図',desc:'AI経営チームの全体像',color:'#6366f1',sections:[
+      {id:'top',label:'トップ',anchor:''},{id:'org',label:'AI経営組織図'},{id:'flow',label:'相談 → 成果物までの流れ'},
+      {id:'brain',label:'進化する経営脳'},{id:'why',label:'なぜすごいのか'}]},
+    {id:'beginner',href:'codex_beginner_guide.html',title:'AI初心者ガイド',desc:'はじめてAIを使う方へ',color:'#10b981',sections:[
+      {id:'visual-overview',label:'全体像'},{id:'mindset',label:'AIへのマインドセット'},{id:'difference',label:'ChatGPTとの違い'},
+      {id:'why-codex',label:'なぜCodexか'},{id:'voice',label:'音声入力の使い方'},{id:'prompt-basics',label:'話し方の5つの基本'},
+      {id:'steps',label:'最初の7ステップ'},{id:'examples',label:'実例集'},{id:'safety',label:'安全に使うために'},
+      {id:'operation-next',label:'次は操作ガイドへ'}]},
+    {id:'operation',href:'codex_operation_guide.html',title:'操作ガイド',desc:'実務で使いこなすために',color:'#f59e0b',sections:[
+      {id:'flow',label:'基本フロー'},{id:'prompt-basics',label:'プロンプトの基本'},{id:'modes',label:'各種モード'},
+      {id:'plan-mode',label:'Plan Mode'},{id:'preview',label:'プレビュー機能'},{id:'permissions',label:'権限管理'},
+      {id:'reasoning',label:'思考の深さ調整'},{id:'skills',label:'スキル機能'},{id:'folders',label:'フォルダ運用'},
+      {id:'templates',label:'テンプレート集'},{id:'checklist',label:'チェックリスト'}]},
+    {id:'portfolio',href:'portfolio_ai_proposals.html',title:'ポートフォリオ',desc:'AI提案の実績紹介',color:'#f43f5e',sections:[
+      {id:'capabilities',label:'できること'},{id:'portfolio',label:'実績一覧'},{id:'grulla',label:'Grulla事例'},
+      {id:'quallia',label:'Quallia事例'},{id:'contact',label:'お問い合わせ'}]},
+  ];
+  const header = document.querySelector('header[data-current]');
+  const current = header ? header.dataset.current : '';
+  const list = document.getElementById('og-nav-list');
+  const sidebar = document.getElementById('og-sidebar');
+  const backdrop = document.getElementById('og-backdrop');
+  const openBtn = document.getElementById('og-menu-btn');
+  const closeBtn = document.getElementById('og-sidebar-close');
+  const softBg = c => c + '0d';
+  list.innerHTML = OG_PAGES.map(p => {
+    const isCurrent = p.id === current;
+    const dotShadow = isCurrent ? `box-shadow:0 0 0 4px ${p.color}33;` : '';
+    const sectionHref = s => isCurrent ? `#${s.id}` : `${p.href}${s.anchor === '' ? '' : '#' + s.id}`;
+    return `
+    <details class="og-acc rounded-xl border" ${isCurrent ? 'open' : ''} style="border-color:${p.color}40;background:${softBg(p.color)}">
+      <summary class="og-page-card flex items-center gap-3 p-3.5 rounded-xl">
+        <span class="og-chev shrink-0 w-5 h-5 flex items-center justify-center text-slate-400">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l4 4-4 4"/></svg>
+        </span>
+        <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${p.color};${dotShadow}"></span>
+        <a href="${p.href}" class="flex-1 min-w-0">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-sm text-slate-900">${p.title}</span>
+            ${isCurrent ? `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded" style="background:${p.color};color:white">現在</span>` : ''}
+          </div>
+          <div class="text-[11px] text-slate-500 mt-0.5">${p.desc}</div>
+        </a>
+      </summary>
+      <ul class="pl-10 pr-3 pb-3 pt-1 space-y-0.5">
+        ${p.sections.map(s => `<li><a href="${sectionHref(s)}" class="og-section-link block px-3 py-2 rounded-lg text-[13px] text-slate-600 hover:text-slate-900 transition-colors" data-color="${p.color}">${s.label}</a></li>`).join('')}
+      </ul>
+    </details>`;
+  }).join('');
+  document.querySelectorAll('.og-section-link').forEach(a => {
+    const c = a.dataset.color;
+    a.addEventListener('mouseenter', () => { a.style.background = c + '14'; });
+    a.addEventListener('mouseleave', () => { a.style.background = ''; });
+    a.addEventListener('click', closeMenu);
+  });
+  function openMenu(){sidebar.style.transform='translateX(0)';backdrop.style.opacity='1';backdrop.style.pointerEvents='auto';document.body.classList.add('og-menu-open');}
+  function closeMenu(){sidebar.style.transform='translateX(-100%)';backdrop.style.opacity='0';backdrop.style.pointerEvents='none';document.body.classList.remove('og-menu-open');}
+  openBtn.addEventListener('click', openMenu);
+  closeBtn.addEventListener('click', closeMenu);
+  backdrop.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeMenu(); });
+})();
+</script>
+
+<main>
+  <section class="relative min-h-[90vh] flex items-center pt-24 pb-14 overflow-hidden">
+    <div class="absolute inset-0 light-grid opacity-70 pointer-events-none"></div>
+    <div class="absolute inset-x-0 top-0 h-[60vh] pointer-events-none" style="background:radial-gradient(ellipse at 58% 10%,rgba(34,211,238,.15),transparent 55%),radial-gradient(ellipse at 18% 25%,rgba(37,99,235,.13),transparent 52%)"></div>
+    <div class="relative max-w-7xl mx-auto px-5 sm:px-8 w-full">
+      <div class="grid lg:grid-cols-[1.02fr_.98fr] gap-10 lg:gap-16 items-center">
+        <div>
+          <p class="fade-up inline-flex items-center gap-2 pill rounded-lg px-4 py-2 text-xs sm:text-sm font-bold text-sky-700 mb-6">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            概念の次は、実際に動かす
+          </p>
+          <h1 class="h-hero font-black text-slate-900 fade-up" style="font-family:Inter,'Noto Sans JP',sans-serif">
+            <span class="hero-line">Codexを</span><span class="hero-line grad-text">初心者でも</span><span class="hero-line grad-text">安全に動かす</span><span class="hero-line">操作マニュアル。</span>
+          </h1>
+          <p class="mt-7 text-base sm:text-lg text-slate-600 max-w-2xl fade-up">
+            Plan Mode、プレビュー、権限、推論レベル、Skills、便利なフォルダ構成まで。AIエージェントに作業を任せるときの「どこを押すか」「何を選ぶか」「何を言うか」をまとめました。
+          </p>
+          <div class="mt-9 flex flex-col sm:flex-row gap-3 fade-up">
+            <a href="#flow" class="inline-flex items-center justify-center gap-2 rounded-lg px-7 py-4 bg-sky-600 text-white font-bold hover:bg-sky-700 transition-colors">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              基本操作フローへ
+            </a>
+            <a href="codex_beginner_guide.html" class="inline-flex items-center justify-center rounded-lg px-7 py-4 border border-slate-200 bg-white font-bold text-slate-700 hover:bg-slate-50 transition-colors">
+              初心者ガイドへ戻る
+            </a>
+          </div>
+        </div>
+
+        <div class="fade-up min-w-0">
+          <div class="card p-6 sm:p-8 relative overflow-hidden">
+            <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-500 via-cyan-500 to-emerald-500"></div>
+            <p class="text-xs font-bold text-slate-400 tracking-widest mb-4">OPERATION POLICY</p>
+            <h2 class="text-2xl font-black text-slate-900 mb-5">操作方針</h2>
+            <div class="space-y-4">
+              <div class="board-row gap-3">
+                <span class="mt-1 w-7 h-7 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-700 font-black text-sm">1</span>
+                <p class="text-sm text-slate-600 flex-1"><strong class="text-slate-900">作業が未来感になる導線。</strong> Codexをただの編集係ではなく、自分の仕事チームとして扱う。</p>
+              </div>
+              <div class="board-row gap-3">
+                <span class="mt-1 w-7 h-7 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-700 font-black text-sm">2</span>
+                <p class="text-sm text-slate-600 flex-1"><strong class="text-slate-900">選択を絞る。</strong> 初心者は標準権限、推論は中か高、まず小さな1作業から始める。</p>
+              </div>
+              <div class="board-row gap-3">
+                <span class="mt-1 w-7 h-7 rounded-lg bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-700 font-black text-sm">3</span>
+                <p class="text-sm text-slate-600 flex-1"><strong class="text-slate-900">折れない設計。</strong> 失敗しても戻せる範囲で試し、確認しながら改善する。</p>
+              </div>
+              <div class="board-row gap-3">
+                <span class="mt-1 w-7 h-7 rounded-lg bg-cyan-50 border border-cyan-100 flex items-center justify-center text-cyan-700 font-black text-sm">4</span>
+                <p class="text-sm text-slate-600 flex-1"><strong class="text-slate-900">文脈・権限・検証が核心。</strong> 目的を音声で渡し、Planで固め、Previewで見て、学びを残す。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="flow" class="py-18 md:py-24 border-y border-slate-100" style="background:#f8fbff">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="text-center mb-12 fade-up">
+        <p class="text-sm font-bold text-sky-600 tracking-widest mb-3">BASIC FLOW</p>
+        <h2 class="h-sec font-black text-slate-900">Codexは、この順番で使う。</h2>
+        <p class="mt-4 text-slate-600 max-w-3xl mx-auto">最初から完璧な指示を出そうとしなくて大丈夫です。大事なのは、作る前に相談し、作った後に必ず見ることです。</p>
+      </div>
+      <div class="mb-8 fade-up">
+        <img src="assets/codex-operation-flow.png" alt="Codex基本操作フローの図解" class="visual-img" loading="lazy">
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="card p-5 fade-up"><p class="font-black text-sky-600 mb-2">01</p><h3 class="font-bold text-slate-900 mb-2">プロジェクトを開く</h3><p class="text-sm text-slate-500">作業したいフォルダをCodexのプロジェクトとして開く。関係ないフォルダまで広げすぎない。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-cyan-600 mb-2">02</p><h3 class="font-bold text-slate-900 mb-2">目的を音声で渡す</h3><p class="text-sm text-slate-500">誰向け、何を作る、制約、完成条件を口でまとめて話す。短文だけだとズレやすい。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-emerald-600 mb-2">03</p><h3 class="font-bold text-slate-900 mb-2">Plan Modeで固める</h3><p class="text-sm text-slate-500">いきなり実装させず、構成、リスク、テスト方法を先に出してもらう。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-violet-600 mb-2">04</p><h3 class="font-bold text-slate-900 mb-2">実装してもらう</h3><p class="text-sm text-slate-500">計画に問題がなければ「この計画で実装して」と頼む。作業中も追加条件を伝えてよい。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-amber-600 mb-2">05</p><h3 class="font-bold text-slate-900 mb-2">Previewで見る</h3><p class="text-sm text-slate-500">HTMLやアプリをブラウザで開き、PC幅とスマホ幅で見た目を確認する。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-rose-600 mb-2">06</p><h3 class="font-bold text-slate-900 mb-2">差分を見る</h3><p class="text-sm text-slate-500">何を変えたか、不要な変更がないかを確認する。納品前の人間チェックは必須。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-indigo-600 mb-2">07</p><h3 class="font-bold text-slate-900 mb-2">直しを頼む</h3><p class="text-sm text-slate-500">違和感をそのまま話す。「もっと初心者向け」「色が強い」など感覚でもよい。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-slate-700 mb-2">08</p><h3 class="font-bold text-slate-900 mb-2">学びを残す</h3><p class="text-sm text-slate-500">次も使うルールはAGENTS.mdやai-learningに保存する。ここからAIが育ちます。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="prompt-basics" class="py-18 md:py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-8 lg:gap-14 items-start">
+        <div class="fade-up">
+          <p class="text-sm font-bold text-cyan-600 tracking-widest mb-3">VOICE PROMPT BASICS</p>
+          <h2 class="h-sec font-black text-slate-900">音声入力は「5つの目的」から話す。</h2>
+          <p class="mt-4 text-slate-600">Codexに頼む時も、Claude Codeに頼む時も、最初に「何をしてほしいか」を選ぶと指示が安定します。音声で長く話す時は、この5つを見ながら話せば十分です。</p>
+        </div>
+        <div class="fade-up">
+          <img src="assets/voice-prompt-five-basics.png" alt="音声入力で使うプロンプト5つの基本の図解" class="visual-img" loading="lazy">
+        </div>
+      </div>
+      <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div class="card p-5 fade-up"><p class="font-black text-blue-600 mb-2">01</p><h3 class="font-bold text-slate-900 mb-2">情報収集</h3><p class="text-sm text-slate-500">調べたい、選択肢を出したい、背景を知りたい時。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-teal-600 mb-2">02</p><h3 class="font-bold text-slate-900 mb-2">理解</h3><p class="text-sm text-slate-500">難しい内容を、初心者向け・例え話・手順に変えたい時。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-emerald-600 mb-2">03</p><h3 class="font-bold text-slate-900 mb-2">評価・比較</h3><p class="text-sm text-slate-500">良し悪し、メリット・デメリット、改善点を見たい時。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-violet-600 mb-2">04</p><h3 class="font-bold text-slate-900 mb-2">整形</h3><p class="text-sm text-slate-500">箇条書き、表、Markdown、台本など、見せ方を整えたい時。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-amber-600 mb-2">05</p><h3 class="font-bold text-slate-900 mb-2">生成</h3><p class="text-sm text-slate-500">文章、HTML、コード、画像案、資料などを新しく作りたい時。</p></div>
+      </div>
+      <div class="mt-8 code-box p-5 sm:p-6 fade-up text-sm">
+        <p class="text-sky-200 font-bold mb-2">音声で話す型</p>
+        <p>今から〇〇について話します。目的は、情報収集／理解／評価・比較／整形／生成のうち〇〇です。対象者は〇〇で、完成形は〇〇です。まず足りない前提があれば聞いてから進めてください。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="modes" class="py-18 md:py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="mb-10 fade-up">
+        <p class="text-sm font-bold text-cyan-600 tracking-widest mb-3">THREAD MODES</p>
+        <h2 class="h-sec font-black text-slate-900">Local、Worktree、Cloudの選び方</h2>
+      </div>
+      <div class="table-scroll fade-up">
+        <table class="wide-table w-full border-separate border-spacing-0 text-sm">
+          <thead>
+            <tr>
+              <th class="text-left p-4 bg-slate-50 border-y border-l border-slate-200 rounded-l-lg">モード</th>
+              <th class="text-left p-4 bg-slate-50 border-y border-slate-200">何をする場か</th>
+              <th class="text-left p-4 bg-slate-50 border-y border-slate-200">初心者の使いどころ</th>
+              <th class="text-left p-4 bg-slate-50 border-y border-r border-slate-200 rounded-r-lg">注意</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="p-4 border-b border-slate-100 font-bold text-sky-700">Local</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">今のフォルダを直接編集する。</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">静的HTML、資料、ちょっとした修正。</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">直接変わるので、差分確認を必ずする。</td>
+            </tr>
+            <tr>
+              <td class="p-4 border-b border-slate-100 font-bold text-emerald-700">Worktree</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">Gitの別作業場で変更を分ける。</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">試したい案、複数案比較、大きめ修正。</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">Git管理されているプロジェクトで使いやすい。</td>
+            </tr>
+            <tr>
+              <td class="p-4 border-b border-slate-100 font-bold text-violet-700">Cloud</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">リモート環境で作業する。</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">長めの作業、手元を軽くしたい作業。</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">環境設定や権限の理解が必要。最初はLocal中心でよい。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="plan-mode" class="py-18 md:py-24 border-y border-slate-100" style="background:#f8fbff">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="grid lg:grid-cols-[.92fr_1.08fr] gap-8 lg:gap-14 items-start">
+        <div class="fade-up">
+          <p class="text-sm font-bold text-emerald-600 tracking-widest mb-3">PLAN MODE</p>
+          <h2 class="h-sec font-black text-slate-900">Plan Modeは、作る前の作戦会議。</h2>
+          <p class="mt-4 text-slate-600">初心者ほど、いきなり「作って」ではなく「まず計画して」と頼むのが大事です。完成条件を先にそろえると、後戻りが減ります。</p>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="card p-6 fade-up"><h3 class="font-bold text-slate-900 mb-2">使うべき時</h3><p class="text-sm text-slate-500">新規ページ、複数ファイル修正、デザイン変更、公開前チェック、やり方に迷う作業。</p></div>
+          <div class="card p-6 fade-up"><h3 class="font-bold text-slate-900 mb-2">使わなくてよい時</h3><p class="text-sm text-slate-500">誤字修正、1文変更、リンク差し替えなど、失敗しても戻しやすい小さな作業。</p></div>
+          <div class="card p-6 fade-up"><h3 class="font-bold text-slate-900 mb-2">確認すること</h3><p class="text-sm text-slate-500">目的、対象者、完成条件、触るファイル、触らないファイル、確認方法。</p></div>
+          <div class="card p-6 fade-up"><h3 class="font-bold text-slate-900 mb-2">合図の出し方</h3><p class="text-sm text-slate-500">「まずPlan Modeで、実装せずに計画だけ出して」と明確に伝える。</p></div>
+        </div>
+      </div>
+      <div class="mt-8 code-box p-5 sm:p-6 fade-up text-sm">
+        <p class="text-sky-200 font-bold mb-2">そのまま使える依頼文</p>
+        <p>まずPlan Modeで相談してください。まだ実装はしないでください。目的は〇〇で、対象者は〇〇です。触ってよいファイルは〇〇、触ってほしくない場所は〇〇です。完成条件とリスク、確認方法まで含めて計画を出してください。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="preview" class="py-18 md:py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="text-center mb-12 fade-up">
+        <p class="text-sm font-bold text-sky-600 tracking-widest mb-3">PREVIEW LOOP</p>
+        <h2 class="h-sec font-black text-slate-900">Previewは、AI任せを人間の目に戻す場所。</h2>
+        <p class="mt-4 text-slate-600 max-w-3xl mx-auto">見た目の良し悪し、文字のはみ出し、スマホ表示の違和感は、最後は画面で見ないとわかりません。</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="card p-6 fade-up">
+          <h3 class="font-black text-slate-900 mb-3">静的HTML</h3>
+          <p class="text-sm text-slate-500 mb-4">HTMLファイルだけで動く場合は、ローカルサーバーやブラウザで開いて確認します。</p>
+          <p class="text-xs text-slate-400">例: 資料ページ、LP、単一HTML</p>
+        </div>
+        <div class="card p-6 fade-up">
+          <h3 class="font-black text-slate-900 mb-3">アプリ</h3>
+          <p class="text-sm text-slate-500 mb-4">ReactやFastAPIなどは、開発サーバーを立ち上げてURLを開きます。</p>
+          <p class="text-xs text-slate-400">例: localhost:3000、127.0.0.1:8000</p>
+        </div>
+        <div class="card p-6 fade-up">
+          <h3 class="font-black text-slate-900 mb-3">自動Preview</h3>
+          <p class="text-sm text-slate-500 mb-4">利用できる場合はオンにして、Codexに「プレビューを見ながら直して」と頼みます。</p>
+          <p class="text-xs text-slate-400">表示崩れ、リンク、ボタン、スマホ幅を確認</p>
+        </div>
+      </div>
+      <div class="mt-8 card p-6 fade-up">
+        <h3 class="font-black text-slate-900 mb-3">見る順番</h3>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm text-slate-600">
+          <p class="rounded-lg bg-slate-50 border border-slate-100 p-4"><strong class="text-slate-900">1. PC幅</strong><br>最初の見た目と導線を見る。</p>
+          <p class="rounded-lg bg-slate-50 border border-slate-100 p-4"><strong class="text-slate-900">2. スマホ幅</strong><br>文字はみ出しと重なりを見る。</p>
+          <p class="rounded-lg bg-slate-50 border border-slate-100 p-4"><strong class="text-slate-900">3. クリック</strong><br>ページ遷移、外部リンク、戻る導線を見る。</p>
+          <p class="rounded-lg bg-slate-50 border border-slate-100 p-4"><strong class="text-slate-900">4. 差分</strong><br>余計な変更が混ざっていないか見る。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="permissions" class="py-18 md:py-24 border-y border-slate-100" style="background:#fff7ed">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="mb-10 fade-up">
+        <p class="text-sm font-bold text-orange-600 tracking-widest mb-3">PERMISSIONS</p>
+        <h2 class="h-sec font-black text-slate-900">権限は、便利さと危険さがセット。</h2>
+        <p class="mt-4 text-slate-600 max-w-3xl">初心者は標準権限を基本にします。Full accessは「何をしてよいか」がはっきりしていて、消えて困るものがない作業場でだけ使います。</p>
+      </div>
+      <div class="table-scroll fade-up">
+        <table class="wide-table w-full border-separate border-spacing-0 text-sm">
+          <thead>
+            <tr>
+              <th class="text-left p-4 bg-white border-y border-l border-orange-100 rounded-l-lg">権限</th>
+              <th class="text-left p-4 bg-white border-y border-orange-100">得意な場面</th>
+              <th class="text-left p-4 bg-white border-y border-orange-100">リスク</th>
+              <th class="text-left p-4 bg-white border-y border-r border-orange-100 rounded-r-lg">初心者判断</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="p-4 border-b border-orange-100 font-bold text-emerald-700">標準権限</td>
+              <td class="p-4 border-b border-orange-100 text-slate-600">現在の作業フォルダ内の編集、通常コマンド。</td>
+              <td class="p-4 border-b border-orange-100 text-slate-600">範囲外の操作は止まるので、少し待ちが出る。</td>
+              <td class="p-4 border-b border-orange-100 text-slate-600">最初はこれ。迷ったらこれ。</td>
+            </tr>
+            <tr>
+              <td class="p-4 border-b border-orange-100 font-bold text-sky-700">Auto-review</td>
+              <td class="p-4 border-b border-orange-100 text-slate-600">承認判断をある程度スムーズにしたい作業。</td>
+              <td class="p-4 border-b border-orange-100 text-slate-600">承認が自動寄りでも、作業範囲の理解は必要。</td>
+              <td class="p-4 border-b border-orange-100 text-slate-600">慣れてきたら使う。秘密情報や削除系は慎重に。</td>
+            </tr>
+            <tr>
+              <td class="p-4 border-b border-orange-100 font-bold text-rose-700">Full access</td>
+              <td class="p-4 border-b border-orange-100 text-slate-600">複数フォルダ横断、ネット利用、環境構築など止まりやすい作業。</td>
+              <td class="p-4 border-b border-orange-100 text-slate-600">フォルダ外の変更、削除、移動、秘密情報への接触が起きやすい。</td>
+              <td class="p-4 border-b border-orange-100 text-slate-600">常用しない。空の検証フォルダやバックアップ済み作業だけ。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-8 grid md:grid-cols-2 gap-4">
+        <div class="card p-6 fade-up"><h3 class="font-black text-slate-900 mb-2">Full accessが得意なこと</h3><p class="text-sm text-slate-500">開発サーバー起動、依存関係インストール、複数フォルダ参照、外部データ取得など、標準権限で何度も止まる作業。</p></div>
+        <div class="card p-6 fade-up"><h3 class="font-black text-slate-900 mb-2">Full accessで避けること</h3><p class="text-sm text-slate-500">デスクトップ全体、OneDrive全体、秘密情報入りフォルダ、顧客情報、バックアップなしの削除や移動。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reasoning" class="py-18 md:py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="text-center mb-12 fade-up">
+        <p class="text-sm font-bold text-indigo-600 tracking-widest mb-3">REASONING LEVEL</p>
+        <h2 class="h-sec font-black text-slate-900">推論レベルは「高ければ常に正解」ではない。</h2>
+        <p class="mt-4 text-slate-600 max-w-3xl mx-auto">考える量が増えるほど、重い作業に向きます。ただし軽い修正まで非常に高いにすると、遅くなったり、考えすぎたりします。</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="card p-6 fade-up">
+          <p class="text-xs font-bold text-sky-600 mb-2">中</p>
+          <h3 class="font-black text-xl text-slate-900 mb-3">軽い修正・資料整理</h3>
+          <p class="text-sm text-slate-500">文言変更、HTMLの小修正、議事録整理、既存デザインに合わせる作業。</p>
+        </div>
+        <div class="card p-6 fade-up">
+          <p class="text-xs font-bold text-emerald-600 mb-2">高</p>
+          <h3 class="font-black text-xl text-slate-900 mb-3">標準の本命</h3>
+          <p class="text-sm text-slate-500">複数ファイル、設計判断、原因調査、PC/スマホ表示確認、教材構成のような作業。</p>
+        </div>
+        <div class="card p-6 fade-up">
+          <p class="text-xs font-bold text-rose-600 mb-2">非常に高い</p>
+          <h3 class="font-black text-xl text-slate-900 mb-3">難しい時だけ</h3>
+          <p class="text-sm text-slate-500">原因不明のバグ、大規模コード理解、複雑な仕様整理、長い作業計画、失敗コストが大きい判断。</p>
+        </div>
+      </div>
+      <div class="mt-8 card p-6 fade-up">
+        <h3 class="font-black text-slate-900 mb-3">初心者の初期値</h3>
+        <p class="text-sm text-slate-500">迷ったら「高」。軽い作業なら「中」。何度やってもズレる、ファイル数が多い、前提が複雑なら「非常に高い」。この3択で十分です。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="py-18 md:py-24 border-y border-slate-100" style="background:#f8fbff">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-8 lg:gap-14 items-start">
+        <div class="fade-up">
+          <p class="text-sm font-bold text-cyan-600 tracking-widest mb-3">SKILLS</p>
+          <h2 class="h-sec font-black text-slate-900">Skillsは、毎回の説明を減らす仕組み。</h2>
+          <p class="mt-4 text-slate-600">Skillsは「この作業はこの手順でやる」「このデザイン型を使う」という再利用ルールです。CodexでもClaude Codeでも、強い人は毎回ゼロから説明しません。</p>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="card p-6 fade-up"><h3 class="font-bold text-slate-900 mb-2">使う場面</h3><p class="text-sm text-slate-500">同じ形式の資料、同じデザイン、同じ検証手順、同じ会社ルールを何度も使う時。</p></div>
+          <div class="card p-6 fade-up"><h3 class="font-bold text-slate-900 mb-2">初心者の頼み方</h3><p class="text-sm text-slate-500">「このページはroot1039-pageの型に合わせて」「この作業をSkill化できるか見て」と頼む。</p></div>
+          <div class="card p-6 fade-up"><h3 class="font-bold text-slate-900 mb-2">Claude Codeにも効く考え方</h3><p class="text-sm text-slate-500">Skillsの有無に関わらず、作業ルールをMarkdownにして常に読ませると精度が上がる。</p></div>
+          <div class="card p-6 fade-up"><h3 class="font-bold text-slate-900 mb-2">安全確認</h3><p class="text-sm text-slate-500">知らないSkillや外部から取った手順は、中身を読んで危ない操作がないか確認してから使う。</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="folders" class="py-18 md:py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="mb-10 fade-up">
+        <p class="text-sm font-bold text-emerald-600 tracking-widest mb-3">CONTEXT FOLDERS</p>
+        <h2 class="h-sec font-black text-slate-900">持っておくと便利なファイル・フォルダ</h2>
+        <p class="mt-4 text-slate-600 max-w-3xl">AIエージェントは、文脈が多いほど判断が安定します。フォルダ構成を整えることは、AIに仕事を教えることです。</p>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="card p-6 fade-up"><h3 class="font-black text-slate-900 mb-2">AGENTS.md</h3><p class="text-sm text-slate-500">作業ルール、触ってよい範囲、文章トーン、検証方法を書く。</p></div>
+        <div class="card p-6 fade-up"><h3 class="font-black text-slate-900 mb-2">ai-learning/</h3><p class="text-sm text-slate-500">学び、失敗、再利用パターンを残す。CodexとClaude Codeの共有記憶になる。</p></div>
+        <div class="card p-6 fade-up"><h3 class="font-black text-slate-900 mb-2">docs/ または context/</h3><p class="text-sm text-slate-500">仕様、背景、議事録、判断理由など、AIに読ませる資料置き場。</p></div>
+        <div class="card p-6 fade-up"><h3 class="font-black text-slate-900 mb-2">assets/</h3><p class="text-sm text-slate-500">画像、ロゴ、スクリーンショット、参考デザインを置く。</p></div>
+        <div class="card p-6 fade-up"><h3 class="font-black text-slate-900 mb-2">examples/</h3><p class="text-sm text-slate-500">過去に良かったページ、資料、プロンプト例を置く。</p></div>
+        <div class="card p-6 fade-up"><h3 class="font-black text-slate-900 mb-2">outputs/</h3><p class="text-sm text-slate-500">生成物や一時成果物を置く。後で確認しやすくする。</p></div>
+      </div>
+      <div class="mt-8 rounded-lg border border-rose-100 bg-rose-50 p-6 fade-up">
+        <h3 class="font-black text-rose-900 mb-2">作らない方がよい置き場</h3>
+        <p class="text-sm text-rose-800">`secrets/`、APIキー置き場、パスワードメモ、顧客個人情報の丸ごと保管は避けます。必要な秘密情報は、AIに見せる資料とは分けて管理します。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="templates" class="py-18 md:py-24 border-y border-slate-100" style="background:#f8fbff">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="text-center mb-12 fade-up">
+        <p class="text-sm font-bold text-indigo-600 tracking-widest mb-3">PROMPT TEMPLATES</p>
+        <h2 class="h-sec font-black text-slate-900">実例別、そのまま使える依頼文</h2>
+      </div>
+      <div class="grid lg:grid-cols-2 gap-4">
+        <div class="code-box p-5 fade-up text-sm"><p class="text-sky-200 font-bold mb-2">LP修正</p><p>このHTMLを初心者向けのLPとして見直してください。まずPlan Modeで、構成・CTA・スマホ表示・変更するファイル・確認方法を出してください。実装はまだしないでください。</p></div>
+        <div class="code-box p-5 fade-up text-sm"><p class="text-sky-200 font-bold mb-2">HTML資料作成</p><p>このフォルダ内の資料を参考に、初心者向けの説明ページを新規HTMLで作ってください。専門用語はかみ砕き、操作手順と注意点を入れてください。完成後はプレビューで確認してください。</p></div>
+        <div class="code-box p-5 fade-up text-sm"><p class="text-sky-200 font-bold mb-2">既存コード調査</p><p>まだ修正しないでください。この機能がどのファイルで動いているか調べ、関係ファイル、データの流れ、直すならどこを触るかを説明してください。</p></div>
+        <div class="code-box p-5 fade-up text-sm"><p class="text-sky-200 font-bold mb-2">画像付きページ</p><p>このページに合う画像や図の案を出し、必要なら生成・配置してください。暗すぎる画像や内容がわからない装飾画像は避け、実際に伝えたい内容が見えるようにしてください。</p></div>
+        <div class="code-box p-5 fade-up text-sm"><p class="text-sky-200 font-bold mb-2">議事録整理</p><p>この議事録を、決定事項、TODO、未決事項、次回確認、背景メモに分けてMarkdownにしてください。曖昧な箇所は勝手に断定せず、確認が必要として残してください。</p></div>
+        <div class="code-box p-5 fade-up text-sm"><p class="text-sky-200 font-bold mb-2">PC操作依頼</p><p>画面を見ながら操作してほしいです。実行前に、何をクリックするか、どの情報を入力するか、外部に送信する情報があるかを説明してください。危ない操作は止まって確認してください。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="checklist" class="py-18 md:py-24 bg-white">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
+      <div class="card p-7 sm:p-9 fade-up">
+        <p class="text-sm font-bold text-emerald-600 tracking-widest mb-3">STARTER CHECKLIST</p>
+        <h2 class="text-2xl font-black text-slate-900 mb-5">初回のおすすめ設定</h2>
+        <div class="grid md:grid-cols-2 gap-4 text-sm text-slate-600">
+          <p class="rounded-lg bg-slate-50 border border-slate-100 p-4"><strong class="text-slate-900">権限</strong><br>標準権限から始める。Full accessは使わない。</p>
+          <p class="rounded-lg bg-slate-50 border border-slate-100 p-4"><strong class="text-slate-900">推論</strong><br>迷ったら高。軽い作業は中。</p>
+          <p class="rounded-lg bg-slate-50 border border-slate-100 p-4"><strong class="text-slate-900">モード</strong><br>小さな資料やHTMLはLocal。大きな試作はWorktree。</p>
+          <p class="rounded-lg bg-slate-50 border border-slate-100 p-4"><strong class="text-slate-900">指示</strong><br>まず音声で背景を話し、Plan Modeで計画を見る。</p>
+          <p class="rounded-lg bg-slate-50 border border-slate-100 p-4"><strong class="text-slate-900">確認</strong><br>Preview、差分、リンク、スマホ幅を必ず見る。</p>
+          <p class="rounded-lg bg-slate-50 border border-slate-100 p-4"><strong class="text-slate-900">記録</strong><br>うまくいった頼み方はAGENTS.mdやai-learningに残す。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="py-10 border-t border-slate-200 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+    <a href="ogalabo_organization.html" class="font-bold text-slate-800" style="font-family:Inter,sans-serif">ogalabo</a>
+    <p class="text-xs text-slate-400 text-center">Codex操作マニュアル | Plan, Preview, Permissions, Skills</p>
+    <p class="text-xs text-slate-400">&copy; 2026 ogalabo</p>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      e.target.style.transitionDelay = Math.min((i % 5) * 60, 240) + 'ms';
+      e.target.classList.add('visible');
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

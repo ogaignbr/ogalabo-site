@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codex初心者ガイド | ogalabo</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{font-family:'Noto Sans JP','Inter',sans-serif;background:#ffffff;color:#0f172a;line-height:1.85;-webkit-font-smoothing:antialiased;font-feature-settings:"palt";overflow-x:hidden}
+main,header,footer{width:100%;max-width:100vw;overflow-x:hidden}
+.light-grid{background-image:linear-gradient(rgba(99,102,241,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,.06) 1px,transparent 1px);background-size:42px 42px}
+.card{background:#fff;border:1px solid rgba(99,102,241,.12);box-shadow:0 1px 3px rgba(15,23,42,.06),0 10px 26px rgba(99,102,241,.06);border-radius:8px}
+.visual-img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;border:1px solid rgba(99,102,241,.14);box-shadow:0 18px 44px rgba(15,23,42,.10)}
+.grad-text{background:linear-gradient(120deg,#4f46e5,#0891b2 48%,#10b981);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.h-hero{font-size:clamp(2.2rem,1.45rem + 3.4vw,4.6rem);line-height:1.08}
+.h-sec{font-size:clamp(1.55rem,1.2rem + 1.75vw,2.65rem);line-height:1.25}
+.pill{border:1px solid rgba(99,102,241,.16);background:rgba(255,255,255,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.fade-up{opacity:0;transform:translateY(22px);transition:opacity .65s cubic-bezier(.2,.7,.3,1),transform .65s cubic-bezier(.2,.7,.3,1)}
+.fade-up.visible{opacity:1;transform:none}
+p,h1,h2,h3,li,td,th,a{overflow-wrap:anywhere}
+.flex-1,.min-w-0{min-width:0}
+.board-row{display:grid;grid-template-columns:2rem minmax(0,1fr);align-items:start}
+.board-row p{min-width:0}
+@media (max-width: 640px){body{word-break:break-word}.h-hero{font-size:clamp(1.9rem,1.55rem + 2vw,2.25rem)}.hero-line{display:block}.hero-panel{display:block}.card,p,h1,h2,h3{max-width:100%}.table-scroll{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}.compare-table{min-width:760px}}
+</style>
+</head>
+<body>
+
+<!-- ogalabo 共通ナビ (data-current切り替え) -->
+<style>
+  #og-sidebar{transition:transform .35s cubic-bezier(.2,.7,.3,1)}
+  #og-backdrop{transition:opacity .3s ease}
+  .og-acc[open] > summary .og-chev{transform:rotate(90deg)}
+  .og-chev{transition:transform .25s ease}
+  .og-page-card{transition:all .2s ease}
+  .og-page-card:hover{transform:translateY(-1px)}
+  details > summary{list-style:none;cursor:pointer}
+  details > summary::-webkit-details-marker{display:none}
+  body.og-menu-open{overflow:hidden}
+</style>
+
+<header data-current="beginner" class="fixed top-0 inset-x-0 z-50 bg-white/92 backdrop-blur border-b border-slate-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
+    <button id="og-menu-btn" aria-label="メニューを開く" class="w-11 h-11 rounded-xl flex items-center justify-center hover:bg-slate-100 text-slate-700 transition-colors">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h16M3 11h16M3 16h16"/></svg>
+    </button>
+    <a href="ogalabo_organization.html" class="flex items-center gap-2 ml-1">
+      <span class="font-bold tracking-wide text-slate-900" style="font-family:Inter,sans-serif">ogalabo</span>
+    </a>
+    <span class="hidden sm:inline-flex items-center gap-1.5 ml-2 px-2.5 py-1 rounded-full text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>AI初心者ガイド
+    </span>
+    <div class="ml-auto hidden md:flex items-center gap-4 text-xs font-medium text-slate-400">
+      <a href="ogalabo_organization.html" class="hover:text-indigo-600 transition-colors">組織図</a>
+      <a href="codex_operation_guide.html" class="hover:text-amber-600 transition-colors">操作ガイド</a>
+      <a href="portfolio_ai_proposals.html" class="hover:text-rose-600 transition-colors">ポートフォリオ</a>
+    </div>
+  </div>
+</header>
+
+<div id="og-backdrop" class="fixed inset-0 bg-slate-900/45 z-[80] opacity-0 pointer-events-none"></div>
+<aside id="og-sidebar" class="fixed top-0 left-0 h-full w-[88vw] max-w-[360px] bg-white shadow-2xl z-[90] -translate-x-full flex flex-col">
+  <div class="px-4 py-3 border-b border-slate-100 flex items-center gap-3 shrink-0">
+    <button id="og-sidebar-close" aria-label="メニューを閉じる" class="w-11 h-11 rounded-xl flex items-center justify-center hover:bg-slate-100 text-slate-700 transition-colors">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h16M3 11h16M3 16h16"/></svg>
+    </button>
+    <div class="flex items-center gap-2">
+      <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="sblogG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#22d3ee"/></linearGradient></defs>
+        <rect width="32" height="32" rx="8" fill="url(#sblogG)"/>
+        <text x="16" y="22" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="14" fill="white">og</text>
+      </svg>
+      <span class="font-bold text-slate-900" style="font-family:Inter,sans-serif">ogalabo</span>
+    </div>
+  </div>
+  <nav id="og-nav-list" class="flex-1 overflow-y-auto p-3 space-y-2"></nav>
+  <div class="px-4 py-3 border-t border-slate-100 text-xs text-slate-400 shrink-0">© 2026 ogalabo</div>
+</aside>
+
+<script>
+(function(){
+  const OG_PAGES = [
+    {id:'org',href:'ogalabo_organization.html',title:'組織図',desc:'AI経営チームの全体像',color:'#6366f1',sections:[
+      {id:'top',label:'トップ',anchor:''},{id:'org',label:'AI経営組織図'},{id:'flow',label:'相談 → 成果物までの流れ'},
+      {id:'brain',label:'進化する経営脳'},{id:'why',label:'なぜすごいのか'}]},
+    {id:'beginner',href:'codex_beginner_guide.html',title:'AI初心者ガイド',desc:'はじめてAIを使う方へ',color:'#10b981',sections:[
+      {id:'visual-overview',label:'全体像'},{id:'mindset',label:'AIへのマインドセット'},{id:'difference',label:'ChatGPTとの違い'},
+      {id:'why-codex',label:'なぜCodexか'},{id:'voice',label:'音声入力の使い方'},{id:'prompt-basics',label:'話し方の5つの基本'},
+      {id:'steps',label:'最初の7ステップ'},{id:'examples',label:'実例集'},{id:'safety',label:'安全に使うために'},
+      {id:'operation-next',label:'次は操作ガイドへ'}]},
+    {id:'operation',href:'codex_operation_guide.html',title:'操作ガイド',desc:'実務で使いこなすために',color:'#f59e0b',sections:[
+      {id:'flow',label:'基本フロー'},{id:'prompt-basics',label:'プロンプトの基本'},{id:'modes',label:'各種モード'},
+      {id:'plan-mode',label:'Plan Mode'},{id:'preview',label:'プレビュー機能'},{id:'permissions',label:'権限管理'},
+      {id:'reasoning',label:'思考の深さ調整'},{id:'skills',label:'スキル機能'},{id:'folders',label:'フォルダ運用'},
+      {id:'templates',label:'テンプレート集'},{id:'checklist',label:'チェックリスト'}]},
+    {id:'portfolio',href:'portfolio_ai_proposals.html',title:'ポートフォリオ',desc:'AI提案の実績紹介',color:'#f43f5e',sections:[
+      {id:'capabilities',label:'できること'},{id:'portfolio',label:'実績一覧'},{id:'grulla',label:'Grulla事例'},
+      {id:'quallia',label:'Quallia事例'},{id:'contact',label:'お問い合わせ'}]},
+  ];
+  const header = document.querySelector('header[data-current]');
+  const current = header ? header.dataset.current : '';
+  const list = document.getElementById('og-nav-list');
+  const sidebar = document.getElementById('og-sidebar');
+  const backdrop = document.getElementById('og-backdrop');
+  const openBtn = document.getElementById('og-menu-btn');
+  const closeBtn = document.getElementById('og-sidebar-close');
+  const softBg = c => c + '0d';
+  list.innerHTML = OG_PAGES.map(p => {
+    const isCurrent = p.id === current;
+    const dotShadow = isCurrent ? `box-shadow:0 0 0 4px ${p.color}33;` : '';
+    const sectionHref = s => isCurrent ? `#${s.id}` : `${p.href}${s.anchor === '' ? '' : '#' + s.id}`;
+    return `
+    <details class="og-acc rounded-xl border" ${isCurrent ? 'open' : ''} style="border-color:${p.color}40;background:${softBg(p.color)}">
+      <summary class="og-page-card flex items-center gap-3 p-3.5 rounded-xl">
+        <span class="og-chev shrink-0 w-5 h-5 flex items-center justify-center text-slate-400">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l4 4-4 4"/></svg>
+        </span>
+        <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${p.color};${dotShadow}"></span>
+        <a href="${p.href}" class="flex-1 min-w-0">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-sm text-slate-900">${p.title}</span>
+            ${isCurrent ? `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded" style="background:${p.color};color:white">現在</span>` : ''}
+          </div>
+          <div class="text-[11px] text-slate-500 mt-0.5">${p.desc}</div>
+        </a>
+      </summary>
+      <ul class="pl-10 pr-3 pb-3 pt-1 space-y-0.5">
+        ${p.sections.map(s => `<li><a href="${sectionHref(s)}" class="og-section-link block px-3 py-2 rounded-lg text-[13px] text-slate-600 hover:text-slate-900 transition-colors" data-color="${p.color}">${s.label}</a></li>`).join('')}
+      </ul>
+    </details>`;
+  }).join('');
+  document.querySelectorAll('.og-section-link').forEach(a => {
+    const c = a.dataset.color;
+    a.addEventListener('mouseenter', () => { a.style.background = c + '14'; });
+    a.addEventListener('mouseleave', () => { a.style.background = ''; });
+    a.addEventListener('click', closeMenu);
+  });
+  function openMenu(){sidebar.style.transform='translateX(0)';backdrop.style.opacity='1';backdrop.style.pointerEvents='auto';document.body.classList.add('og-menu-open');}
+  function closeMenu(){sidebar.style.transform='translateX(-100%)';backdrop.style.opacity='0';backdrop.style.pointerEvents='none';document.body.classList.remove('og-menu-open');}
+  openBtn.addEventListener('click', openMenu);
+  closeBtn.addEventListener('click', closeMenu);
+  backdrop.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeMenu(); });
+})();
+</script>
+
+<main>
+  <section class="relative min-h-[92vh] flex items-center pt-24 pb-14 overflow-hidden">
+    <div class="absolute inset-0 light-grid opacity-70 pointer-events-none"></div>
+    <div class="absolute inset-x-0 top-0 h-[62vh] pointer-events-none" style="background:radial-gradient(ellipse at 55% 10%,rgba(34,211,238,.14),transparent 55%),radial-gradient(ellipse at 18% 25%,rgba(99,102,241,.14),transparent 52%)"></div>
+    <div class="relative max-w-7xl mx-auto px-5 sm:px-8 w-full">
+      <div class="grid lg:grid-cols-[1.05fr_.95fr] gap-10 lg:gap-16 items-center">
+        <div>
+          <p class="fade-up inline-flex items-center gap-2 pill rounded-lg px-4 py-2 text-xs sm:text-sm font-bold text-indigo-700 mb-6">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            ChatGPT課金者の次の一歩
+          </p>
+          <h1 class="h-hero font-black text-slate-900 fade-up" style="font-family:Inter,'Noto Sans JP',sans-serif">
+            <span class="hero-line">ChatGPTを使う</span><span class="hero-line">人から、</span><span class="hero-line grad-text">AIエージェントと</span><span class="hero-line grad-text">共創する人</span>へ。
+          </h1>
+          <p class="mt-7 text-base sm:text-lg text-slate-600 max-w-2xl fade-up">
+            これからの仕事は、AIに質問するだけでは足りません。背景を渡し、作業を任せ、結果を見て、また直す。Codexはその練習を、ChatGPTの延長線上で始めやすい入口です。
+          </p>
+          <div class="mt-9 flex flex-col sm:flex-row gap-3 fade-up">
+            <a href="#steps" class="inline-flex items-center justify-center gap-2 rounded-lg px-7 py-4 bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-colors">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              最初の7ステップへ
+            </a>
+            <a href="codex_operation_guide.html" class="inline-flex items-center justify-center rounded-lg px-7 py-4 border border-cyan-200 bg-cyan-50 font-bold text-cyan-800 hover:bg-cyan-100 transition-colors">
+              実際の操作方法はこちら
+            </a>
+            <a href="ogalabo_organization.html" class="inline-flex items-center justify-center rounded-lg px-7 py-4 border border-slate-200 bg-white font-bold text-slate-700 hover:bg-slate-50 transition-colors">
+              ogalabo組織図へ戻る
+            </a>
+          </div>
+        </div>
+
+        <div class="fade-up hero-panel min-w-0">
+          <div class="card p-6 sm:p-8 relative overflow-hidden">
+            <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-indigo-500 via-cyan-500 to-emerald-500"></div>
+            <p class="text-xs font-bold text-slate-400 tracking-widest mb-4">KEY MESSAGE</p>
+            <h2 class="text-2xl font-black text-slate-900 mb-5">この資料で伝える結論</h2>
+            <div class="space-y-4">
+              <div class="board-row gap-3">
+                <span class="mt-1 w-7 h-7 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 font-black text-sm">1</span>
+                <p class="text-sm text-slate-600 flex-1"><strong class="text-slate-900">Codexは「会話相手」ではなく「作業する仲間」。</strong> ファイルを読み、変更し、検証まで進められる。</p>
+              </div>
+              <div class="board-row gap-3">
+                <span class="mt-1 w-7 h-7 rounded-lg bg-cyan-50 border border-cyan-100 flex items-center justify-center text-cyan-700 font-black text-sm">2</span>
+                <p class="text-sm text-slate-600 flex-1"><strong class="text-slate-900">初心者ほど音声入力が大事。</strong> 短い手打ち指示では背景が抜け、AIの判断がズレやすい。</p>
+              </div>
+              <div class="board-row gap-3">
+                <span class="mt-1 w-7 h-7 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-700 font-black text-sm">3</span>
+                <p class="text-sm text-slate-600 flex-1"><strong class="text-slate-900">中途半端なAI活用では弱い。</strong> 仕事の前提をAIと共創する形へ組み替える人が強くなる。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="visual-overview" class="py-14 md:py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="fade-up">
+        <img src="assets/codex-beginner-workflow.png" alt="ChatGPTからCodexで作業する流れの図解" class="visual-img" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section id="mindset" class="py-18 md:py-24 border-y border-slate-100" style="background:#f8f9ff">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
+      <div class="text-center mb-12 fade-up">
+        <p class="text-sm font-bold text-indigo-500 tracking-widest mb-3">MINDSET</p>
+        <h2 class="h-sec font-black text-slate-900">「ちょっとAIが使える」では、もう足りない。</h2>
+        <p class="mt-4 text-slate-600 max-w-3xl mx-auto">AI時代に価値が出るのは、AIに答えを聞く人ではなく、AIに文脈を渡して一緒に成果物を作れる人です。</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="card p-6 fade-up">
+          <p class="text-xs font-bold text-indigo-500 mb-2">PHASE 1</p>
+          <h3 class="font-bold text-lg text-slate-900 mb-2">質問する</h3>
+          <p class="text-sm text-slate-500">ChatGPTに聞いて、文章やアイデアを出してもらう段階。入口としては正しいが、ここで止まると差はつかない。</p>
+        </div>
+        <div class="card p-6 fade-up">
+          <p class="text-xs font-bold text-cyan-600 mb-2">PHASE 2</p>
+          <h3 class="font-bold text-lg text-slate-900 mb-2">任せる</h3>
+          <p class="text-sm text-slate-500">Codexにフォルダ・目的・制約を渡し、調査、修正、検証を進めてもらう段階。ここからAIエージェント活用が始まる。</p>
+        </div>
+        <div class="card p-6 fade-up">
+          <p class="text-xs font-bold text-emerald-600 mb-2">PHASE 3</p>
+          <h3 class="font-bold text-lg text-slate-900 mb-2">共創する</h3>
+          <p class="text-sm text-slate-500">AIの提案を見て、追加の背景を音声で足し、何度も改善する段階。仕事の進め方そのものが変わる。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="difference" class="py-18 md:py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="mb-10 fade-up">
+        <p class="text-sm font-bold text-indigo-500 tracking-widest mb-3">BASIC DIFFERENCE</p>
+        <h2 class="h-sec font-black text-slate-900">ChatGPT、Codex、Claude Code、AIエージェントの違い</h2>
+      </div>
+      <div class="table-scroll fade-up">
+        <table class="compare-table w-full border-separate border-spacing-0 text-sm">
+          <thead>
+            <tr>
+              <th class="text-left p-4 bg-slate-50 border-y border-l border-slate-200 rounded-l-lg">種類</th>
+              <th class="text-left p-4 bg-slate-50 border-y border-slate-200">初心者向けの理解</th>
+              <th class="text-left p-4 bg-slate-50 border-y border-slate-200">得意なこと</th>
+              <th class="text-left p-4 bg-slate-50 border-y border-r border-slate-200 rounded-r-lg">最初の使い方</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="p-4 border-b border-slate-100 font-bold text-slate-900">ChatGPT</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">相談相手・文章作成・壁打ち</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">考えを整理する、説明する、文章を作る</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">悩みや目的を話して、方向性を作る</td>
+            </tr>
+            <tr>
+              <td class="p-4 border-b border-slate-100 font-bold text-indigo-700">Codex</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">ファイルを見て、作業もするAIエージェント</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">HTML作成、コード修正、資料生成、検証</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">フォルダを開き、目的を音声で渡す</td>
+            </tr>
+            <tr>
+              <td class="p-4 border-b border-slate-100 font-bold text-violet-700">Claude Code</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">開発者向けに強いコーディングエージェント</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">大きなコード理解、実装、並列作業</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">中級以降、開発量が増えたら検討</td>
+            </tr>
+            <tr>
+              <td class="p-4 border-b border-slate-100 font-bold text-emerald-700">AIエージェント</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">目的に向かって、調べて、動いて、直すAI</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">人の代わりに作業工程を進める</td>
+              <td class="p-4 border-b border-slate-100 text-slate-600">小さな作業を1つ任せる</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="why-codex" class="py-18 md:py-24 border-y border-slate-100" style="background:#f8f9ff">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="grid lg:grid-cols-[.9fr_1.1fr] gap-8 lg:gap-14 items-start">
+        <div class="fade-up">
+          <p class="text-sm font-bold text-cyan-600 tracking-widest mb-3">WHY CODEX FIRST</p>
+          <h2 class="h-sec font-black text-slate-900">なぜ最初はCodexなのか。</h2>
+          <p class="mt-4 text-slate-600">理由はシンプルです。ChatGPTをすでに課金している人が、追加の心理的ハードルを低くAIエージェントへ移れるからです。</p>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="card p-6 fade-up">
+            <h3 class="font-bold text-slate-900 mb-2">ChatGPTアカウントで始めやすい</h3>
+            <p class="text-sm text-slate-500">OpenAI公式ヘルプでは、CodexはFree、Go、Plus、Pro、Business、Edu、EnterpriseなどのChatGPTプランに含まれると案内されています。利用上限はプランで変わります。</p>
+          </div>
+          <div class="card p-6 fade-up">
+            <h3 class="font-bold text-slate-900 mb-2">作業ファイルとつながる</h3>
+            <p class="text-sm text-slate-500">CodexはコードやHTMLだけでなく、ドキュメント、スプレッドシート、プレゼンなどの非コード成果物も扱える入口になります。</p>
+          </div>
+          <div class="card p-6 fade-up">
+            <h3 class="font-bold text-slate-900 mb-2">Windowsでも使える</h3>
+            <p class="text-sm text-slate-500">Codex appはWindowsでもPowerShellとWindows sandboxに対応しており、Windows利用者でも始めやすい設計です。</p>
+          </div>
+          <div class="card p-6 fade-up">
+            <h3 class="font-bold text-slate-900 mb-2">Claude Codeは次の段階</h3>
+            <p class="text-sm text-slate-500">Claude Codeは強力ですが、最初から複数課金や開発者向け操作に寄せるより、まずCodexでAIエージェントの感覚を掴む方が続きやすいです。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="voice" class="py-18 md:py-24 bg-white">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
+      <div class="text-center mb-12 fade-up">
+        <p class="text-sm font-bold text-emerald-600 tracking-widest mb-3">VOICE FIRST</p>
+        <h2 class="h-sec font-black text-slate-900">音声入力がないと、AIはズレやすい。</h2>
+        <p class="mt-4 text-slate-600 max-w-3xl mx-auto">AIエージェントは、背景を知らないまま作業すると勝手に判断します。だから初心者ほど、口で長く説明するのが強いです。</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5 mb-8">
+        <div class="card p-7 fade-up">
+          <h3 class="font-black text-xl text-slate-900 mb-3">短い手打ち指示</h3>
+          <p class="text-sm text-slate-500 mb-4">「このページをいい感じにして」だけだと、AIは目的、読者、制約、使う場面を推測します。推測が増えるほど、成果物はズレます。</p>
+          <div class="rounded-lg bg-rose-50 border border-rose-100 p-4 text-sm text-rose-800">背景が抜ける → AIが推測する → 直しが増える</div>
+        </div>
+        <div class="card p-7 fade-up">
+          <h3 class="font-black text-xl text-slate-900 mb-3">音声で渡す指示</h3>
+          <p class="text-sm text-slate-500 mb-4">「誰に向けた資料で、何を理解してほしくて、どこは強く言いたくて、デザインは後で見る」まで話すと、AIの判断が安定します。</p>
+          <div class="rounded-lg bg-emerald-50 border border-emerald-100 p-4 text-sm text-emerald-800">文脈が増える → 判断が揃う → 修正が速い</div>
+        </div>
+      </div>
+      <div class="card p-6 sm:p-8 fade-up">
+        <div class="flex flex-col md:flex-row md:items-center gap-5">
+          <div class="w-14 h-14 rounded-lg bg-cyan-50 border border-cyan-100 flex items-center justify-center shrink-0">
+            <svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z" fill="none" stroke="#0891b2" stroke-width="2"/><path d="M5 10v1a7 7 0 0 0 14 0v-1M12 18v3M8 21h8" fill="none" stroke="#0891b2" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <h3 class="font-black text-slate-900 text-xl mb-1">Codex appでは、composer表示中に <span class="text-cyan-700">Ctrl + M</span> を押しながら話す。</h3>
+            <p class="text-sm text-slate-500">まずは録音のように話して、文字起こしされた内容を少し直して送る。これだけで、初心者のAI活用はかなり変わります。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="prompt-basics" class="py-18 md:py-24 border-y border-slate-100" style="background:#f8f9ff">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="grid lg:grid-cols-[.95fr_1.05fr] gap-8 lg:gap-14 items-start">
+        <div class="fade-up">
+          <p class="text-sm font-bold text-cyan-600 tracking-widest mb-3">VOICE PROMPT BASICS</p>
+          <h2 class="h-sec font-black text-slate-900">音声入力で話すことは、まず5つでいい。</h2>
+          <p class="mt-4 text-slate-600">初心者が止まりやすいのは「何を話せばいいかわからない」瞬間です。難しい長文プロンプトを覚えるより、今AIに何をしてほしいかをこの5つから選んで話す方が早いです。</p>
+        </div>
+        <div class="fade-up">
+          <img src="assets/voice-prompt-five-basics.png" alt="音声入力で使うプロンプト5つの基本の図解" class="visual-img" loading="lazy">
+        </div>
+      </div>
+      <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div class="card p-5 fade-up"><p class="font-black text-blue-600 mb-2">01</p><h3 class="font-bold text-slate-900 mb-2">情報収集</h3><p class="text-sm text-slate-500">知らないこと、相場、選択肢、背景を集めたい時。「〇〇について短く教えて」「表で比較して」と話す。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-teal-600 mb-2">02</p><h3 class="font-bold text-slate-900 mb-2">理解</h3><p class="text-sm text-slate-500">難しい言葉や仕組みをわかりたい時。「初心者向けに」「例え話で」「専門用語をかみ砕いて」と頼む。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-emerald-600 mb-2">03</p><h3 class="font-bold text-slate-900 mb-2">評価・比較</h3><p class="text-sm text-slate-500">どちらが良いか、何が弱いかを見たい時。「メリット・デメリットで」「改善点を出して」と聞く。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-violet-600 mb-2">04</p><h3 class="font-bold text-slate-900 mb-2">整形</h3><p class="text-sm text-slate-500">出てきた内容を見やすくしたい時。「箇条書きで」「Markdownで」「台本形式で」と整える。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-amber-600 mb-2">05</p><h3 class="font-bold text-slate-900 mb-2">生成</h3><p class="text-sm text-slate-500">文章、画像案、コード、資料を作りたい時。「〇〇向けに作って」「30秒で話せる文章にして」と頼む。</p></div>
+      </div>
+      <div class="mt-8 card p-6 fade-up">
+        <h3 class="font-black text-slate-900 mb-3">ズレた時の言い方</h3>
+        <p class="text-sm text-slate-500">うまく言語化できなくても、「なんか違う。どこが違いそうか候補を出して」「もっと初心者向け」「短く」「比較表にして」と追加で話せば大丈夫です。音声入力は、最初の一発よりも、見て直すラリーで強くなります。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="steps" class="py-18 md:py-24 border-y border-slate-100" style="background:#f8f9ff">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="text-center mb-12 fade-up">
+        <p class="text-sm font-bold text-indigo-500 tracking-widest mb-3">FIRST 7 STEPS</p>
+        <h2 class="h-sec font-black text-slate-900">初心者が最初にやること</h2>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-7 gap-3">
+        <div class="card p-5 fade-up"><p class="font-black text-indigo-600 mb-2">01</p><h3 class="font-bold text-sm text-slate-900 mb-2">目的を話す</h3><p class="text-xs text-slate-500">何を作るか、誰に使わせるか、なぜ必要かを音声で話す。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-cyan-600 mb-2">02</p><h3 class="font-bold text-sm text-slate-900 mb-2">フォルダを渡す</h3><p class="text-xs text-slate-500">関連ファイルが入ったフォルダをCodexのプロジェクトとして開く。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-emerald-600 mb-2">03</p><h3 class="font-bold text-sm text-slate-900 mb-2">Plan Mode</h3><p class="text-xs text-slate-500">いきなり作らせず、まず内容・方針・リスクを相談する。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-violet-600 mb-2">04</p><h3 class="font-bold text-sm text-slate-900 mb-2">実装を任せる</h3><p class="text-xs text-slate-500">決まったら「実装して」と頼み、作業を進めてもらう。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-amber-600 mb-2">05</p><h3 class="font-bold text-sm text-slate-900 mb-2">差分を見る</h3><p class="text-xs text-slate-500">何が変わったかを読み、意図とズレていないか確認する。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-rose-600 mb-2">06</p><h3 class="font-bold text-sm text-slate-900 mb-2">直す</h3><p class="text-xs text-slate-500">違和感をまた音声で伝え、2周目、3周目で磨く。</p></div>
+        <div class="card p-5 fade-up"><p class="font-black text-slate-700 mb-2">07</p><h3 class="font-bold text-sm text-slate-900 mb-2">学びを残す</h3><p class="text-xs text-slate-500">決めたルールや失敗をAGENTS.mdやai-learningに保存する。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="examples" class="py-18 md:py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="mb-10 fade-up">
+        <p class="text-sm font-bold text-emerald-600 tracking-widest mb-3">PRACTICAL EXAMPLES</p>
+        <h2 class="h-sec font-black text-slate-900">Codexに任せる実例</h2>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="card p-6 fade-up"><h3 class="font-bold text-slate-900 mb-2">LP修正</h3><p class="text-sm text-slate-500">「このページを初心者向けにして。CTAを増やして、スマホで見やすくして」と頼む。</p></div>
+        <div class="card p-6 fade-up"><h3 class="font-bold text-slate-900 mb-2">HTML資料作成</h3><p class="text-sm text-slate-500">YouTubeや議事録を参考に、研修資料のHTMLを作らせる。</p></div>
+        <div class="card p-6 fade-up"><h3 class="font-bold text-slate-900 mb-2">議事録整理</h3><p class="text-sm text-slate-500">文字起こしをMarkdown化し、決定事項、TODO、次回論点に分ける。</p></div>
+        <div class="card p-6 fade-up"><h3 class="font-bold text-slate-900 mb-2">画像付き資料</h3><p class="text-sm text-slate-500">資料の流れを決め、必要な図や画像を生成してページに組み込む。</p></div>
+        <div class="card p-6 fade-up"><h3 class="font-bold text-slate-900 mb-2">PC操作</h3><p class="text-sm text-slate-500">Computer Useで画面を見ながら、GUIだけで起きる確認作業を手伝わせる。</p></div>
+        <div class="card p-6 fade-up"><h3 class="font-bold text-slate-900 mb-2">既存コード調査</h3><p class="text-sm text-slate-500">「この仕組みがどこにあるか調べて」と頼み、ファイル構成と修正方針を出させる。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="safety" class="py-18 md:py-24 border-y border-slate-100" style="background:#fff7ed">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
+      <div class="text-center mb-10 fade-up">
+        <p class="text-sm font-bold text-orange-600 tracking-widest mb-3">DO NOT SKIP</p>
+        <h2 class="h-sec font-black text-slate-900">初心者が避けるべきこと</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="card p-6 fade-up"><h3 class="font-bold text-slate-900 mb-2">秘密情報をそのまま渡さない</h3><p class="text-sm text-slate-500">顧客情報、パスワード、APIキー、契約情報は扱いを分ける。必要なら伏せ字や別管理にする。</p></div>
+        <div class="card p-6 fade-up"><h3 class="font-bold text-slate-900 mb-2">いきなり公開しない</h3><p class="text-sm text-slate-500">Web公開はセキュリティリスクがある。初心者はまずローカルHTMLや社内資料から始める。</p></div>
+        <div class="card p-6 fade-up"><h3 class="font-bold text-slate-900 mb-2">フルアクセスを常用しない</h3><p class="text-sm text-slate-500">権限が強いほど便利だが、誤操作の影響も大きい。Sandboxと承認を基本にする。</p></div>
+        <div class="card p-6 fade-up"><h3 class="font-bold text-slate-900 mb-2">AI任せで見ないまま納品しない</h3><p class="text-sm text-slate-500">AIは作れるが、責任は人間に残る。成果物、リンク、文言、表示崩れは必ず確認する。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="operation-next" class="py-18 md:py-24 bg-white">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
+      <div class="card p-7 sm:p-9 fade-up text-center">
+        <p class="text-sm font-bold text-cyan-600 tracking-widest mb-3">NEXT STEP</p>
+        <h2 class="text-2xl font-black text-slate-900 mb-4">次は、実際の操作方法へ。</h2>
+        <p class="text-sm text-slate-500 max-w-2xl mx-auto mb-6">Plan Mode、プレビュー、権限、推論レベル、Skills、便利なフォルダ構成まで、Codexを動かすときに迷いやすい部分を別ページにまとめています。</p>
+        <a href="codex_operation_guide.html" class="inline-flex items-center justify-center gap-2 rounded-lg px-7 py-4 bg-cyan-600 text-white font-bold hover:bg-cyan-700 transition-colors">
+          実際の操作方法はこちら
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="py-10 border-t border-slate-200 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+    <a href="ogalabo_organization.html" class="font-bold text-slate-800" style="font-family:Inter,sans-serif">ogalabo</a>
+    <p class="text-xs text-slate-400 text-center">Codex初心者ガイド | AIエージェントと共創するための入口</p>
+    <p class="text-xs text-slate-400">&copy; 2026 ogalabo</p>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      e.target.style.transitionDelay = Math.min((i % 5) * 60, 240) + 'ms';
+      e.target.classList.add('visible');
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

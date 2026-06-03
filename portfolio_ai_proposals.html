@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI業務効率化 ご提案 | おがさん</title>
+<meta name="description" content="AIで、ビジネスを進化させる。岩手グルージャ盛岡様・quallia様向けAIソリューションのご提案。">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Inter', 'Noto Sans JP', 'system-ui', 'sans-serif'],
+        jp: ['Noto Sans JP', 'sans-serif'],
+      }
+    }
+  }
+}
+</script>
+<style>
+:root {
+  --bg-1: #07091a;
+  --bg-2: #0d1230;
+  --accent-1: #6366f1;
+  --accent-2: #a855f7;
+  --accent-3: #06b6d4;
+}
+* { font-family: 'Inter', 'Noto Sans JP', system-ui, sans-serif; }
+html { scroll-behavior: smooth; }
+body {
+  background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+  color: #e2e8f0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.bg-pattern {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(99,102,241,.15), transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(168,85,247,.12), transparent 50%);
+}
+.grid-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(99,102,241,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+  pointer-events: none;
+}
+
+.glass {
+  background: rgba(20,24,55,.55);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(148,163,184,.12);
+}
+.glass-nav {
+  background: rgba(7,9,26,.82);
+  backdrop-filter: blur(16px) saturate(130%);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+  border-bottom: 1px solid rgba(148,163,184,.08);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #6366f1, #a855f7, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gradient-text-green {
+  background: linear-gradient(135deg, #10b981, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gradient-text-purple {
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card-hover {
+  transition: transform .25s cubic-bezier(.2,.7,.3,1), box-shadow .25s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(99,102,241,.15), 0 4px 12px rgba(0,0,0,.2);
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .6s cubic-bezier(.2,.7,.3,1), transform .6s cubic-bezier(.2,.7,.3,1);
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.badge-proven {
+  background: linear-gradient(135deg, rgba(16,185,129,.2), rgba(6,182,212,.2));
+  border: 1px solid rgba(16,185,129,.4);
+  color: #6ee7b7;
+}
+
+.grulla-card {
+  border: 1px solid rgba(16,185,129,.15);
+  background: rgba(16,185,129,.03);
+}
+.grulla-card:hover {
+  border-color: rgba(16,185,129,.35);
+  background: rgba(16,185,129,.06);
+}
+
+.quallia-card {
+  border: 1px solid rgba(168,85,247,.15);
+  background: rgba(168,85,247,.03);
+}
+.quallia-card:hover {
+  border-color: rgba(168,85,247,.35);
+  background: rgba(168,85,247,.06);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.float-anim { animation: float 4s ease-in-out infinite; }
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(99,102,241,.4), rgba(168,85,247,.3));
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .hero-heading { font-size: 2rem !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-pattern"></div>
+
+<!-- ogalabo 共通ナビ (data-current切り替え) -->
+<style>
+  #og-sidebar{transition:transform .35s cubic-bezier(.2,.7,.3,1)}
+  #og-backdrop{transition:opacity .3s ease}
+  .og-acc[open] > summary .og-chev{transform:rotate(90deg)}
+  .og-chev{transition:transform .25s ease}
+  .og-page-card{transition:all .2s ease}
+  .og-page-card:hover{transform:translateY(-1px)}
+  details > summary{list-style:none;cursor:pointer}
+  details > summary::-webkit-details-marker{display:none}
+  body.og-menu-open{overflow:hidden}
+</style>
+
+<header data-current="portfolio" class="glass-nav fixed top-0 inset-x-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
+    <button id="og-menu-btn" aria-label="メニューを開く" class="w-11 h-11 rounded-xl flex items-center justify-center hover:bg-white/10 text-slate-200 transition-colors">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h16M3 11h16M3 16h16"/></svg>
+    </button>
+    <a href="ogalabo_organization.html" class="flex items-center gap-2 ml-1">
+      <span class="font-bold tracking-wide text-slate-100" style="font-family:Inter,sans-serif">ogalabo</span>
+    </a>
+    <span class="hidden sm:inline-flex items-center gap-1.5 ml-2 px-2.5 py-1 rounded-full text-xs font-bold text-rose-200 bg-rose-500/15 border border-rose-400/40">
+      <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>ポートフォリオ
+    </span>
+    <div class="ml-auto hidden md:flex items-center gap-4 text-xs font-medium text-slate-400">
+      <a href="ogalabo_organization.html" class="hover:text-indigo-300 transition-colors">組織図</a>
+      <a href="codex_beginner_guide.html" class="hover:text-emerald-300 transition-colors">初心者ガイド</a>
+      <a href="codex_operation_guide.html" class="hover:text-amber-300 transition-colors">操作ガイド</a>
+    </div>
+  </div>
+</header>
+
+<div id="og-backdrop" class="fixed inset-0 bg-slate-900/60 z-[80] opacity-0 pointer-events-none"></div>
+<aside id="og-sidebar" class="fixed top-0 left-0 h-full w-[88vw] max-w-[360px] bg-white shadow-2xl z-[90] -translate-x-full flex flex-col">
+  <div class="px-4 py-3 border-b border-slate-100 flex items-center gap-3 shrink-0">
+    <button id="og-sidebar-close" aria-label="メニューを閉じる" class="w-11 h-11 rounded-xl flex items-center justify-center hover:bg-slate-100 text-slate-700 transition-colors">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h16M3 11h16M3 16h16"/></svg>
+    </button>
+    <div class="flex items-center gap-2">
+      <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="sblogG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#22d3ee"/></linearGradient></defs>
+        <rect width="32" height="32" rx="8" fill="url(#sblogG)"/>
+        <text x="16" y="22" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="14" fill="white">og</text>
+      </svg>
+      <span class="font-bold text-slate-900" style="font-family:Inter,sans-serif">ogalabo</span>
+    </div>
+  </div>
+  <nav id="og-nav-list" class="flex-1 overflow-y-auto p-3 space-y-2" style="color:#0f172a"></nav>
+  <div class="px-4 py-3 border-t border-slate-100 text-xs text-slate-400 shrink-0">© 2026 ogalabo</div>
+</aside>
+
+<script>
+(function(){
+  const OG_PAGES = [
+    {id:'org',href:'ogalabo_organization.html',title:'組織図',desc:'AI経営チームの全体像',color:'#6366f1',sections:[
+      {id:'top',label:'トップ',anchor:''},{id:'org',label:'AI経営組織図'},{id:'flow',label:'相談 → 成果物までの流れ'},
+      {id:'brain',label:'進化する経営脳'},{id:'why',label:'なぜすごいのか'}]},
+    {id:'beginner',href:'codex_beginner_guide.html',title:'AI初心者ガイド',desc:'はじめてAIを使う方へ',color:'#10b981',sections:[
+      {id:'visual-overview',label:'全体像'},{id:'mindset',label:'AIへのマインドセット'},{id:'difference',label:'ChatGPTとの違い'},
+      {id:'why-codex',label:'なぜCodexか'},{id:'voice',label:'音声入力の使い方'},{id:'prompt-basics',label:'話し方の5つの基本'},
+      {id:'steps',label:'最初の7ステップ'},{id:'examples',label:'実例集'},{id:'safety',label:'安全に使うために'},
+      {id:'operation-next',label:'次は操作ガイドへ'}]},
+    {id:'operation',href:'codex_operation_guide.html',title:'操作ガイド',desc:'実務で使いこなすために',color:'#f59e0b',sections:[
+      {id:'flow',label:'基本フロー'},{id:'prompt-basics',label:'プロンプトの基本'},{id:'modes',label:'各種モード'},
+      {id:'plan-mode',label:'Plan Mode'},{id:'preview',label:'プレビュー機能'},{id:'permissions',label:'権限管理'},
+      {id:'reasoning',label:'思考の深さ調整'},{id:'skills',label:'スキル機能'},{id:'folders',label:'フォルダ運用'},
+      {id:'templates',label:'テンプレート集'},{id:'checklist',label:'チェックリスト'}]},
+    {id:'portfolio',href:'portfolio_ai_proposals.html',title:'ポートフォリオ',desc:'AI提案の実績紹介',color:'#f43f5e',sections:[
+      {id:'capabilities',label:'できること'},{id:'portfolio',label:'実績一覧'},{id:'grulla',label:'Grulla事例'},
+      {id:'quallia',label:'Quallia事例'},{id:'contact',label:'お問い合わせ'}]},
+  ];
+  const header = document.querySelector('header[data-current]');
+  const current = header ? header.dataset.current : '';
+  const list = document.getElementById('og-nav-list');
+  const sidebar = document.getElementById('og-sidebar');
+  const backdrop = document.getElementById('og-backdrop');
+  const openBtn = document.getElementById('og-menu-btn');
+  const closeBtn = document.getElementById('og-sidebar-close');
+  const softBg = c => c + '0d';
+  list.innerHTML = OG_PAGES.map(p => {
+    const isCurrent = p.id === current;
+    const dotShadow = isCurrent ? `box-shadow:0 0 0 4px ${p.color}33;` : '';
+    const sectionHref = s => isCurrent ? `#${s.id}` : `${p.href}${s.anchor === '' ? '' : '#' + s.id}`;
+    return `
+    <details class="og-acc rounded-xl border" ${isCurrent ? 'open' : ''} style="border-color:${p.color}40;background:${softBg(p.color)}">
+      <summary class="og-page-card flex items-center gap-3 p-3.5 rounded-xl">
+        <span class="og-chev shrink-0 w-5 h-5 flex items-center justify-center text-slate-400">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l4 4-4 4"/></svg>
+        </span>
+        <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${p.color};${dotShadow}"></span>
+        <a href="${p.href}" class="flex-1 min-w-0">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-sm text-slate-900">${p.title}</span>
+            ${isCurrent ? `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded" style="background:${p.color};color:white">現在</span>` : ''}
+          </div>
+          <div class="text-[11px] text-slate-500 mt-0.5">${p.desc}</div>
+        </a>
+      </summary>
+      <ul class="pl-10 pr-3 pb-3 pt-1 space-y-0.5">
+        ${p.sections.map(s => `<li><a href="${sectionHref(s)}" class="og-section-link block px-3 py-2 rounded-lg text-[13px] text-slate-600 hover:text-slate-900 transition-colors" data-color="${p.color}">${s.label}</a></li>`).join('')}
+      </ul>
+    </details>`;
+  }).join('');
+  document.querySelectorAll('.og-section-link').forEach(a => {
+    const c = a.dataset.color;
+    a.addEventListener('mouseenter', () => { a.style.background = c + '14'; });
+    a.addEventListener('mouseleave', () => { a.style.background = ''; });
+    a.addEventListener('click', closeMenu);
+  });
+  function openMenu(){sidebar.style.transform='translateX(0)';backdrop.style.opacity='1';backdrop.style.pointerEvents='auto';document.body.classList.add('og-menu-open');}
+  function closeMenu(){sidebar.style.transform='translateX(-100%)';backdrop.style.opacity='0';backdrop.style.pointerEvents='none';document.body.classList.remove('og-menu-open');}
+  openBtn.addEventListener('click', openMenu);
+  closeBtn.addEventListener('click', closeMenu);
+  backdrop.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeMenu(); });
+})();
+</script>
+
+<!-- Hero -->
+<section class="relative min-h-screen flex items-center justify-center grid-bg pt-14">
+  <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+    <p class="text-sm uppercase tracking-[.2em] text-indigo-400 mb-4 fade-up">AI Solutions for Business</p>
+    <h1 class="hero-heading text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-6 fade-up">
+      <span class="gradient-text">AIで、ビジネスを</span><br>
+      <span class="text-white">進化させる。</span>
+    </h1>
+    <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto mb-10 fade-up leading-relaxed">
+      チャットボット、業務自動化、データ分析、コンテンツ生成。<br class="hidden sm:block">
+      あなたの事業課題に合わせた<strong class="text-slate-200">オーダーメイドのAIソリューション</strong>を<br class="hidden sm:block">
+      設計から構築・運用まで一貫してご提供します。
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center fade-up">
+      <a href="#grulla" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold hover:from-indigo-500 hover:to-purple-500 transition-all hover:-translate-y-0.5 shadow-lg shadow-indigo-500/25">
+        <i data-lucide="arrow-down" class="w-4 h-4"></i>ご提案を見る
+      </a>
+      <a href="#capabilities" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-slate-700 text-slate-300 font-semibold hover:border-slate-500 hover:text-white transition-all">
+        できることを見る
+      </a>
+    </div>
+  </div>
+  <!-- Decorative floating elements -->
+  <div class="absolute top-1/4 right-[10%] w-20 h-20 rounded-full bg-indigo-500/10 blur-xl float-anim hidden lg:block"></div>
+  <div class="absolute bottom-1/3 left-[8%] w-16 h-16 rounded-full bg-purple-500/10 blur-xl float-anim hidden lg:block" style="animation-delay:-2s"></div>
+</section>
+
+<!-- Stats Bar -->
+<section class="relative z-10 border-y border-slate-800/50 py-8">
+  <div class="max-w-5xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+    <div class="fade-up">
+      <p class="text-2xl font-bold text-white">6+</p>
+      <p class="text-xs text-slate-500 mt-1">AIシステム構築実績</p>
+    </div>
+    <div class="fade-up">
+      <p class="text-2xl font-bold text-white">LINE / Zoom / Stripe</p>
+      <p class="text-xs text-slate-500 mt-1">外部サービス連携</p>
+    </div>
+    <div class="fade-up">
+      <p class="text-2xl font-bold text-white">フルスタック</p>
+      <p class="text-xs text-slate-500 mt-1">設計〜開発〜運用</p>
+    </div>
+    <div class="fade-up">
+      <p class="text-2xl font-bold text-white">24h</p>
+      <p class="text-xs text-slate-500 mt-1">AI自動稼働</p>
+    </div>
+  </div>
+</section>
+
+<!-- Capabilities -->
+<section id="capabilities" class="relative z-10 py-20 sm:py-28">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-14 fade-up">
+      <p class="text-xs uppercase tracking-[.2em] text-indigo-400 mb-3">Capabilities</p>
+      <h2 class="text-3xl sm:text-4xl font-bold text-white">できること</h2>
+      <p class="text-slate-400 mt-3 max-w-xl mx-auto">AI技術を活用して実現できるソリューションの一例です。御社の課題に合わせてカスタマイズしてご提供します。</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- Capability 1 -->
+      <div class="glass rounded-2xl p-6 card-hover fade-up">
+        <div class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center mb-4">
+          <i data-lucide="message-square" class="w-5 h-5 text-indigo-400"></i>
+        </div>
+        <h3 class="font-bold text-white mb-2">AIチャットボット / 秘書</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">LINE・Web・Slackに対応した対話AI。問い合わせ対応、社内FAQ、顧客サポートを自動化します。</p>
+      </div>
+      <!-- Capability 2 -->
+      <div class="glass rounded-2xl p-6 card-hover fade-up">
+        <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center mb-4">
+          <i data-lucide="zap" class="w-5 h-5 text-purple-400"></i>
+        </div>
+        <h3 class="font-bold text-white mb-2">業務自動化</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">Zoom議事録の自動生成、メール配信、SNS投稿作成、定型レポート生成など、繰り返し業務を自動化。</p>
+      </div>
+      <!-- Capability 3 -->
+      <div class="glass rounded-2xl p-6 card-hover fade-up">
+        <div class="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center mb-4">
+          <i data-lucide="bar-chart-3" class="w-5 h-5 text-cyan-400"></i>
+        </div>
+        <h3 class="font-bold text-white mb-2">データ分析・レポート</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">顧客データ、売上データ、パフォーマンスデータを分析し、AIが洞察を自動レポート化。</p>
+      </div>
+      <!-- Capability 4 -->
+      <div class="glass rounded-2xl p-6 card-hover fade-up">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4">
+          <i data-lucide="target" class="w-5 h-5 text-emerald-400"></i>
+        </div>
+        <h3 class="font-bold text-white mb-2">営業支援AI</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">リード収集、企業リスト作成、DM自動送信、スポンサー候補の抽出まで営業プロセスを効率化。</p>
+      </div>
+      <!-- Capability 5 -->
+      <div class="glass rounded-2xl p-6 card-hover fade-up">
+        <div class="w-10 h-10 rounded-xl bg-pink-500/10 flex items-center justify-center mb-4">
+          <i data-lucide="globe" class="w-5 h-5 text-pink-400"></i>
+        </div>
+        <h3 class="font-bold text-white mb-2">Webアプリ / SaaS開発</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">React/Supabase/Stripeによるサブスクリプション型Webサービスの設計・構築・運用。</p>
+      </div>
+      <!-- Capability 6 -->
+      <div class="glass rounded-2xl p-6 card-hover fade-up">
+        <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center mb-4">
+          <i data-lucide="pen-tool" class="w-5 h-5 text-amber-400"></i>
+        </div>
+        <h3 class="font-bold text-white mb-2">コンテンツ自動生成</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">LP、プレゼン資料、広告コピー、教育資料、トークスクリプトをAIが自動で作成。</p>
+      </div>
+      <!-- Capability 7 -->
+      <div class="glass rounded-2xl p-6 card-hover fade-up">
+        <div class="w-10 h-10 rounded-xl bg-rose-500/10 flex items-center justify-center mb-4">
+          <i data-lucide="graduation-cap" class="w-5 h-5 text-rose-400"></i>
+        </div>
+        <h3 class="font-bold text-white mb-2">教育・研修AI</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">社員研修用のAIチャット、自動テスト生成、トークスクリプト・マニュアルの作成を支援。</p>
+      </div>
+      <!-- Capability 8 -->
+      <div class="glass rounded-2xl p-6 card-hover fade-up">
+        <div class="w-10 h-10 rounded-xl bg-teal-500/10 flex items-center justify-center mb-4">
+          <i data-lucide="file-text" class="w-5 h-5 text-teal-400"></i>
+        </div>
+        <h3 class="font-bold text-white mb-2">書類・ドキュメント自動生成</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">履歴書、報告書、契約書テンプレート、議事録などの定型書類をAIで自動作成。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Portfolio -->
+<section id="portfolio" class="relative z-10 py-20 sm:py-28 border-t border-slate-800/50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-14 fade-up">
+      <p class="text-xs uppercase tracking-[.2em] text-purple-400 mb-3">Portfolio</p>
+      <h2 class="text-3xl sm:text-4xl font-bold text-white">開発実績</h2>
+      <p class="text-slate-400 mt-3">実際に構築・運用しているAIシステムの一部をご紹介します。</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Portfolio 1 -->
+      <div class="glass rounded-2xl overflow-hidden card-hover fade-up">
+        <div class="h-36 bg-gradient-to-br from-indigo-900/60 to-purple-900/40 flex items-center justify-center relative overflow-hidden">
+          <div class="absolute inset-0 opacity-20" style="background-image: linear-gradient(rgba(99,102,241,.3) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,.3) 1px, transparent 1px); background-size: 20px 20px;"></div>
+          <div class="relative flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-indigo-500/30 border border-indigo-400/30"></div>
+            <div class="space-y-1.5">
+              <div class="w-28 h-2.5 rounded bg-indigo-400/30"></div>
+              <div class="w-20 h-2 rounded bg-indigo-400/20"></div>
+            </div>
+          </div>
+        </div>
+        <div class="p-5">
+          <h3 class="font-bold text-white mb-1">AI秘書 / 役員会議システム</h3>
+          <p class="text-xs text-slate-400 mb-3">複数のAIペルソナが議論し、経営判断を支援。WebSocket + LINE連携。</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Python</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">FastAPI</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">Claude API</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">LINE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Portfolio 2 -->
+      <div class="glass rounded-2xl overflow-hidden card-hover fade-up">
+        <div class="h-36 bg-gradient-to-br from-cyan-900/60 to-blue-900/40 flex items-center justify-center relative overflow-hidden">
+          <div class="relative flex flex-col items-center gap-2">
+            <i data-lucide="video" class="w-8 h-8 text-cyan-400/60"></i>
+            <div class="flex items-center gap-2">
+              <i data-lucide="arrow-right" class="w-4 h-4 text-cyan-400/40"></i>
+              <i data-lucide="file-text" class="w-6 h-6 text-cyan-400/60"></i>
+              <i data-lucide="arrow-right" class="w-4 h-4 text-cyan-400/40"></i>
+              <i data-lucide="smartphone" class="w-6 h-6 text-cyan-400/60"></i>
+            </div>
+          </div>
+        </div>
+        <div class="p-5">
+          <h3 class="font-bold text-white mb-1">Zoom議事録 自動化Bot</h3>
+          <p class="text-xs text-slate-400 mb-3">Zoom録画 → AI要約 → 構造化議事録 → LINE通知。完全自動で稼働中。</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">Zoom API</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">OpenAI</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">LINE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Portfolio 3 -->
+      <div class="glass rounded-2xl overflow-hidden card-hover fade-up">
+        <div class="h-36 bg-gradient-to-br from-emerald-900/60 to-teal-900/40 flex items-center justify-center relative overflow-hidden">
+          <div class="relative flex items-center gap-1">
+            <div class="w-14 h-20 rounded-lg bg-emerald-500/20 border border-emerald-400/20 flex items-center justify-center">
+              <i data-lucide="camera" class="w-5 h-5 text-emerald-400/60"></i>
+            </div>
+            <i data-lucide="plus" class="w-4 h-4 text-emerald-400/40"></i>
+            <div class="w-14 h-20 rounded-lg bg-emerald-500/20 border border-emerald-400/20 flex items-center justify-center">
+              <i data-lucide="camera" class="w-5 h-5 text-emerald-400/60"></i>
+            </div>
+          </div>
+        </div>
+        <div class="p-5">
+          <h3 class="font-bold text-white mb-1">ぴたカメ（SaaSアプリ）</h3>
+          <p class="text-xs text-slate-400 mb-3">ビフォーアフター比較カメラ。Stripe課金・PWA・顔認識搭載のフルスタックSaaS。</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">React</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Supabase</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">Stripe</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">PWA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Portfolio 4 -->
+      <div class="glass rounded-2xl overflow-hidden card-hover fade-up">
+        <div class="h-36 bg-gradient-to-br from-amber-900/60 to-orange-900/40 flex items-center justify-center relative overflow-hidden">
+          <div class="relative flex flex-col items-center gap-1">
+            <div class="flex items-center gap-2">
+              <i data-lucide="search" class="w-5 h-5 text-amber-400/60"></i>
+              <i data-lucide="arrow-right" class="w-4 h-4 text-amber-400/40"></i>
+              <i data-lucide="users" class="w-5 h-5 text-amber-400/60"></i>
+              <i data-lucide="arrow-right" class="w-4 h-4 text-amber-400/40"></i>
+              <i data-lucide="mail" class="w-5 h-5 text-amber-400/60"></i>
+            </div>
+          </div>
+        </div>
+        <div class="p-5">
+          <h3 class="font-bold text-white mb-1">営業DM自動化システム</h3>
+          <p class="text-xs text-slate-400 mb-3">Google Places→企業リスト→AI文面生成→一斉送信。40+業種対応。</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20">Python</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20">Streamlit</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20">SMTP</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20">Scraping</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Portfolio 5 -->
+      <div class="glass rounded-2xl overflow-hidden card-hover fade-up">
+        <div class="h-36 bg-gradient-to-br from-rose-900/60 to-pink-900/40 flex items-center justify-center relative overflow-hidden">
+          <div class="relative flex items-center gap-3">
+            <i data-lucide="wand-2" class="w-8 h-8 text-rose-400/60"></i>
+            <div class="space-y-1.5">
+              <div class="w-20 h-2.5 rounded bg-rose-400/30"></div>
+              <div class="w-24 h-2.5 rounded bg-rose-400/20"></div>
+              <div class="w-16 h-2.5 rounded bg-rose-400/15"></div>
+            </div>
+          </div>
+        </div>
+        <div class="p-5">
+          <h3 class="font-bold text-white mb-1">AIコンテンツ自動生成</h3>
+          <p class="text-xs text-slate-400 mb-3">LP・プレゼン資料・広告コピーを一言の指示で自動生成するスキルシステム。</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-300 border border-rose-500/20">Claude Code</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-300 border border-rose-500/20">HTML</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-300 border border-rose-500/20">PPTX</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Portfolio 6 -->
+      <div class="glass rounded-2xl overflow-hidden card-hover fade-up">
+        <div class="h-36 bg-gradient-to-br from-green-900/60 to-emerald-900/40 flex items-center justify-center relative overflow-hidden">
+          <div class="relative flex flex-col items-center gap-2">
+            <i data-lucide="book-open" class="w-8 h-8 text-green-400/60"></i>
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-10 rounded bg-green-500/20 border border-green-400/20"></div>
+              <div class="w-8 h-10 rounded bg-green-500/20 border border-green-400/20"></div>
+              <div class="w-8 h-10 rounded bg-green-500/20 border border-green-400/20"></div>
+            </div>
+          </div>
+        </div>
+        <div class="p-5">
+          <h3 class="font-bold text-white mb-1">教育支援Webツール</h3>
+          <p class="text-xs text-slate-400 mb-3">トークスクリプト・履歴書自動作成・研修テスト・マニュアルを集約した教育プラットフォーム。</p>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-green-500/10 text-green-300 border border-green-500/20">HTML/JS</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-green-500/10 text-green-300 border border-green-500/20">ExcelJS</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-green-500/10 text-green-300 border border-green-500/20">AI生成</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Grulla Proposal -->
+<section id="grulla" class="relative z-10 py-20 sm:py-28 border-t border-slate-800/50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-6 fade-up">
+      <p class="text-xs uppercase tracking-[.2em] text-emerald-400 mb-3">Proposal for Iwate Grulla</p>
+      <h2 class="text-3xl sm:text-4xl font-bold">
+        <span class="gradient-text-green">岩手グルージャ盛岡</span>
+        <span class="text-white">様へのご提案</span>
+      </h2>
+    </div>
+    <p class="text-center text-slate-400 max-w-2xl mx-auto mb-12 fade-up leading-relaxed text-sm">
+      地域密着型クラブとして、限られたリソースの中でファンとの絆を深め、クラブの成長を加速させるための<br class="hidden sm:block">
+      AI活用施策を10案ご提案いたします。
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-5">
+      <!-- Grulla 1 -->
+      <div class="glass grulla-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="share-2" class="w-5 h-5 text-emerald-400"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-white mb-1 text-sm">SNS投稿 自動生成</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">試合プレビュー、結果速報、選手ハイライトをAIが自動で下書き作成。X/Instagram/Facebookへの投稿工数を大幅削減。</p>
+          </div>
+        </div>
+      </div>
+      <!-- Grulla 2 -->
+      <div class="glass grulla-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="message-circle" class="w-5 h-5 text-emerald-400"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-white mb-1 text-sm">ファンエンゲージメント Bot</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">LINE公式アカウントにAI Botを搭載。チケット情報、試合日程、イベント案内、Q&A対応を24時間自動応答。</p>
+          </div>
+        </div>
+      </div>
+      <!-- Grulla 3 -->
+      <div class="glass grulla-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="file-text" class="w-5 h-5 text-emerald-400"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="font-bold text-white text-sm">議事録・会議AI</h3>
+              <span class="badge-proven text-[9px] px-1.5 py-0.5 rounded-full font-medium">実績あり</span>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">理事会・スタッフ会議の録画を自動で議事録化。決定事項・アクション項目を構造化してLINEに通知。</p>
+          </div>
+        </div>
+      </div>
+      <!-- Grulla 4 -->
+      <div class="glass grulla-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="target" class="w-5 h-5 text-emerald-400"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="font-bold text-white text-sm">スポンサー営業支援</h3>
+              <span class="badge-proven text-[9px] px-1.5 py-0.5 rounded-full font-medium">実績あり</span>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">岩手県内の企業リストをAIが自動収集。業種別にパーソナライズした営業メールを一括送信。</p>
+          </div>
+        </div>
+      </div>
+      <!-- Grulla 5 -->
+      <div class="glass grulla-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="bar-chart-3" class="w-5 h-5 text-emerald-400"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-white mb-1 text-sm">試合データ分析レポート</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">試合スタッツ、選手パフォーマンス、対戦相手の傾向をAIが分析。スタッフ向けレポートを自動生成。</p>
+          </div>
+        </div>
+      </div>
+      <!-- Grulla 6 -->
+      <div class="glass grulla-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="shopping-bag" class="w-5 h-5 text-emerald-400"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-white mb-1 text-sm">グッズ販売最適化</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">BASEショップの販売データ分析、需要予測、人気商品レコメンド。在庫最適化と売上向上を支援。</p>
+          </div>
+        </div>
+      </div>
+      <!-- Grulla 7 -->
+      <div class="glass grulla-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="headphones" class="w-5 h-5 text-emerald-400"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-white mb-1 text-sm">問い合わせ対応Bot</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">チケット購入方法、アクセス案内、試合日程など、よくある質問をAIが自動応答。スタッフの負担を軽減。</p>
+          </div>
+        </div>
+      </div>
+      <!-- Grulla 8 -->
+      <div class="glass grulla-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="presentation" class="w-5 h-5 text-emerald-400"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="font-bold text-white text-sm">スポンサー向け報告資料 自動生成</h3>
+              <span class="badge-proven text-[9px] px-1.5 py-0.5 rounded-full font-medium">実績あり</span>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">試合来場数、SNSリーチ、露出実績などをまとめたスポンサー報告書をAIが自動作成（PPTX/PDF）。</p>
+          </div>
+        </div>
+      </div>
+      <!-- Grulla 9 -->
+      <div class="glass grulla-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="megaphone" class="w-5 h-5 text-emerald-400"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-white mb-1 text-sm">イベント告知・集客AI</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">ファン感謝祭、サッカー教室、地域イベントの告知文面・チラシ・LPをAIが自動作成。集客を効率化。</p>
+          </div>
+        </div>
+      </div>
+      <!-- Grulla 10 -->
+      <div class="glass grulla-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="clipboard-list" class="w-5 h-5 text-emerald-400"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="font-bold text-white text-sm">スタッフ教育・マニュアルAI</h3>
+              <span class="badge-proven text-[9px] px-1.5 py-0.5 rounded-full font-medium">実績あり</span>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">新人スタッフ向けの業務マニュアル、接客トークスクリプト、研修テストをAIで自動生成・管理。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- quallia Proposal -->
+<section id="quallia" class="relative z-10 py-20 sm:py-28 border-t border-slate-800/50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-6 fade-up">
+      <p class="text-xs uppercase tracking-[.2em] text-purple-400 mb-3">Proposal for QUALIA</p>
+      <h2 class="text-3xl sm:text-4xl font-bold">
+        <span class="gradient-text-purple">quallia</span>
+        <span class="text-white">様へのご提案</span>
+      </h2>
+    </div>
+    <p class="text-center text-slate-400 max-w-2xl mx-auto mb-12 fade-up leading-relaxed text-sm">
+      急成長するネットワークの中で、ディストリビューターの教育・営業・管理を<br class="hidden sm:block">
+      AIで効率化し、組織の拡大を加速させるための10案をご提案いたします。
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-5">
+      <!-- quallia 1 -->
+      <div class="glass quallia-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="graduation-cap" class="w-5 h-5 text-purple-400"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="font-bold text-white text-sm">ディストリビューター教育Bot</h3>
+              <span class="badge-proven text-[9px] px-1.5 py-0.5 rounded-full font-medium">実績あり</span>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">新規メンバーのオンボーディング、製品知識、営業手法をAI Botが24時間研修。理解度テストも自動生成。</p>
+          </div>
+        </div>
+      </div>
+      <!-- quallia 2 -->
+      <div class="glass quallia-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="users" class="w-5 h-5 text-purple-400"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="font-bold text-white text-sm">自動DM / リード収集</h3>
+              <span class="badge-proven text-[9px] px-1.5 py-0.5 rounded-full font-medium">実績あり</span>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">SNS・Webから見込み客を自動収集。ターゲット属性に合わせたパーソナライズDMを一括送信。</p>
+          </div>
+        </div>
+      </div>
+      <!-- quallia 3 -->
+      <div class="glass quallia-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="pen-tool" class="w-5 h-5 text-purple-400"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-white mb-1 text-sm">SNS・販促コンテンツ自動生成</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">製品紹介、体験談投稿、リクルート文面をAIが自動作成。各ディストリビューターが即使える素材を提供。</p>
+          </div>
+        </div>
+      </div>
+      <!-- quallia 4 -->
+      <div class="glass quallia-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="trending-up" class="w-5 h-5 text-purple-400"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-white mb-1 text-sm">ダウンライン分析・予測</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">メンバーの活動量・成約率を追跡し、離脱リスクの高いメンバーを早期検知。フォロー施策を提案。</p>
+          </div>
+        </div>
+      </div>
+      <!-- quallia 5 -->
+      <div class="glass quallia-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="mic" class="w-5 h-5 text-purple-400"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="font-bold text-white text-sm">会議議事録 自動化</h3>
+              <span class="badge-proven text-[9px] px-1.5 py-0.5 rounded-full font-medium">実績あり</span>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">チームMTG、リーダー会議の録画から要約・決定事項・タスクを自動抽出。全メンバーにLINE共有。</p>
+          </div>
+        </div>
+      </div>
+      <!-- quallia 6 -->
+      <div class="glass quallia-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="headphones" class="w-5 h-5 text-purple-400"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-white mb-1 text-sm">FAQ / 問い合わせ対応Bot</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">製品の使い方、注文状況、返品対応など顧客からの問い合わせをAIが自動応答。対応コストを削減。</p>
+          </div>
+        </div>
+      </div>
+      <!-- quallia 7 -->
+      <div class="glass quallia-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="message-square" class="w-5 h-5 text-purple-400"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="font-bold text-white text-sm">営業トークスクリプト生成</h3>
+              <span class="badge-proven text-[9px] px-1.5 py-0.5 rounded-full font-medium">実績あり</span>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">商談シーン別（初回接触/フォロー/クロージング）のトークスクリプトをAIが自動生成。成約率向上を支援。</p>
+          </div>
+        </div>
+      </div>
+      <!-- quallia 8 -->
+      <div class="glass quallia-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="clipboard-check" class="w-5 h-5 text-purple-400"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="font-bold text-white text-sm">研修テスト・認定試験 自動生成</h3>
+              <span class="badge-proven text-[9px] px-1.5 py-0.5 rounded-full font-medium">実績あり</span>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">製品知識テスト、ランクアップ認定試験をAIが自動作成。採点・フィードバックも自動化。</p>
+          </div>
+        </div>
+      </div>
+      <!-- quallia 9 -->
+      <div class="glass quallia-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="globe" class="w-5 h-5 text-purple-400"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <h3 class="font-bold text-white text-sm">個人LP / 営業ページ自動生成</h3>
+              <span class="badge-proven text-[9px] px-1.5 py-0.5 rounded-full font-medium">実績あり</span>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed">各ディストリビューター専用のランディングページをAIが自動生成。個人の強みに合わせたLP作成。</p>
+          </div>
+        </div>
+      </div>
+      <!-- quallia 10 -->
+      <div class="glass quallia-card rounded-2xl p-5 card-hover fade-up">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+            <i data-lucide="repeat" class="w-5 h-5 text-purple-400"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-white mb-1 text-sm">顧客フォローアップ自動化</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">購入者への定期フォロー、リピート促進メッセージ、記念日DMをAIが自動配信。LTV最大化を実現。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Engagement Model -->
+<section class="relative z-10 py-20 sm:py-28 border-t border-slate-800/50">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-14 fade-up">
+      <p class="text-xs uppercase tracking-[.2em] text-cyan-400 mb-3">How We Work</p>
+      <h2 class="text-3xl sm:text-4xl font-bold text-white">お取り組みの流れ</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="glass rounded-2xl p-6 text-center card-hover fade-up">
+        <div class="w-12 h-12 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mx-auto mb-4">
+          <span class="text-indigo-400 font-bold text-lg">1</span>
+        </div>
+        <h3 class="font-bold text-white mb-2">無料相談</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">30分のオンラインMTGで課題をヒアリング。AIで解決できるポイントを整理します。</p>
+        <p class="text-[10px] text-emerald-400 mt-3 font-medium">無料・オンライン対応</p>
+      </div>
+      <div class="glass rounded-2xl p-6 text-center card-hover fade-up">
+        <div class="w-12 h-12 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mx-auto mb-4">
+          <span class="text-purple-400 font-bold text-lg">2</span>
+        </div>
+        <h3 class="font-bold text-white mb-2">提案・見積</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">課題に合わせたカスタムプランを設計。優先度と費用感をご提示します。</p>
+        <p class="text-[10px] text-emerald-400 mt-3 font-medium">1週間以内にご提案</p>
+      </div>
+      <div class="glass rounded-2xl p-6 text-center card-hover fade-up">
+        <div class="w-12 h-12 rounded-full bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mx-auto mb-4">
+          <span class="text-cyan-400 font-bold text-lg">3</span>
+        </div>
+        <h3 class="font-bold text-white mb-2">開発・納品</h3>
+        <p class="text-xs text-slate-400 leading-relaxed">スプリント単位で段階的に構築。動くものを確認しながら進めます。</p>
+        <p class="text-[10px] text-emerald-400 mt-3 font-medium">最短1週間で初版</p>
+      </div>
+    </div>
+
+    <div class="mt-10 glass rounded-2xl p-6 text-center fade-up">
+      <p class="text-sm text-slate-300 mb-2">ご契約形態</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div class="flex items-center gap-2">
+          <i data-lucide="calendar" class="w-4 h-4 text-indigo-400"></i>
+          <span class="text-sm text-slate-300"><strong class="text-white">月額顧問型</strong>：継続的な改善・運用サポート</span>
+        </div>
+        <span class="hidden sm:inline text-slate-600">|</span>
+        <div class="flex items-center gap-2">
+          <i data-lucide="package" class="w-4 h-4 text-purple-400"></i>
+          <span class="text-sm text-slate-300"><strong class="text-white">スポット開発</strong>：単発の構築・納品</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contact" class="relative z-10 py-20 sm:py-28">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6">
+    <div class="rounded-3xl p-8 sm:p-12 text-center fade-up" style="background: linear-gradient(135deg, rgba(99,102,241,.15), rgba(168,85,247,.15)); border: 1px solid rgba(99,102,241,.2);">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">まずは無料でお話しませんか？</h2>
+      <p class="text-slate-400 text-sm mb-8 leading-relaxed">
+        「こんなことできる？」「うちの場合はどう？」<br>
+        どんな小さな疑問でもお気軽にお声がけください。<br>
+        <span class="text-slate-500 text-xs">営業電話は一切いたしません。</span>
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="mailto:ogaignbr@gmail.com" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold hover:from-indigo-500 hover:to-purple-500 transition-all hover:-translate-y-0.5 shadow-lg shadow-indigo-500/25">
+          <i data-lucide="mail" class="w-4 h-4"></i>メールで相談
+        </a>
+        <a href="#" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-slate-600 text-slate-300 font-semibold hover:border-slate-400 hover:text-white transition-all">
+          <i data-lucide="message-circle" class="w-4 h-4"></i>LINEで相談
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="relative z-10 border-t border-slate-800/50 py-8">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+    <p class="text-sm text-slate-500">OGA AI &mdash; AI Solutions for Business</p>
+    <p class="text-xs text-slate-600 mt-2">&copy; 2026 All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+// Initialize Lucide icons
+lucide.createIcons();
+
+// Intersection Observer for scroll animations
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('.fade-up').forEach((el, i) => {
+    el.style.transitionDelay = (i % 5) * 80 + 'ms';
+    observer.observe(el);
+  });
+} else {
+  document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+}
+
+// (旧モバイルメニューは共通サイドバーへ統合済み)
+
+// Smooth scroll offset for fixed nav
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      const offset = 70;
+      const position = target.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top: position, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>
