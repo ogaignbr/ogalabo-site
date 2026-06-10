@@ -60,6 +60,7 @@ p,h1,h2,h3,li,td,th,a{overflow-wrap:anywhere}
       <a href="ogalabo_organization.html" class="hover:text-indigo-600 transition-colors">組織図</a>
       <a href="codex_beginner_guide.html" class="hover:text-emerald-600 transition-colors">初心者ガイド</a>
       <a href="portfolio_ai_proposals.html" class="hover:text-rose-600 transition-colors">ポートフォリオ</a>
+      <a href="ai_ability_map.html" class="hover:text-violet-600 transition-colors">得意・苦手マップ</a>
     </div>
   </div>
 </header>
@@ -102,6 +103,12 @@ p,h1,h2,h3,li,td,th,a{overflow-wrap:anywhere}
     {id:'portfolio',href:'portfolio_ai_proposals.html',title:'ポートフォリオ',desc:'AI提案の実績紹介',color:'#f43f5e',sections:[
       {id:'capabilities',label:'できること'},{id:'portfolio',label:'実績一覧'},{id:'grulla',label:'Grulla事例'},
       {id:'quallia',label:'Quallia事例'},{id:'contact',label:'お問い合わせ'}]},
+    {id:'ability',href:'ai_ability_map.html',title:'AI得意・苦手マップ',desc:'任せていい/まだダメの境界',color:'#8b5cf6',sections:[
+      {id:'why',label:'なぜ苦手から考えるか',anchor:''},{id:'map',label:'得意・苦手 早見表'},{id:'board',label:'役員会議の結論'},
+      {id:'smallbiz',label:'★ 個人店・小規模編'},
+      {id:'writing',label:'① 文章・ライティング'},{id:'research',label:'② リサーチ・分析'},{id:'docs',label:'③ 資料・プレゼン'},
+      {id:'web',label:'④ Web・ホームページ'},{id:'image',label:'⑤ 画像・デザイン'},{id:'video',label:'⑥ 動画・音声'},
+      {id:'auto',label:'⑦ 自動化・データ'},{id:'human',label:'⑧ 企画・接客・営業'},{id:'principles',label:'活用の3原則'}]},
   ];
   const header = document.querySelector('header[data-current]');
   const current = header ? header.dataset.current : '';

@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI得意・苦手マップ | ogalabo</title>
+<meta name="description" content="「AIで何ができるか」ではなく「AIに任せていい/まだ人間がやるべき」の境界を、ビジネス目線でジャンル別に整理。クライアントへの説明にそのまま使える早見表つき。">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{font-family:'Noto Sans JP','Inter',sans-serif;background:#ffffff;color:#0f172a;line-height:1.85;-webkit-font-smoothing:antialiased;font-feature-settings:"palt";overflow-x:hidden}
+main,header,footer{width:100%;max-width:100vw;overflow-x:hidden}
+.light-grid{background-image:linear-gradient(rgba(139,92,246,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(139,92,246,.06) 1px,transparent 1px);background-size:42px 42px}
+.card{background:#fff;border:1px solid rgba(139,92,246,.13);box-shadow:0 1px 3px rgba(15,23,42,.06),0 10px 26px rgba(139,92,246,.06);border-radius:12px}
+.grad-text{background:linear-gradient(120deg,#7c3aed,#a855f7 45%,#06b6d4);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.h-hero{font-size:clamp(2.2rem,1.45rem + 3.4vw,4.4rem);line-height:1.08}
+.h-sec{font-size:clamp(1.55rem,1.2rem + 1.75vw,2.55rem);line-height:1.25}
+.pill{border:1px solid rgba(139,92,246,.18);background:rgba(255,255,255,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.fade-up{opacity:0;transform:translateY(22px);transition:opacity .65s cubic-bezier(.2,.7,.3,1),transform .65s cubic-bezier(.2,.7,.3,1)}
+.fade-up.visible{opacity:1;transform:none}
+p,h1,h2,h3,li,td,th,a{overflow-wrap:anywhere}
+.flex-1,.min-w-0{min-width:0}
+/* verdict badges */
+.vb{display:inline-flex;align-items:center;gap:.35rem;font-weight:800;font-size:.72rem;padding:.2rem .6rem;border-radius:999px;white-space:nowrap}
+.vb-good{background:#dcfce7;color:#15803d;border:1px solid #86efac}
+.vb-cond{background:#fef3c7;color:#b45309;border:1px solid #fcd34d}
+.vb-bad{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}
+.dot{display:inline-block;width:.55rem;height:.55rem;border-radius:999px}
+.dot-good{background:#22c55e}.dot-cond{background:#f59e0b}.dot-bad{background:#ef4444}
+.map-row{transition:background .2s ease}
+.map-row:hover{background:#faf5ff}
+/* 実例アコーディオン */
+.ex-acc{border:1px solid #e9d5ff;border-radius:12px;background:#fbfaff;overflow:hidden;margin-top:1.25rem}
+.ex-acc>summary{list-style:none;cursor:pointer;padding:.95rem 1.2rem;font-weight:800;color:#7c3aed;display:flex;align-items:center;gap:.6rem;background:#f5f3ff;transition:background .2s ease}
+.ex-acc>summary:hover{background:#ede9fe}
+.ex-acc>summary::-webkit-details-marker{display:none}
+.ex-acc>summary .exchev{transition:transform .25s ease;display:inline-flex}
+.ex-acc[open]>summary .exchev{transform:rotate(90deg)}
+.ex-body{padding:1.1rem 1.2rem 1.3rem}
+.ex-card{background:#fff;border:1px solid #ede9fe;border-radius:10px;padding:1rem 1.1rem;margin-top:.85rem;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.ex-card:first-child{margin-top:0}
+.ex-stat{display:inline-block;font-weight:800;font-size:.74rem;color:#6d28d9;background:#f3e8ff;border:1px solid #e9d5ff;border-radius:999px;padding:.1rem .6rem;margin-left:.4rem;vertical-align:middle}
+.ex-src{font-size:.72rem;color:#94a3b8;margin-top:.35rem}
+.ex-src a{color:#8b5cf6;text-decoration:underline}
+.flag{font-size:.66rem;font-weight:700;color:#b45309;background:#fef3c7;border:1px solid #fcd34d;border-radius:4px;padding:0 .3rem;white-space:nowrap}
+.ex-hint{font-size:.8rem;color:#475569;margin-top:.4rem}
+.ex-hint strong{color:#7c3aed}
+@media (max-width: 640px){body{word-break:break-word}.h-hero{font-size:clamp(1.9rem,1.55rem + 2vw,2.25rem)}.hero-line{display:block}.card,p,h1,h2,h3{max-width:100%}.table-scroll{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}.map-table{min-width:680px}}
+</style>
+</head>
+<body>
+
+<!-- ogalabo 共通ナビ (data-current切り替え) -->
+<style>
+  #og-sidebar{transition:transform .35s cubic-bezier(.2,.7,.3,1)}
+  #og-backdrop{transition:opacity .3s ease}
+  .og-acc[open] > summary .og-chev{transform:rotate(90deg)}
+  .og-chev{transition:transform .25s ease}
+  .og-page-card{transition:all .2s ease}
+  .og-page-card:hover{transform:translateY(-1px)}
+  details > summary{list-style:none;cursor:pointer}
+  details > summary::-webkit-details-marker{display:none}
+  body.og-menu-open{overflow:hidden}
+</style>
+
+<header data-current="ability" class="fixed top-0 inset-x-0 z-50 bg-white/92 backdrop-blur border-b border-slate-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3">
+    <button id="og-menu-btn" aria-label="メニューを開く" class="w-11 h-11 rounded-xl flex items-center justify-center hover:bg-slate-100 text-slate-700 transition-colors">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h16M3 11h16M3 16h16"/></svg>
+    </button>
+    <a href="ogalabo_organization.html" class="flex items-center gap-2 ml-1">
+      <span class="font-bold tracking-wide text-slate-900" style="font-family:Inter,sans-serif">ogalabo</span>
+    </a>
+    <span class="hidden sm:inline-flex items-center gap-1.5 ml-2 px-2.5 py-1 rounded-full text-xs font-bold text-violet-700 bg-violet-50 border border-violet-200">
+      <span class="w-1.5 h-1.5 rounded-full bg-violet-500"></span>得意・苦手マップ
+    </span>
+    <div class="ml-auto hidden md:flex items-center gap-4 text-xs font-medium text-slate-400">
+      <a href="ogalabo_organization.html" class="hover:text-indigo-600 transition-colors">組織図</a>
+      <a href="codex_beginner_guide.html" class="hover:text-emerald-600 transition-colors">初心者ガイド</a>
+      <a href="codex_operation_guide.html" class="hover:text-amber-600 transition-colors">操作ガイド</a>
+      <a href="portfolio_ai_proposals.html" class="hover:text-rose-600 transition-colors">ポートフォリオ</a>
+    </div>
+  </div>
+</header>
+
+<div id="og-backdrop" class="fixed inset-0 bg-slate-900/45 z-[80] opacity-0 pointer-events-none"></div>
+<aside id="og-sidebar" class="fixed top-0 left-0 h-full w-[88vw] max-w-[360px] bg-white shadow-2xl z-[90] -translate-x-full flex flex-col">
+  <div class="px-4 py-3 border-b border-slate-100 flex items-center gap-3 shrink-0">
+    <button id="og-sidebar-close" aria-label="メニューを閉じる" class="w-11 h-11 rounded-xl flex items-center justify-center hover:bg-slate-100 text-slate-700 transition-colors">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h16M3 11h16M3 16h16"/></svg>
+    </button>
+    <div class="flex items-center gap-2">
+      <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">
+        <defs><linearGradient id="sblogG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#22d3ee"/></linearGradient></defs>
+        <rect width="32" height="32" rx="8" fill="url(#sblogG)"/>
+        <text x="16" y="22" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="14" fill="white">og</text>
+      </svg>
+      <span class="font-bold text-slate-900" style="font-family:Inter,sans-serif">ogalabo</span>
+    </div>
+  </div>
+  <nav id="og-nav-list" class="flex-1 overflow-y-auto p-3 space-y-2"></nav>
+  <div class="px-4 py-3 border-t border-slate-100 text-xs text-slate-400 shrink-0">© 2026 ogalabo</div>
+</aside>
+
+<script>
+(function(){
+  const OG_PAGES = [
+    {id:'org',href:'ogalabo_organization.html',title:'組織図',desc:'AI経営チームの全体像',color:'#6366f1',sections:[
+      {id:'top',label:'トップ',anchor:''},{id:'org',label:'AI経営組織図'},{id:'flow',label:'相談 → 成果物までの流れ'},
+      {id:'brain',label:'進化する経営脳'},{id:'why',label:'なぜすごいのか'}]},
+    {id:'beginner',href:'codex_beginner_guide.html',title:'AI初心者ガイド',desc:'はじめてAIを使う方へ',color:'#10b981',sections:[
+      {id:'visual-overview',label:'全体像'},{id:'mindset',label:'AIへのマインドセット'},{id:'difference',label:'ChatGPTとの違い'},
+      {id:'why-codex',label:'なぜCodexか'},{id:'voice',label:'音声入力の使い方'},{id:'prompt-basics',label:'話し方の5つの基本'},
+      {id:'steps',label:'最初の7ステップ'},{id:'examples',label:'実例集'},{id:'safety',label:'安全に使うために'},
+      {id:'operation-next',label:'次は操作ガイドへ'}]},
+    {id:'operation',href:'codex_operation_guide.html',title:'操作ガイド',desc:'実務で使いこなすために',color:'#f59e0b',sections:[
+      {id:'flow',label:'基本フロー'},{id:'prompt-basics',label:'プロンプトの基本'},{id:'modes',label:'各種モード'},
+      {id:'plan-mode',label:'Plan Mode'},{id:'preview',label:'プレビュー機能'},{id:'permissions',label:'権限管理'},
+      {id:'reasoning',label:'思考の深さ調整'},{id:'skills',label:'スキル機能'},{id:'folders',label:'フォルダ運用'},
+      {id:'templates',label:'テンプレート集'},{id:'checklist',label:'チェックリスト'}]},
+    {id:'portfolio',href:'portfolio_ai_proposals.html',title:'ポートフォリオ',desc:'AI提案の実績紹介',color:'#f43f5e',sections:[
+      {id:'capabilities',label:'できること'},{id:'portfolio',label:'実績一覧'},{id:'grulla',label:'Grulla事例'},
+      {id:'quallia',label:'Quallia事例'},{id:'contact',label:'お問い合わせ'}]},
+    {id:'ability',href:'ai_ability_map.html',title:'AI得意・苦手マップ',desc:'任せていい/まだダメの境界',color:'#8b5cf6',sections:[
+      {id:'why',label:'なぜ苦手から考えるか',anchor:''},{id:'map',label:'得意・苦手 早見表'},{id:'board',label:'役員会議の結論'},
+      {id:'smallbiz',label:'★ 個人店・小規模編'},
+      {id:'writing',label:'① 文章・ライティング'},{id:'research',label:'② リサーチ・分析'},{id:'docs',label:'③ 資料・プレゼン'},
+      {id:'web',label:'④ Web・ホームページ'},{id:'image',label:'⑤ 画像・デザイン'},{id:'video',label:'⑥ 動画・音声'},
+      {id:'auto',label:'⑦ 自動化・データ'},{id:'human',label:'⑧ 企画・接客・営業'},{id:'principles',label:'活用の3原則'}]},
+  ];
+  const header = document.querySelector('header[data-current]');
+  const current = header ? header.dataset.current : '';
+  const list = document.getElementById('og-nav-list');
+  const sidebar = document.getElementById('og-sidebar');
+  const backdrop = document.getElementById('og-backdrop');
+  const openBtn = document.getElementById('og-menu-btn');
+  const closeBtn = document.getElementById('og-sidebar-close');
+  const softBg = c => c + '0d';
+  list.innerHTML = OG_PAGES.map(p => {
+    const isCurrent = p.id === current;
+    const dotShadow = isCurrent ? `box-shadow:0 0 0 4px ${p.color}33;` : '';
+    const sectionHref = s => isCurrent ? `#${s.id}` : `${p.href}${s.anchor === '' ? '' : '#' + s.id}`;
+    return `
+    <details class="og-acc rounded-xl border" ${isCurrent ? 'open' : ''} style="border-color:${p.color}40;background:${softBg(p.color)}">
+      <summary class="og-page-card flex items-center gap-3 p-3.5 rounded-xl">
+        <span class="og-chev shrink-0 w-5 h-5 flex items-center justify-center text-slate-400">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l4 4-4 4"/></svg>
+        </span>
+        <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${p.color};${dotShadow}"></span>
+        <a href="${p.href}" class="flex-1 min-w-0">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-sm text-slate-900">${p.title}</span>
+            ${isCurrent ? `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded" style="background:${p.color};color:white">現在</span>` : ''}
+          </div>
+          <div class="text-[11px] text-slate-500 mt-0.5">${p.desc}</div>
+        </a>
+      </summary>
+      <ul class="pl-10 pr-3 pb-3 pt-1 space-y-0.5">
+        ${p.sections.map(s => `<li><a href="${sectionHref(s)}" class="og-section-link block px-3 py-2 rounded-lg text-[13px] text-slate-600 hover:text-slate-900 transition-colors" data-color="${p.color}">${s.label}</a></li>`).join('')}
+      </ul>
+    </details>`;
+  }).join('');
+  document.querySelectorAll('.og-section-link').forEach(a => {
+    const c = a.dataset.color;
+    a.addEventListener('mouseenter', () => { a.style.background = c + '14'; });
+    a.addEventListener('mouseleave', () => { a.style.background = ''; });
+    a.addEventListener('click', closeMenu);
+  });
+  function openMenu(){sidebar.style.transform='translateX(0)';backdrop.style.opacity='1';backdrop.style.pointerEvents='auto';document.body.classList.add('og-menu-open');}
+  function closeMenu(){sidebar.style.transform='translateX(-100%)';backdrop.style.opacity='0';backdrop.style.pointerEvents='none';document.body.classList.remove('og-menu-open');}
+  openBtn.addEventListener('click', openMenu);
+  closeBtn.addEventListener('click', closeMenu);
+  backdrop.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeMenu(); });
+})();
+</script>
+
+<main>
+  <!-- ===== HERO ===== -->
+  <section class="relative min-h-[88vh] flex items-center pt-24 pb-14 overflow-hidden">
+    <div class="absolute inset-0 light-grid opacity-70 pointer-events-none"></div>
+    <div class="absolute inset-x-0 top-0 h-[62vh] pointer-events-none" style="background:radial-gradient(ellipse at 60% 10%,rgba(168,85,247,.14),transparent 55%),radial-gradient(ellipse at 18% 25%,rgba(99,102,241,.12),transparent 52%)"></div>
+    <div class="relative max-w-7xl mx-auto px-5 sm:px-8 w-full">
+      <div class="grid lg:grid-cols-[1.05fr_.95fr] gap-10 lg:gap-16 items-center">
+        <div>
+          <p class="fade-up inline-flex items-center gap-2 pill rounded-lg px-4 py-2 text-xs sm:text-sm font-bold text-violet-700 mb-6">
+            <span class="w-2 h-2 rounded-full bg-violet-500"></span>
+            クライアントにそのまま見せられる早見表
+          </p>
+          <h1 class="h-hero font-black text-slate-900 fade-up" style="font-family:Inter,'Noto Sans JP',sans-serif">
+            <span class="hero-line">「何ができる？」</span><span class="hero-line">より、</span><span class="hero-line grad-text">「どこまで</span><span class="hero-line grad-text">任せていい？」</span>
+          </h1>
+          <p class="mt-7 text-base sm:text-lg text-slate-600 max-w-2xl fade-up">
+            「AIで何ができますか？」——よく聞かれる質問です。でも、抱える課題は会社ごと・人ごとに違うので「これができます」と言い切るのは案外むずかしい。<br>
+            だから ogalabo は逆から整理します。<strong class="text-slate-900">いま AI が得意なこと・まだ苦手なこと</strong>を、ビジネス目線でジャンル別に。境界線が分かれば、自分の仕事のどこに効くかは自然と見えてきます。
+          </p>
+          <div class="mt-9 flex flex-col sm:flex-row gap-3 fade-up">
+            <a href="#map" class="inline-flex items-center justify-center gap-2 rounded-lg px-7 py-4 bg-violet-600 text-white font-bold hover:bg-violet-700 transition-colors">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              得意・苦手の早見表を見る
+            </a>
+            <a href="#smallbiz" class="inline-flex items-center justify-center gap-2 rounded-lg px-7 py-4 border border-emerald-200 bg-emerald-50 font-bold text-emerald-800 hover:bg-emerald-100 transition-colors">
+              <span>🏪</span>個人店・小規模の「今日からできる」へ
+            </a>
+          </div>
+        </div>
+
+        <div class="fade-up hero-panel min-w-0">
+          <div class="card p-6 sm:p-8 relative overflow-hidden">
+            <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-500"></div>
+            <p class="text-xs font-bold text-slate-400 tracking-widest mb-4">ONE-LINE VERDICT</p>
+            <h2 class="text-2xl font-black text-slate-900 mb-5">一言でいうと</h2>
+            <div class="space-y-4">
+              <div class="flex gap-3">
+                <span class="vb vb-good shrink-0 mt-0.5">🟢 得意</span>
+                <p class="text-sm text-slate-600 flex-1"><strong class="text-slate-900">「たたき台・量産・整理」。</strong>下書き、定型文、要約、データ整形は任せてOK。</p>
+              </div>
+              <div class="flex gap-3">
+                <span class="vb vb-cond shrink-0 mt-0.5">🟡 条件付き</span>
+                <p class="text-sm text-slate-600 flex-1"><strong class="text-slate-900">「人の監修ありき」。</strong>SNS・対外資料・Webは、最後の温度感とデザインを人が握る。</p>
+              </div>
+              <div class="flex gap-3">
+                <span class="vb vb-bad shrink-0 mt-0.5">🔴 苦手</span>
+                <p class="text-sm text-slate-600 flex-1"><strong class="text-slate-900">「勝負どころの仕上げ」。</strong>ビジネス品質の動画、厳密なデザイン、最終判断はまだ人間。</p>
+              </div>
+            </div>
+            <div class="mt-5 pt-4 border-t border-slate-100">
+              <p class="text-xs text-slate-500 leading-relaxed">判断のものさしは <strong class="text-violet-700">「やり直しコスト」</strong>。間違えても安いものは全部AI、間違えたら信用を失うものは人が最終責任を持つ。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHY ===== -->
+  <section id="why" class="py-18 md:py-24 border-y border-slate-100" style="background:#faf7ff">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
+      <div class="text-center mb-12 fade-up">
+        <p class="text-sm font-bold text-violet-500 tracking-widest mb-3">WHY</p>
+        <h2 class="h-sec font-black text-slate-900">なぜ「できること」より<br class="sm:hidden">「苦手なこと」から整理するのか</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="card p-6 fade-up">
+          <div class="w-11 h-11 rounded-xl bg-violet-50 border border-violet-100 flex items-center justify-center text-violet-600 font-black mb-4">1</div>
+          <h3 class="font-bold text-slate-900 mb-2">課題は人ごとに違う</h3>
+          <p class="text-sm text-slate-600">「できること」を並べても、相手の課題に刺さらなければ意味がない。万人に効く訴求は作りにくい。</p>
+        </div>
+        <div class="card p-6 fade-up">
+          <div class="w-11 h-11 rounded-xl bg-violet-50 border border-violet-100 flex items-center justify-center text-violet-600 font-black mb-4">2</div>
+          <h3 class="font-bold text-slate-900 mb-2">境界が分かれば応用できる</h3>
+          <p class="text-sm text-slate-600">「ここまでは任せられる/ここからは人」が分かれば、自分の仕事のどこに効くかは相手自身が判断できる。</p>
+        </div>
+        <div class="card p-6 fade-up">
+          <div class="w-11 h-11 rounded-xl bg-violet-50 border border-violet-100 flex items-center justify-center text-violet-600 font-black mb-4">3</div>
+          <h3 class="font-bold text-slate-900 mb-2">期待値を正しくそろえる</h3>
+          <p class="text-sm text-slate-600">「何でもできる」と盛ると失望につながる。苦手も正直に伝えるほうが、結果的に信頼される。</p>
+        </div>
+      </div>
+      <p class="mt-8 text-center text-sm text-slate-500 fade-up max-w-3xl mx-auto">
+        ※ AIの実力は <strong class="text-violet-700">2〜3週間単位で変わります</strong>。ここでの「苦手」は「永遠にできない」ではなく「2026年6月時点で、ビジネス品質ではまだ人間が主役」という意味です。境界は定期的に引き直してください。
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== MAP (早見表) ===== -->
+  <section id="map" class="py-18 md:py-24 bg-white">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="text-center mb-12 fade-up">
+        <p class="text-sm font-bold text-violet-500 tracking-widest mb-3">QUICK MAP</p>
+        <h2 class="h-sec font-black text-slate-900">得意・苦手 早見表</h2>
+        <p class="mt-4 text-slate-600 max-w-2xl mx-auto">ビジネス利用を前提に、ジャンルごとの「総合判定」を一覧化。各ジャンルの詳細では <strong class="text-violet-700">「🔎 リアルな活用実例」をクリック</strong>すると、海外の成功事例や数字つきの実例が開きます。</p>
+        <div class="mt-6 flex flex-wrap items-center justify-center gap-3 text-xs">
+          <span class="inline-flex items-center gap-1.5"><span class="dot dot-good"></span>得意 = 任せてOK</span>
+          <span class="inline-flex items-center gap-1.5"><span class="dot dot-cond"></span>条件付き = 人の監修必須</span>
+          <span class="inline-flex items-center gap-1.5"><span class="dot dot-bad"></span>苦手 = まだ人間が主役</span>
+        </div>
+      </div>
+
+      <div class="card overflow-hidden fade-up">
+        <div class="table-scroll">
+          <table class="map-table w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wide">
+                <th class="px-4 py-3 font-bold">ジャンル</th>
+                <th class="px-4 py-3 font-bold w-28">総合判定</th>
+                <th class="px-4 py-3 font-bold">ビジネスでの目安（最も伝えたい一言）</th>
+              </tr>
+            </thead>
+            <tbody class="text-sm divide-y divide-slate-100">
+              <tr class="map-row"><td class="px-4 py-3"><a href="#writing" class="font-bold text-slate-900 hover:text-violet-700">① 文章・ライティング</a></td><td class="px-4 py-3"><span class="vb vb-good">🟢 得意</span></td><td class="px-4 py-3 text-slate-600">定型文・要約・下書きは即戦力。ブランドの世界観や謝罪文の最終調整は人。</td></tr>
+              <tr class="map-row"><td class="px-4 py-3"><a href="#research" class="font-bold text-slate-900 hover:text-violet-700">② リサーチ・分析</a></td><td class="px-4 py-3"><span class="vb vb-good">🟢 得意</span></td><td class="px-4 py-3 text-slate-600">情報の整理・比較・壁打ちは強い。ただし数字と事実は必ず裏取りを。</td></tr>
+              <tr class="map-row"><td class="px-4 py-3"><a href="#docs" class="font-bold text-slate-900 hover:text-violet-700">③ 資料・プレゼン</a></td><td class="px-4 py-3"><span class="vb vb-cond">🟡 条件付き</span></td><td class="px-4 py-3 text-slate-600">社内用・たたき台は得意。対外的な勝負資料は目線誘導が弱く手動が上。</td></tr>
+              <tr class="map-row"><td class="px-4 py-3"><a href="#web" class="font-bold text-slate-900 hover:text-violet-700">④ Web・ホームページ</a></td><td class="px-4 py-3"><span class="vb vb-cond">🟡 条件付き</span></td><td class="px-4 py-3 text-slate-600">簡易サイト・LP・社内ツールは得意。デザイナー品質は素材とスキル準備が前提。</td></tr>
+              <tr class="map-row"><td class="px-4 py-3"><a href="#image" class="font-bold text-slate-900 hover:text-violet-700">⑤ 画像・デザイン</a></td><td class="px-4 py-3"><span class="vb vb-cond">🟡 条件付き</span></td><td class="px-4 py-3 text-slate-600">ラフ・素材・加工は得意。正確な文字入れ・ロゴ・厳密な指定は苦手。</td></tr>
+              <tr class="map-row"><td class="px-4 py-3"><a href="#video" class="font-bold text-slate-900 hover:text-violet-700">⑥ 動画・音声</a></td><td class="px-4 py-3"><span class="vb vb-bad">🔴 苦手</span></td><td class="px-4 py-3 text-slate-600">ビジネス品質の編集・生成はまだ弱い。文字起こし・要約・台本下書きは○。</td></tr>
+              <tr class="map-row"><td class="px-4 py-3"><a href="#auto" class="font-bold text-slate-900 hover:text-violet-700">⑦ 自動化・データ処理</a></td><td class="px-4 py-3"><span class="vb vb-good">🟢 得意</span></td><td class="px-4 py-3 text-slate-600">集計・整形・スクリプト・定型業務の自動化は非常に強い。機密の外部送信は注意。</td></tr>
+              <tr class="map-row"><td class="px-4 py-3"><a href="#human" class="font-bold text-slate-900 hover:text-violet-700">⑧ 企画・接客・営業</a></td><td class="px-4 py-3"><span class="vb vb-cond">🟡 条件付き</span></td><td class="px-4 py-3 text-slate-600">発散・たたき・一次対応は得意。最終判断・信頼関係・感情対応は人間。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="mt-4 text-xs text-slate-400 text-center fade-up">※ 判定はビジネスで「納品・対外利用できる水準か」を基準にしています。趣味・個人用途ならもう一段ゆるく考えてOKです。</p>
+    </div>
+  </section>
+
+  <!-- ===== BOARD CONCLUSION ===== -->
+  <section id="board" class="py-18 md:py-24 border-y border-slate-100" style="background:#f7f8ff">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
+      <div class="text-center mb-12 fade-up">
+        <p class="text-sm font-bold text-indigo-500 tracking-widest mb-3">BOARD MEETING</p>
+        <h2 class="h-sec font-black text-slate-900">役員会議の結論</h2>
+        <p class="mt-4 text-slate-600 max-w-2xl mx-auto">この早見表は、ogalabo のAI役員会議（前澤・柳井・松下＋AIスペシャリスト、進行：中田）で「実際に使える/使えない」を議論してまとめたものです。各役員の視点を要約します。</p>
+      </div>
+
+      <div class="space-y-4">
+        <div class="card p-5 sm:p-6 fade-up" style="border-left:4px solid #6366f1">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="font-bold text-slate-900">中田敦彦</span>
+            <span class="text-[11px] font-mono text-indigo-600 bg-indigo-50 border border-indigo-100 rounded px-2 py-0.5">秘書・進行</span>
+          </div>
+          <p class="text-sm text-slate-600">「AIは <strong class='text-slate-900'>“翻訳と量産”</strong> が得意。難しいことを分かりやすくする下書き、定型の発信は任せていい。ただし“その人らしさ”や世界観の最終調整は、人間の編集力がまだ要る。」</p>
+        </div>
+        <div class="card p-5 sm:p-6 fade-up" style="border-left:4px solid #f472b6">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="font-bold text-slate-900">前澤友作</span>
+            <span class="text-[11px] font-mono text-pink-600 bg-pink-50 border border-pink-100 rounded px-2 py-0.5">ビジョン型</span>
+          </div>
+          <p class="text-sm text-slate-600">「人の心を動かす <strong class='text-slate-900'>“驚き”</strong> はまだ人間の領域。でもアイデアの壁打ち相手としては最高や。0→1の発散はAIに任せて、その1を磨いて尖らせるのが人間の仕事。」</p>
+        </div>
+        <div class="card p-5 sm:p-6 fade-up" style="border-left:4px solid #fb923c">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="font-bold text-slate-900">柳井正</span>
+            <span class="text-[11px] font-mono text-orange-600 bg-orange-50 border border-orange-100 rounded px-2 py-0.5">損得型</span>
+          </div>
+          <p class="text-sm text-slate-600">「判断基準は <strong class='text-slate-900'>“やり直しコスト”</strong> の一点や。間違えても安いもの（社内資料・たたき台・データ整形）は全部AI。間違えたら信用を失うもの（対外資料・謝罪文・契約）は、人が最終責任を持て。」</p>
+        </div>
+        <div class="card p-5 sm:p-6 fade-up" style="border-left:4px solid #2dd4bf">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="font-bold text-slate-900">松下幸之助</span>
+            <span class="text-[11px] font-mono text-teal-600 bg-teal-50 border border-teal-100 rounded px-2 py-0.5">人重視型</span>
+          </div>
+          <p class="text-sm text-slate-600">「お客様との <strong class='text-slate-900'>信頼関係そのもの</strong> はAIに渡してはいけません。けれど、人を雑務から解放する道具としては本物です。任せられる仕事は任せ、人は人にしかできない仕事へ向かうべきです。」</p>
+        </div>
+        <div class="card p-5 sm:p-6 fade-up" style="border-left:4px solid #a855f7">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="font-bold text-slate-900">AIスペシャリスト</span>
+            <span class="text-[11px] font-mono text-purple-600 bg-purple-50 border border-purple-100 rounded px-2 py-0.5">AI技術型</span>
+          </div>
+          <p class="text-sm text-slate-600">「動画・厳密なデザイン・最新の事実確認は <strong class='text-slate-900'>今の弱点</strong> や。でもツールは2〜3週間で序列が変わる。“今できない”は“半年後できる”かもしれん。だから境界は固定するな、定期的に引き直せ。」</p>
+        </div>
+      </div>
+
+      <!-- 合意した結論 -->
+      <div class="mt-8 card p-6 sm:p-8 fade-up relative overflow-hidden">
+        <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-indigo-500 via-violet-500 to-cyan-500"></div>
+        <p class="text-xs font-bold text-violet-600 tracking-widest mb-4">✦ 合意した3つの結論</p>
+        <div class="space-y-4">
+          <div class="flex gap-3">
+            <span class="shrink-0 w-7 h-7 rounded-lg bg-violet-50 border border-violet-100 flex items-center justify-center text-violet-600 font-black text-sm">1</span>
+            <p class="text-sm text-slate-700 flex-1"><strong class="text-slate-900">クライアントには「できること」ではなく「やり直しコストが低い領域＝任せていい領域」で説明する。</strong>そのほうが相手は自分の業務に当てはめやすい。</p>
+          </div>
+          <div class="flex gap-3">
+            <span class="shrink-0 w-7 h-7 rounded-lg bg-violet-50 border border-violet-100 flex items-center justify-center text-violet-600 font-black text-sm">2</span>
+            <p class="text-sm text-slate-700 flex-1"><strong class="text-slate-900">AIは“たたき台製造機”。</strong>最終品質の責任は人間が持つ前提なら、ほぼ全領域で大幅な時短になる。ゼロから作るより、AIの叩き台を直すほうが速い。</p>
+          </div>
+          <div class="flex gap-3">
+            <span class="shrink-0 w-7 h-7 rounded-lg bg-violet-50 border border-violet-100 flex items-center justify-center text-violet-600 font-black text-sm">3</span>
+            <p class="text-sm text-slate-700 flex-1"><strong class="text-slate-900">線引きはシンプルに「対外的に勝負する成果物」か「内部・下書き」か。</strong>勝負どころは人が仕上げ、それ以外はAIに任せる——これが一番分かりやすい。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 個人店・小規模ビジネス編（メイン） ===== -->
+  <section id="smallbiz" class="py-18 md:py-24 border-y border-emerald-100" style="background:linear-gradient(180deg,#f0fdf9,#f7fefb)">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8">
+      <div class="text-center mb-10 fade-up">
+        <p class="inline-flex items-center gap-2 text-xs font-bold text-emerald-700 bg-emerald-100 border border-emerald-200 rounded-full px-3 py-1 mb-4">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>FOR SMALL BUSINESS ・ 今日からできる
+        </p>
+        <h2 class="h-sec font-black text-slate-900">個人店・小さな会社の<br class="sm:hidden">「毎日のタスク」効率化</h2>
+        <p class="mt-4 text-slate-600 max-w-3xl mx-auto">海外の大型事例は規模が大きく、資金も技術も必要です。ここは<strong class="text-emerald-700">真逆</strong>——専門知識もアプリ開発もいらず、<strong class="text-slate-900">スマホとChatGPT（無料〜月20ドル）だけ</strong>で、いま手作業でやっていることを今日から半分にする「小さな効率化」だけを集めました。</p>
+      </div>
+
+      <!-- 必要なもの -->
+      <div class="flex flex-wrap items-center justify-center gap-3 mb-12 fade-up">
+        <span class="text-xs font-bold text-slate-400 mr-1">必要なものは3つだけ：</span>
+        <span class="inline-flex items-center gap-2 bg-white border border-emerald-200 rounded-full px-4 py-2 text-sm font-bold text-slate-700">📱 スマホ</span>
+        <span class="text-slate-300">＋</span>
+        <span class="inline-flex items-center gap-2 bg-white border border-emerald-200 rounded-full px-4 py-2 text-sm font-bold text-slate-700">🤖 ChatGPT / Claude</span>
+        <span class="text-slate-300">＋</span>
+        <span class="inline-flex items-center gap-2 bg-white border border-emerald-200 rounded-full px-4 py-2 text-sm font-bold text-slate-700">📊 スプレッドシート（無料）</span>
+      </div>
+
+      <!-- 場面別タスク -->
+      <p class="text-center text-sm font-bold text-emerald-600 tracking-widest mb-6 fade-up">場面別・手作業をAIに置き換えるリスト</p>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <div class="card p-6 fade-up">
+          <div class="flex items-center gap-2.5 mb-3.5"><span class="text-xl">📩</span><h3 class="font-bold text-slate-900">問い合わせ・予約対応</h3></div>
+          <ul class="space-y-2.5">
+            <li class="flex gap-2.5"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-sm text-slate-600"><strong class="text-slate-800">メール／LINE／DMの返信</strong>を毎回考える → 「丁寧に断る」「日程を調整する」の下書きをAIに作らせる。</span></li>
+            <li class="flex gap-2.5"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-sm text-slate-600"><strong class="text-slate-800">よくある質問</strong>に毎回手打ち → FAQ返信文を一度作って使い回す。</span></li>
+            <li class="flex gap-2.5"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-sm text-slate-600"><strong class="text-slate-800">予約確認・お礼メッセージ</strong>を一から → テンプレ3パターンを用意して貼るだけ。</span></li>
+          </ul>
+        </div>
+
+        <div class="card p-6 fade-up">
+          <div class="flex items-center gap-2.5 mb-3.5"><span class="text-xl">📣</span><h3 class="font-bold text-slate-900">SNS・販促の発信</h3></div>
+          <ul class="space-y-2.5">
+            <li class="flex gap-2.5"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-sm text-slate-600"><strong class="text-slate-800">毎日の投稿ネタが浮かばない</strong> → 商品名を伝えて投稿文＋ハッシュタグを10案出させ、選ぶ。</span></li>
+            <li class="flex gap-2.5"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-sm text-slate-600"><strong class="text-slate-800">POP・チラシの文言</strong>に悩む → キャッチコピーを量産→いいものだけ採用。</span></li>
+            <li class="flex gap-2.5"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-sm text-slate-600"><strong class="text-slate-800">セール・休業の告知文</strong> → 定型文はAIの得意分野。日付を変えるだけ。</span></li>
+          </ul>
+        </div>
+
+        <div class="card p-6 fade-up">
+          <div class="flex items-center gap-2.5 mb-3.5"><span class="text-xl">⭐</span><h3 class="font-bold text-slate-900">口コミ・レビュー返信</h3></div>
+          <ul class="space-y-2.5">
+            <li class="flex gap-2.5"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-sm text-slate-600"><strong class="text-slate-800">Google・食べログの口コミ返信</strong> → 内容を貼り付け→丁寧な返信文を即作成。</span></li>
+            <li class="flex gap-2.5"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-sm text-slate-600"><strong class="text-slate-800">低評価に感情的になりそう</strong> → 冷静で誠実な下書きを作らせ、最後は人が確認して投稿。</span></li>
+            <li class="flex gap-2.5"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-sm text-slate-600"><strong class="text-slate-800">毎回似た返信</strong> → 高評価・低評価それぞれの型を保存しておく。</span></li>
+          </ul>
+        </div>
+
+        <div class="card p-6 fade-up">
+          <div class="flex items-center gap-2.5 mb-3.5"><span class="text-xl">🧾</span><h3 class="font-bold text-slate-900">事務・データ整理</h3></div>
+          <ul class="space-y-2.5">
+            <li class="flex gap-2.5"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-sm text-slate-600"><strong class="text-slate-800">手書きメモ・名刺・領収書の転記</strong> → 写真を撮ってAIで文字起こし→そのまま表に。</span></li>
+            <li class="flex gap-2.5"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-sm text-slate-600"><strong class="text-slate-800">顧客リストの表記ゆれ・名寄せ</strong> → スプレッドシートでAIに一括整理させる。</span></li>
+            <li class="flex gap-2.5"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-sm text-slate-600"><strong class="text-slate-800">日報・引き継ぎメモ</strong>を読む時間がない → 長文を3行に要約させる。</span></li>
+          </ul>
+        </div>
+
+        <div class="card p-6 fade-up">
+          <div class="flex items-center gap-2.5 mb-3.5"><span class="text-xl">📄</span><h3 class="font-bold text-slate-900">書類・文面づくり</h3></div>
+          <ul class="space-y-2.5">
+            <li class="flex gap-2.5"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-sm text-slate-600"><strong class="text-slate-800">見積・請求の挨拶文／督促文</strong> → 角の立たない言い回しを作らせる。</span></li>
+            <li class="flex gap-2.5"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-sm text-slate-600"><strong class="text-slate-800">案内・契約の定型文</strong> → 一度テンプレ化して名前と日付だけ差し替え。</span></li>
+            <li class="flex gap-2.5"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-sm text-slate-600"><strong class="text-slate-800">打ち合わせメモの清書</strong> → 走り書きを渡して議事録の形に整えてもらう。</span></li>
+          </ul>
+        </div>
+
+        <div class="card p-6 fade-up">
+          <div class="flex items-center gap-2.5 mb-3.5"><span class="text-xl">🌏</span><h3 class="font-bold text-slate-900">翻訳・調べもの</h3></div>
+          <ul class="space-y-2.5">
+            <li class="flex gap-2.5"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-sm text-slate-600"><strong class="text-slate-800">メニュー・案内の多言語化</strong> → 英・中・韓へ翻訳。外国人客対応の一言フレーズも。</span></li>
+            <li class="flex gap-2.5"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-sm text-slate-600"><strong class="text-slate-800">補助金・手続き・規約の調べもの</strong> → 要点を整理させる（※数字・条件は公式で裏取り）。</span></li>
+            <li class="flex gap-2.5"><span class="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-sm text-slate-600"><strong class="text-slate-800">難しい文書の読み解き</strong> → 契約書・取説を「中学生にも分かるように」要約。</span></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- 話しかけ方サンプル -->
+      <div class="mt-10 card p-6 sm:p-7 fade-up" style="border-color:#a7f3d0;background:#ffffff">
+        <p class="text-xs font-bold text-emerald-600 tracking-widest mb-3">💬 ChatGPTにこう話すだけ（音声入力でOK）</p>
+        <div class="space-y-3">
+          <div class="rounded-lg bg-emerald-50 border border-emerald-100 p-3.5">
+            <p class="text-sm text-slate-700">「うちは<strong>美容室</strong>。常連さんへの予約リマインドのLINE文面を、<strong>堅すぎず親しみやすいトーン</strong>で3パターン作って。」</p>
+          </div>
+          <div class="rounded-lg bg-emerald-50 border border-emerald-100 p-3.5">
+            <p class="text-sm text-slate-700">「この<strong>口コミ（貼り付け）</strong>に、感謝を伝えつつ丁寧に返信する文を。150字くらいで。」</p>
+          </div>
+          <div class="rounded-lg bg-emerald-50 border border-emerald-100 p-3.5">
+            <p class="text-sm text-slate-700">「この<strong>手書きメモの写真</strong>を読んで、日付・名前・金額の表（スプレッドシート用）にして。」</p>
+          </div>
+        </div>
+        <p class="mt-3 text-xs text-slate-500">コツは<strong class="text-slate-700">「立場（業種）＋やってほしいこと＋トーンや文字数」</strong>をセットで伝えること。詳しくは<a href="codex_beginner_guide.html" class="text-emerald-700 font-bold underline">初心者ガイド</a>へ。</p>
+      </div>
+
+      <!-- 業種別ミニ事例 -->
+      <div class="mt-10 fade-up">
+        <p class="text-center text-sm font-bold text-emerald-600 tracking-widest mb-5">業種別・これだけでも効く</p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="bg-white rounded-xl border border-slate-200 p-4"><p class="font-bold text-slate-900 text-sm mb-1">🍜 飲食店</p><p class="text-xs text-slate-600">日替わりメニューのSNS文・多言語メニュー・口コミ返信を毎日5分で。</p></div>
+          <div class="bg-white rounded-xl border border-slate-200 p-4"><p class="font-bold text-slate-900 text-sm mb-1">💇 美容室・サロン</p><p class="text-xs text-slate-600">予約リマインドLINE・キャンペーン告知・お礼メッセージをテンプレ化。</p></div>
+          <div class="bg-white rounded-xl border border-slate-200 p-4"><p class="font-bold text-slate-900 text-sm mb-1">🛍️ 小売・EC</p><p class="text-xs text-slate-600">商品説明文の量産・在庫リストの整理・問い合わせ一次返信。</p></div>
+          <div class="bg-white rounded-xl border border-slate-200 p-4"><p class="font-bold text-slate-900 text-sm mb-1">📚 教室・士業・サービス</p><p class="text-xs text-slate-600">案内文・契約定型文・議事録要約・難しい書類の読み解き。</p></div>
+          <div class="bg-white rounded-xl border border-slate-200 p-4"><p class="font-bold text-slate-900 text-sm mb-1">🧑‍💼 人材・紹介業</p><p class="text-xs text-slate-600">求人原稿のたたき・応募者への定型返信・面談メモの要約。</p></div>
+          <div class="bg-white rounded-xl border border-slate-200 p-4"><p class="font-bold text-slate-900 text-sm mb-1">🔧 工務店・施工・現場系</p><p class="text-xs text-slate-600">現場写真メモの文字起こし・見積文面・日報の清書を移動中に。</p></div>
+        </div>
+      </div>
+
+      <!-- 小さく始める3ステップ -->
+      <div class="mt-12 fade-up">
+        <p class="text-center text-sm font-bold text-emerald-600 tracking-widest mb-6">いちばん大事：小さく始める3ステップ</p>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="card p-6"><div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-black mb-3">1</div><h3 class="font-bold text-slate-900 mb-1.5">手作業を1つだけ選ぶ</h3><p class="text-sm text-slate-600">毎日やっている面倒な作業を1つ。あれもこれもやらない。</p></div>
+          <div class="card p-6"><div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-black mb-3">2</div><h3 class="font-bold text-slate-900 mb-1.5">背景ごと音声で話す</h3><p class="text-sm text-slate-600">「うちは○○で、こういう時に困る」と状況ごと伝えるほど精度が上がる。</p></div>
+          <div class="card p-6"><div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-black mb-3">3</div><h3 class="font-bold text-slate-900 mb-1.5">うまくいった型を保存</h3><p class="text-sm text-slate-600">良かった指示文をメモに保存→次回から貼るだけ。これが“自分専用ツール”になる。</p></div>
+        </div>
+      </div>
+
+      <!-- 注意 -->
+      <div class="mt-8 rounded-xl p-5 fade-up" style="background:#fffbeb;border:1px solid #fcd34d">
+        <p class="text-sm text-amber-900"><strong>小さく始める時の注意：</strong>① 顧客の個人情報や機密は入力しない（一般化して聞く）。② お金・契約・対外文書は<strong>必ず人が最終チェック</strong>してから使う。③ いきなり全自動を狙わず「下書きを作らせる」から始める。これだけ守れば、ほぼノーリスクで今日から時短できます。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GENRE DETAILS ===== -->
+
+  <!-- ① 文章 -->
+  <section id="writing" class="py-16 md:py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
+      <div class="flex items-center gap-3 mb-8 fade-up">
+        <span class="text-2xl">✍️</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900">① 文章・ライティング</h2>
+        <span class="vb vb-good">🟢 総合：得意</span>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="card p-6 fade-up" style="border-top:3px solid #22c55e">
+          <h3 class="font-bold text-green-700 mb-3 flex items-center gap-2"><span class="dot dot-good"></span>得意（任せてOK）</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li>・アナウンス文・お知らせ・定型の案内文（テンプレ的な文章）</li>
+            <li>・メール／チャットの下書き、言い換え・敬語調整</li>
+            <li>・議事録の要約、長文の要点抽出、FAQ・マニュアル化</li>
+            <li>・翻訳、誤字脱字チェック、トーンの統一</li>
+            <li>・ブログ・記事の構成案と初稿（量を出す作業）</li>
+          </ul>
+        </div>
+        <div class="card p-6 fade-up" style="border-top:3px solid #ef4444">
+          <h3 class="font-bold text-red-700 mb-3 flex items-center gap-2"><span class="dot dot-bad"></span>苦手（人間が仕上げる）</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li>・ブランドの世界観・キャラクターを背負ったコピー</li>
+            <li>・経営者本人の“魂”や温度が乗った文章</li>
+            <li>・繊細なニュアンス、行間、ユーモアの機微</li>
+            <li>・社外向けの謝罪文・トラブル対応文の最終判断</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-5 rounded-xl p-5 fade-up" style="background:#fffbeb;border:1px solid #fcd34d">
+        <p class="text-sm text-amber-900"><strong>現実解：</strong>「定型・量産はAI、世界観と最終OKは人」。SNS投稿は <span class="vb vb-cond">🟡 条件付き</span> ——下書きはAIで時短し、人間っぽい温度感は最後に人が一筆入れると“らしさ”が出ます。</p>
+      </div>
+
+      <details class="ex-acc fade-up">
+        <summary><span class="exchev"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l4 4-4 4"/></svg></span>🔎 リアルな活用実例を見る（海外・最新事例）</summary>
+        <div class="ex-body">
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">The Rundown AI <span class="ex-stat">登録200万人 / 年商約700万ドル <span class="flag">要確認</span></span></div>
+            <p class="text-sm text-slate-600 mt-1.5">個人が始めたAIニュースの日刊メルマガ。約2年で登録200万人超・開封率約50%、広告のみで黒字。皮肉にも記事の最終編集は人力。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>ニッチな業界・地域ニュースを毎日「AIで要約→人が整える」で配信し、広告枠で収益化。個人でも再現性が高い。</p>
+            <p class="ex-src">出典: eomag / Creator Spotlight</p>
+          </div>
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">Copy.ai <span class="ex-stat">売上 前年比 +480%</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">コピー生成SaaSから「営業メール文面の自動生成＋送信ワークフロー」へ転換し急成長。文章単体でなく業務フローに組んだ瞬間に価値が跳ねた好例。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>単発のコピーより、アウトバウンド営業メールの量産＋送信まで一気通貫にすると効果が出る。</p>
+            <p class="ex-src">出典: Copy.ai公式（BusinessWire）/ getLatka</p>
+          </div>
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">EC商品説明の一括生成（Shopify Magic 等） <span class="ex-stat">2週間の作業を1日に</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">商品属性をCSVで渡し、テンプレ＋AIで説明文を一括生成。ある代理店は78商品を編集込み2時間で完了。AI利用EC事業者の69%が文章生成を主用途と回答。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>商品数が多い中小ECは最優先。生成→人が最終チェックの流れで。看板商品だけ手書きに。</p>
+            <p class="ex-src">出典: Shopify公式ブログ</p>
+          </div>
+          <div class="ex-card" style="border-color:#fca5a5;background:#fff7f7">
+            <div class="font-bold text-slate-900">⚠ 境界事例：Google スパム制裁（2024年3月） <span class="ex-stat">AI量産サイトを大量にインデックス削除</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">「AIで薄い記事を量産→放置」のサイトが一掃され、合計で月間2,000万PV超・広告収益44万ドル超が消失（Originality.ai調査）。AI生成自体は罰則対象でなく、罰されるのは“独自価値のない無価値ページ”。</p>
+            <p class="ex-hint"><strong>線引き：</strong>AIは下書きに使い、独自の一次情報・体験・データを必ず上乗せする。これが2024年以降の生存条件。</p>
+            <p class="ex-src">出典: Search Engine Journal / Originality.ai</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ② リサーチ -->
+  <section id="research" class="py-16 md:py-20 border-y border-slate-100" style="background:#faf7ff">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
+      <div class="flex items-center gap-3 mb-8 fade-up">
+        <span class="text-2xl">🔍</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900">② リサーチ・情報整理・分析</h2>
+        <span class="vb vb-good">🟢 総合：得意</span>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="card p-6 fade-up" style="border-top:3px solid #22c55e">
+          <h3 class="font-bold text-green-700 mb-3 flex items-center gap-2"><span class="dot dot-good"></span>得意（任せてOK）</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li>・市場・競合のざっくり調査と比較表づくり</li>
+            <li>・大量の資料／PDFを読んで要点を抜き出す</li>
+            <li>・論点の洗い出し、観点の抜け漏れチェック</li>
+            <li>・アイデア発散、企画の壁打ち相手</li>
+            <li>・難しい専門用語をかみ砕いて説明</li>
+          </ul>
+        </div>
+        <div class="card p-6 fade-up" style="border-top:3px solid #ef4444">
+          <h3 class="font-bold text-red-700 mb-3 flex items-center gap-2"><span class="dot dot-bad"></span>苦手（鵜呑み厳禁）</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li>・最新の事実・数字（もっともらしく間違える＝ハルシネーション）</li>
+            <li>・出典のない統計・売上・人物情報の断定</li>
+            <li>・ニッチな業界の深い実務知・暗黙知</li>
+            <li>・「正解が一つ」の事実確認を任せきること</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-5 rounded-xl p-5 fade-up" style="background:#fffbeb;border:1px solid #fcd34d">
+        <p class="text-sm text-amber-900"><strong>現実解：</strong>「発散と整理はAI、裏取りは人」。数字や固有名詞が出たら必ず一次情報で確認。出典つきで答えさせる、調べもの特化モードを使う、の2点で精度は大きく上がります。</p>
+      </div>
+
+      <details class="ex-acc fade-up">
+        <summary><span class="exchev"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l4 4-4 4"/></svg></span>🔎 リアルな活用実例を見る（海外・最新事例）</summary>
+        <div class="ex-body">
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">Perplexity <span class="ex-stat">MAU 約4,500万人 / 評価額 約212億ドル <span class="flag">要確認</span></span></div>
+            <p class="text-sm text-slate-600 mt-1.5">出典リンク付きで答えを返す「答えを出す検索」。市場・競合の一次調査を会話形式で高速化。約2年でユーザーが10倍規模に。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>市場調査・競合の初動リサーチをGoogleの代わりに行い、出典リンクごと社内共有すると裏取りが速い。</p>
+            <p class="ex-src">出典: PitchBook / demandsage</p>
+          </div>
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">ChatGPT / Gemini「Deep Research」 <span class="ex-stat">数時間の調査 → 5〜30分</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">数十〜数百のWebソースを自律的に巡回・統合し、アナリスト級のレポートを自動生成。月20ドルのプランでも「競合10社の料金比較レポート」を朝の30分で作れる。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>指示文に「出典URLを明記」を必ず入れる。最新すぎる情報・ニッチ業界は穴があるので人の検証が前提。</p>
+            <p class="ex-src">出典: OpenAI公式 / Campus Technology</p>
+          </div>
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">ハーバード×BCG 実証研究 <span class="ex-stat">タスク25%高速・品質40%向上・若手は+43%</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">コンサルがAIを使うと、調査・分析・資料化が25%高速化、完了タスク+12%、品質40%超向上。特に経験の浅い人ほど底上げ効果が大きい。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>リサーチの一次工程は「若手＋AI」に任せ、ベテランはレビューに回すと、生産性と人材育成が両立。</p>
+            <p class="ex-src">出典: Harvard Business School（Jagged Frontier論文）/ BCG</p>
+          </div>
+          <div class="ex-card" style="border-color:#fca5a5;background:#fff7f7">
+            <div class="font-bold text-slate-900">⚠ 境界事例：AI捏造判例で弁護士に制裁 <span class="ex-stat">引用23件中21件が“存在しない判例”→ 1万ドルの制裁</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">米国で、AIが作った架空の判例を書面に引用した弁護士が次々と制裁。ある追跡者は「以前は週2件だったAI捏造事件が、今は1日2〜3件」と証言。</p>
+            <p class="ex-hint"><strong>線引き：</strong>AIが出した数字・固有名詞・出典は必ず一次ソースで裏取り。外部提出物は「署名者が全責任」を社内ルールに。</p>
+            <p class="ex-src">出典: CalMatters / Cronkite News</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ③ 資料・プレゼン -->
+  <section id="docs" class="py-16 md:py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
+      <div class="flex items-center gap-3 mb-8 fade-up">
+        <span class="text-2xl">📊</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900">③ 資料・プレゼン作成</h2>
+        <span class="vb vb-cond">🟡 総合：条件付き</span>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="card p-6 fade-up" style="border-top:3px solid #22c55e">
+          <h3 class="font-bold text-green-700 mb-3 flex items-center gap-2"><span class="dot dot-good"></span>得意（任せてOK）</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li>・社内共有・報告用の資料、議事メモのスライド化</li>
+            <li>・プレゼンの構成案・ストーリーの骨子づくり</li>
+            <li>・話す内容（台本・スピーカーノート）の下書き</li>
+            <li>・既存資料の要約・章立ての整理</li>
+          </ul>
+        </div>
+        <div class="card p-6 fade-up" style="border-top:3px solid #ef4444">
+          <h3 class="font-bold text-red-700 mb-3 flex items-center gap-2"><span class="dot dot-bad"></span>苦手（手動が上）</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li>・対外的な“勝負”資料（提案・ピッチ・会社案内）</li>
+            <li>・目線誘導、余白、図解のデザイン的な完成度</li>
+            <li>・ブランドのトンマナを厳密にそろえた仕上げ</li>
+            <li>・1枚で意思決定を動かす“魅せる”レイアウト</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-5 rounded-xl p-5 fade-up" style="background:#fffbeb;border:1px solid #fcd34d">
+        <p class="text-sm text-amber-900"><strong>現実解：</strong>「構成と中身はAI、デザインの詰めは人」。社内用の簡易資料はAIで十分。対外的な会社資料は、AIで骨子を作ってから人が目線誘導とデザインを仕上げる二段構えが、いまは最も精度が高い。</p>
+      </div>
+
+      <details class="ex-acc fade-up">
+        <summary><span class="exchev"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l4 4-4 4"/></svg></span>🔎 リアルな活用実例を見る（海外・最新事例）</summary>
+        <div class="ex-body">
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">Gamma <span class="ex-stat">ユーザー7,000万人 / ARR1億ドルを約50人で</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">テキスト指示からスライド・資料・Webページを自動生成する「PowerPointキラー」。日本語可。提案書・社内資料の“たたき台”を分単位で量産できる。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>中小は有料1〜2席で十分。社内提案書・営業資料の量産で制作工数を1/10に。</p>
+            <p class="ex-src">出典: TechCrunch / BusinessWire</p>
+          </div>
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">AI × 提案書・入札書類（RFP） <span class="ex-stat">43ページの入札書類が「丸2日 → 半日」</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">過去事例・価格・製品説明をナレッジ化し、提案書の8割完成ドラフトを数分で生成（Inventive.ai等）。AI生成の80〜85%がそのまま使えた、という担当者談も。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>BPO・人材紹介・受託の提案書に直結。反復質問への回答を使い回して量産。価格交渉や戦略の核心は人が書く。</p>
+            <p class="ex-src">出典: EA Global / Inventive.ai <span class="flag">要確認</span></p>
+          </div>
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">Microsoft Copilot in PowerPoint <span class="ex-stat">4時間のデッキ → 45〜60分</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">手元のPowerPoint内で初稿スライド・スピーカーノートを自動生成。新ツールを増やさず既存テンプレ資産を活かせるのが利点。ただし“配るだけ”では定着率が一桁%に終わった例も。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>Office 365利用企業はまずこれ。導入時は研修と運用ルールをセットにしないと使われない。</p>
+            <p class="ex-src">出典: Winning Presentations / Microsoft Adoption <span class="flag">要確認</span></p>
+          </div>
+          <div class="ex-card" style="border-color:#fca5a5;background:#fff7f7">
+            <div class="font-bold text-slate-900">⚠ 境界事例：「AIスライドはバレる」 <span class="ex-stat">ビジネス層の約7割が未編集のAIデッキを数枚で見抜く <span class="flag">要確認</span></span></div>
+            <p class="text-sm text-slate-600 mt-1.5">AIは“数百万枚の平均”を学ぶため、頼むと「どの会社にも当てはまる無難＝凡庸」を吐く。ただし人が1パス手を入れたデッキはほぼ見抜けない、とも。</p>
+            <p class="ex-hint"><strong>線引き：</strong>社内・草案・量産はAIで十分。役員会・シリーズA以降の勝負資料はAI一発出しNG。最後の10分で固有名詞・自社の数字・らしさを足す。</p>
+            <p class="ex-src">出典: Winning Presentations / 2Slides</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ④ Web -->
+  <section id="web" class="py-16 md:py-20 border-y border-slate-100" style="background:#faf7ff">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
+      <div class="flex items-center gap-3 mb-8 fade-up">
+        <span class="text-2xl">🌐</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900">④ Web制作・ホームページ</h2>
+        <span class="vb vb-cond">🟡 総合：条件付き</span>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="card p-6 fade-up" style="border-top:3px solid #22c55e">
+          <h3 class="font-bold text-green-700 mb-3 flex items-center gap-2"><span class="dot dot-good"></span>得意（任せてOK）</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li>・簡易的なホームページ、1枚もののLP</li>
+            <li>・社内ツール、問い合わせフォーム、簡易アプリ</li>
+            <li>・プロトタイプ／たたき台を高速で形にする</li>
+            <li>・既存サイトの文言修正・部分改修</li>
+          </ul>
+        </div>
+        <div class="card p-6 fade-up" style="border-top:3px solid #ef4444">
+          <h3 class="font-bold text-red-700 mb-3 flex items-center gap-2"><span class="dot dot-bad"></span>苦手（準備が要る）</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li>・デザイナーが作り込んだようなブランドサイト</li>
+            <li>・凝ったアニメーション・独自のビジュアル表現</li>
+            <li>・撮り下ろし写真など、独自素材ありきの世界観</li>
+            <li>・大規模・複雑なシステムの本番運用設計</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-5 rounded-xl p-5 fade-up" style="background:#fffbeb;border:1px solid #fcd34d">
+        <p class="text-sm text-amber-900"><strong>現実解：</strong>「簡易サイトは得意、デザイナー級は底上げが前提」。本格的なものは、事前に画像・素材を準備し、デザイン用のスキル（テンプレ）を併用して品質を底上げ。AI単体ではなく“AI＋素材＋人の監修”で勝てる領域です。</p>
+      </div>
+
+      <details class="ex-acc fade-up">
+        <summary><span class="exchev"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l4 4-4 4"/></svg></span>🔎 リアルな活用実例を見る（海外・最新事例）</summary>
+        <div class="ex-body">
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">Cal AI（カロリー計算アプリ） <span class="ex-stat">10代2人が開発 / 年商3,000万ドル規模 → MyFitnessPalへ売却</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">食事を撮るだけでAIがカロリー・栄養を推定するアプリ。当時17歳らが2024年に開発、8か月で500万DL超。中身はAIのAPIを叩く“薄いラッパー”。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>「面倒な入力を写真・音声に置き換える」単機能×明確な悩み×サブスク。美容・飲食・健康分野でそのまま真似できる発想。</p>
+            <p class="ex-src">出典: TechCrunch / CNBC / Inc. <span class="flag">一部の金額は要確認</span></p>
+          </div>
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">Lovable（バイブコーディング） <span class="ex-stat">ARR最速で1億ドル → 2億ドル / 1日10万プロジェクト</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">テキスト指示でアプリ・Webサイトを丸ごと生成。非エンジニアでもLPや社内ツールのプロトタイプを数時間で。Bolt.new・v0・Cursor・Replitも同系統。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>商談中に「動くモック」を即日生成して見せると受注前の意思決定が速い。叩き台は人が仕上げる前提で。</p>
+            <p class="ex-src">出典: TechCrunch / Bloomberg</p>
+          </div>
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">Replit Agent（非エンジニアの内製化） <span class="ex-stat">ARRが1年で約16倍</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">プログラミング経験ゼロの人が自然言語で業務アプリを作れるよう振り切ったツール。DuolingoやZillowの非エンジニア部門が見積計算機・研修ツール等を内製化。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>既製SaaSを契約せず、自社業務に合った社内ツール（見積・予約管理）を内製して月額費を削減できる。</p>
+            <p class="ex-src">出典: Sacra / Replit公式</p>
+          </div>
+          <div class="ex-card" style="border-color:#fca5a5;background:#fff7f7">
+            <div class="font-bold text-slate-900">⚠ 境界事例：バイブコーディングのセキュリティ債務 <span class="ex-stat">AI生成コードは脆弱性が約2.74倍</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">「中身をレビューせず生成コードをそのまま本番投入」が事故を生む。調査でサンプルの45%がセキュリティテスト不合格、AI由来のCVE（脆弱性）も急増中。</p>
+            <p class="ex-hint"><strong>線引き：</strong>プロト・社内ツール・MVPは爆速でOK。だが決済・認証・個人情報を扱う本番は必ず人がレビュー／外部診断を入れる。</p>
+            <p class="ex-src">出典: OX Security / Cloud Security Alliance / Georgia Tech</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ⑤ 画像 -->
+  <section id="image" class="py-16 md:py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
+      <div class="flex items-center gap-3 mb-8 fade-up">
+        <span class="text-2xl">🎨</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900">⑤ 画像生成・デザイン</h2>
+        <span class="vb vb-cond">🟡 総合：条件付き</span>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="card p-6 fade-up" style="border-top:3px solid #22c55e">
+          <h3 class="font-bold text-green-700 mb-3 flex items-center gap-2"><span class="dot dot-good"></span>得意（任せてOK）</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li>・ラフ・モック・イメージ出し（方向性の検討）</li>
+            <li>・ブログ挿絵、背景、装飾などの素材づくり</li>
+            <li>・写真の背景除去・加工・補正</li>
+            <li>・「こんな雰囲気」のたたき台を量産する</li>
+          </ul>
+        </div>
+        <div class="card p-6 fade-up" style="border-top:3px solid #ef4444">
+          <h3 class="font-bold text-red-700 mb-3 flex items-center gap-2"><span class="dot dot-bad"></span>苦手（人間／専用ツール）</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li>・画像内への正確な文字入れ（日本語は特に崩れる）</li>
+            <li>・ブランドロゴ、規定どおりの厳密なレイアウト</li>
+            <li>・同じ人物・キャラを複数カットで一貫させる</li>
+            <li>・「ここだけこの色」など細かい指定どおりの出力</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-5 rounded-xl p-5 fade-up" style="background:#fffbeb;border:1px solid #fcd34d">
+        <p class="text-sm text-amber-900"><strong>現実解：</strong>「素材・加工はAI、最終ビジュアルは人やデザインツール」。文字やロゴが要るバナーは、AIで背景を作り、文字組みはCanva等で人が乗せると失敗しません。</p>
+      </div>
+
+      <details class="ex-acc fade-up">
+        <summary><span class="exchev"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l4 4-4 4"/></svg></span>🔎 リアルな活用実例を見る（海外・最新事例）</summary>
+        <div class="ex-body">
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">Photoroom（EC商品写真） <span class="ex-stat">累計DL1.5億超 / 年50億枚を処理</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">スマホで撮った商品写真の背景を自動で消し、プロ品質のスタジオ風背景を生成。社員20名未満の時期に黒字化した資本効率の象徴。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>メルカリ・Amazon・楽天の出店者が、撮影スタジオ代をほぼゼロに。「物撮り代行×AI」の受託も成立。</p>
+            <p class="ex-src">出典: Sacra / TechCrunch</p>
+          </div>
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">AdCreative.ai（AI広告クリエイティブ） <span class="ex-stat">18か月でARR約1,590万ドル → 約3,870万ドルで買収</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">広告バナー・コピー・画像を「高CV狙い」で自動生成。生成広告10億点超。2025年に上場企業Appierが買収。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>FB/Instagram広告のバナーを毎回外注せず、数十パターンを自動量産→数字の良いものだけ回す。</p>
+            <p class="ex-src">出典: getLatka / Appier公式</p>
+          </div>
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">Aitana López（AIインフルエンサー） <span class="ex-stat">月収 最大€10,000（平均は約€3,000）<span class="flag">要確認</span></span></div>
+            <p class="text-sm text-slate-600 mt-1.5">エージェンシーが生成AIで作った架空のモデル。広告1本あたり約€1,000、サプリブランドの広告塔も。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>顔出ししたくない個人・店舗が、AIキャラを“看板役”に立ててSNS運用＋案件獲得。医療・金融など信頼性が要る分野は不向き。</p>
+            <p class="ex-src">出典: Euronews</p>
+          </div>
+          <div class="ex-card" style="border-color:#fca5a5;background:#fff7f7">
+            <div class="font-bold text-slate-900">⚠ 境界事例：文字・ロゴが苦手 <span class="ex-stat">ロゴ100個中、指定どおり正しく出るのは約10個</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">画像生成AIは文字を「意味」でなく「形」として描くため、スペルやロゴが崩れる構造的な弱点がある（業界共通）。</p>
+            <p class="ex-hint"><strong>線引き：</strong>雰囲気・背景・素材・モックはAI、文字・ロゴ・価格は後からCanva/Illustratorで人が重ねる。これで“スペル事故”が激減。</p>
+            <p class="ex-src">出典: TechCrunch / UCL / PetaPixel</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ⑥ 動画・音声 -->
+  <section id="video" class="py-16 md:py-20 border-y border-slate-100" style="background:#fff5f5">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
+      <div class="flex items-center gap-3 mb-8 fade-up">
+        <span class="text-2xl">🎬</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900">⑥ 動画・音声</h2>
+        <span class="vb vb-bad">🔴 総合：苦手（補助は◎）</span>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="card p-6 fade-up" style="border-top:3px solid #22c55e">
+          <h3 class="font-bold text-green-700 mb-3 flex items-center gap-2"><span class="dot dot-good"></span>得意（補助として使える）</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li>・動画の文字起こし・要約・チャプター出し</li>
+            <li>・台本／構成の下書き、切り抜き候補の提案</li>
+            <li>・ナレーション読み上げ（定型・説明系）</li>
+            <li>・字幕の自動生成と翻訳</li>
+          </ul>
+        </div>
+        <div class="card p-6 fade-up" style="border-top:3px solid #ef4444">
+          <h3 class="font-bold text-red-700 mb-3 flex items-center gap-2"><span class="dot dot-bad"></span>苦手（まだ実用に遠い）</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li>・ビジネス品質の動画編集（テンポ・間・演出）</li>
+            <li>・ゼロからの長尺・ブランド動画の生成</li>
+            <li>・感情のこもった演技・キャラクターボイス</li>
+            <li>・「そのまま納品」できる完成度の映像</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-5 rounded-xl p-5 fade-up" style="background:#fffbeb;border:1px solid #fcd34d">
+        <p class="text-sm text-amber-900"><strong>現実解：</strong>「作業の下ごしらえはAI、編集・演出はまだ人」。動画生成・編集はできることはできても、ビジネスで使える水準にはまだ届きません。文字起こし・台本・字幕など“周辺作業”で時短するのが今の正解です。</p>
+      </div>
+
+      <details class="ex-acc fade-up">
+        <summary><span class="exchev"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l4 4-4 4"/></svg></span>🔎 リアルな活用実例を見る（海外・最新事例）</summary>
+        <div class="ex-body">
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">Synthesia（企業研修・社内動画） <span class="ex-stat">制作費・時間を最大80%削減（3日→30分）</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">テキストからアバターが喋る研修・マニュアル動画を生成。Bosch系BSHは外注制作費70%減、Cohesityは1本で約10万ドル削減。更新は“テキストを直すだけ”で再撮影不要。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>マニュアル・eラーニングを多言語アバター動画化。改訂コストが激減する。</p>
+            <p class="ex-src">出典: TechCrunch / Synthesia事例</p>
+          </div>
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">HeyGen ／ ElevenLabs（アバター・AI音声吹替） <span class="ex-stat">1本数千円で外注ナレ・撮影を代替</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">HeyGenはテキストから喋るアバター動画を量産。ElevenLabsは“自分の声のまま”20言語以上に吹き替え。MrBeastもAI多言語吹替で、視聴時間の25%超が主言語以外から発生。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>商品説明・採用・操作マニュアルを台本だけで多言語動画化。既存の人気動画に多言語音声を足して海外視聴者を取り込む。</p>
+            <p class="ex-src">出典: Sacra / HeyGen・ElevenLabs公式 / YouTube公式</p>
+          </div>
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">Captions ／ Arcads（短尺・UGC広告の量産） <span class="ex-stat">月10万本の広告アセットを生成（Arcads）</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">Captionsはスマホ一台で自動字幕・テロップ・カット編集。ArcadsはAI俳優が演じるUGC風広告を35言語以上で量産。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>EC・D2Cなら、俳優・セリフ・言語を変えた広告を数十本一括生成しA/Bテストを高速回転。</p>
+            <p class="ex-src">出典: Slator / PR Newswire</p>
+          </div>
+          <div class="ex-card" style="border-color:#fca5a5;background:#fff7f7">
+            <div class="font-bold text-slate-900">⚠ 境界事例：OpenAI Sora の撤退 <span class="ex-stat">25秒の尺制限・本番品質に届かず、2026年にアプリ終了へ</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">バイラルな短尺生成は得意でも、尺の制限・手や顔の崩れ・キャラの一貫性欠如・著作権の法的保護なしで、クライアント向けブランド動画のゼロからの制作はまだ無理。</p>
+            <p class="ex-hint"><strong>線引き：</strong>AIは「説明・横展開・量産」が金脈。「演出・世界観・ゼロイチの映像制作」はまだ人間に任せる。</p>
+            <p class="ex-src">出典: TechXplore / Wikipedia</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ⑦ 自動化・データ -->
+  <section id="auto" class="py-16 md:py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
+      <div class="flex items-center gap-3 mb-8 fade-up">
+        <span class="text-2xl">⚙️</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900">⑦ 業務自動化・データ処理</h2>
+        <span class="vb vb-good">🟢 総合：得意</span>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="card p-6 fade-up" style="border-top:3px solid #22c55e">
+          <h3 class="font-bold text-green-700 mb-3 flex items-center gap-2"><span class="dot dot-good"></span>得意（任せてOK）</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li>・Excel／スプレッドシートの集計・整形・関数作成</li>
+            <li>・データの名寄せ・分類・クレンジング</li>
+            <li>・繰り返し作業の自動化スクリプト</li>
+            <li>・既存コードの修正・改善・説明</li>
+            <li>・定型レポートの自動生成</li>
+          </ul>
+        </div>
+        <div class="card p-6 fade-up" style="border-top:3px solid #ef4444">
+          <h3 class="font-bold text-red-700 mb-3 flex items-center gap-2"><span class="dot dot-bad"></span>苦手（人の管理が必須）</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li>・機密データを学習オンのまま外部に送ること</li>
+            <li>・大規模システムの全体設計・本番セキュリティ</li>
+            <li>・厳密な会計・監査など“絶対に間違えられない”処理</li>
+            <li>・誰もレビューしないまま本番投入すること</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-5 rounded-xl p-5 fade-up" style="background:#fffbeb;border:1px solid #fcd34d">
+        <p class="text-sm text-amber-900"><strong>現実解：</strong>「面倒な手作業はAI、レビューと機密管理は人」。ここはAIが最も費用対効果を出す領域。ただし機密情報は学習オフ・ローカル運用を徹底し、結果は必ず人が確認してから使うこと。</p>
+      </div>
+
+      <details class="ex-acc fade-up">
+        <summary><span class="exchev"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l4 4-4 4"/></svg></span>🔎 リアルな活用実例を見る（海外・最新事例）</summary>
+        <div class="ex-body">
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">AI請求書処理（AP自動化） <span class="ex-stat">1件15〜20分 → 3分未満 / 処理コスト 13.5ドル → 3ドル</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">請求書・領収書をAI-OCR＋LLMで読み取り、仕訳ドラフト・承認・会計ソフト同期まで自動化（Ramp等）。ある英小売は月40時間超を削減。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>受領請求書のPDFをAIで仕訳ドラフト化→会計ソフト連携で、経理1人分の単純作業が消える。最終承認・税務判断は人が責任を持つ。</p>
+            <p class="ex-src">出典: Ramp / SUPALABS / Snowfox <span class="flag">数字は導入先依存・要確認</span></p>
+          </div>
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">n8n（AIワークフロー自動化） <span class="ex-stat">ARRが1年で約5.5倍 / 個人が自動化受託で月1万ドル<span class="flag">要確認</span></span></div>
+            <p class="text-sm text-slate-600 mt-1.5">ノーコードでAIエージェント業務自動化を組める基盤（Zapier・Makeの競合）。ある導入先は週40〜50件の請求書処理を90%自動化し週8〜10時間削減。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>自社で覚えれば外注費ゼロ。さらに「中小向けに自動化を組んで売る」副業・受託そのものが収益源になる。</p>
+            <p class="ex-src">出典: PYMNTS / n8n公式</p>
+          </div>
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">スプレッドシートAI関数（Numerous.ai 等） <span class="ex-stat">数千行の分類・名寄せを関数1本で</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">Excel・Googleスプレッドシートに <code style="background:#f3e8ff;padding:0 .25rem;border-radius:3px">=AI()</code> 関数を足し、自然言語でデータ分類・抽出・整形をセル単位で一括処理。プログラミング不要。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>顧客リストの表記ゆれ統一、住所・会社名の名寄せ、商品タグ付けなど“地味な表計算地獄”を事務担当でも処理できる。</p>
+            <p class="ex-src">出典: Numerous.ai / SuperbCrew</p>
+          </div>
+          <div class="ex-card" style="border-color:#fca5a5;background:#fff7f7">
+            <div class="font-bold text-slate-900">⚠ 線引き：機密と「絶対に間違えられない処理」 <span class="ex-stat">ドラフトはAI・最終承認は人</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">データ整形・仕訳ドラフト・定型連携は得意。だが機密の財務データを外部AIに丸投げするのは情報管理上アウトになりやすく、会計監査・与信など正確性が命の処理は人の承認ゲートが必須。</p>
+            <p class="ex-hint"><strong>線引き：</strong>自社ホスティング／学習オフ＋「AIが候補出し→人が最終確認」の二段構えで運用する。</p>
+            <p class="ex-src">出典: 各社AP自動化事例より</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ⑧ 企画・接客・営業 -->
+  <section id="human" class="py-16 md:py-20 border-y border-slate-100" style="background:#faf7ff">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
+      <div class="flex items-center gap-3 mb-8 fade-up">
+        <span class="text-2xl">🤝</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900">⑧ 企画・接客・営業・マーケ</h2>
+        <span class="vb vb-cond">🟡 総合：条件付き</span>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="card p-6 fade-up" style="border-top:3px solid #22c55e">
+          <h3 class="font-bold text-green-700 mb-3 flex items-center gap-2"><span class="dot dot-good"></span>得意（任せてOK）</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li>・企画のアイデア発散、選択肢出し、観点チェック</li>
+            <li>・営業リストの整理、提案の骨子・メール文面のたたき</li>
+            <li>・FAQ自動応答・一次対応・定型の問い合わせ返信</li>
+            <li>・キャンペーン案・キャッチコピーの量産たたき</li>
+          </ul>
+        </div>
+        <div class="card p-6 fade-up" style="border-top:3px solid #ef4444">
+          <h3 class="font-bold text-red-700 mb-3 flex items-center gap-2"><span class="dot dot-bad"></span>苦手（人間が主役）</h3>
+          <ul class="space-y-2 text-sm text-slate-600">
+            <li>・責任を伴う最終的な経営判断・意思決定</li>
+            <li>・クレームや感情的なやり取りへの対応</li>
+            <li>・信頼関係の構築、クロージング、人間関係の機微</li>
+            <li>・例外的・属人的な現場判断</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-5 rounded-xl p-5 fade-up" style="background:#fffbeb;border:1px solid #fcd34d">
+        <p class="text-sm text-amber-900"><strong>現実解：</strong>「考える材料を出すのはAI、決めて関係を築くのは人」。AIは優秀な参謀ですが、最後にハンコを押し、お客様と信頼を結ぶのは人間の仕事です。<a href="ogalabo_organization.html" class="text-violet-700 font-bold underline">ogalaboのAI役員会議</a>は、まさにこの“考える材料を出す”を仕組み化したものです。</p>
+      </div>
+
+      <details class="ex-acc fade-up">
+        <summary><span class="exchev"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l4 4-4 4"/></svg></span>🔎 リアルな活用実例を見る（海外・最新事例）</summary>
+        <div class="ex-body">
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">Klarna × OpenAI（サポート自動化） <span class="ex-stat">1か月で230万件・700人分 / 67%を自動化…そして人に戻した</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">後払い大手のCSチャットボット。解決時間11分→2分未満、年4,000万ドルの利益貢献。ただし2025年にCEOが「人を切りすぎた／共感に欠ける」と認め、人の採用を再開。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>FAQ・返品・配送状況など定型問い合わせをまず自動化。ただし最初から「人間に繋ぐ」逃げ道を必ず残す。AIで全部置換は失敗する。</p>
+            <p class="ex-src">出典: Klarna公式 / OpenAI / CX Dive</p>
+          </div>
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">Intercom Fin ／ Salesforce Agentforce（解決エージェント） <span class="ex-stat">問い合わせの67〜84%を自律解決</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">自社ヘルプ記事を根拠に問い合わせを解決。従来型ボットは30〜40%が壁の中、解決率が大きく向上。OpenTableは70%自律解決、Redditは解決時間84%短縮。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>解決率はナレッジ記事の質に直結。まず「よく来る質問TOP20」を記事化してからボットに食わせる。</p>
+            <p class="ex-src">出典: Intercom（Fin）/ Salesforce公式</p>
+          </div>
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">11x「Alice」／ Artisan「Ava」（AI営業SDR） <span class="ex-stat">リスト作成→一次アプローチ→アポ取りを自動化</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">見込み客リスト作成、パーソナライズしたコールドメール・LinkedInアプローチを量産。ある顧客は「人間SDR10人分を代替」と証言（要確認）。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>小規模BtoBでも、リスト作成と一次メールだけAIに任せ、返信が来たら人が商談する「ハイブリッドSDR」が現実的。送りすぎはスパム扱いに注意。</p>
+            <p class="ex-src">出典: 11x公式 / Artisan</p>
+          </div>
+          <div class="ex-card">
+            <div class="font-bold text-slate-900">ECチャット接客でCV改善 <span class="ex-stat">接客ありはCV約4倍 / カゴ落ちの約35%を回収</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">「サイズ・在庫・配送いつ届く？」の3大質問に即答するチャットでコンバージョンが大きく動く。あるブランドはフィット質問対応でCV+315%（ベンダー集計のため割引いて見る）。</p>
+            <p class="ex-hint"><strong>現場のヒント：</strong>商品ページに3大質問の即答チャット＋カゴ落ち自動フォローを置くだけで費用対効果が高い。</p>
+            <p class="ex-src">出典: Glassix調査 ほか <span class="flag">集計値・要確認</span></p>
+          </div>
+          <div class="ex-card" style="border-color:#fca5a5;background:#fff7f7">
+            <div class="font-bold text-slate-900">⚠ 線引き：感情・信頼・クロージングは人 <span class="ex-stat">Klarnaの“揺り戻し”が証明</span></div>
+            <p class="text-sm text-slate-600 mt-1.5">定型一次対応・リード量産は得意だが、クレームの感情対応・複雑な例外判断・最終的な信頼関係構築は人間が主役。やりすぎると顧客満足が崩れる。</p>
+            <p class="ex-hint"><strong>線引き：</strong>人間は「クレームの感情対応」と「商談クロージング」に集中。AIは“一次対応と材料出し”に徹する。</p>
+            <p class="ex-src">出典: Fortune / CX Dive</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===== 3 PRINCIPLES ===== -->
+  <section id="principles" class="py-18 md:py-24 bg-white">
+    <div class="max-w-5xl mx-auto px-5 sm:px-8">
+      <div class="text-center mb-12 fade-up">
+        <p class="text-sm font-bold text-violet-500 tracking-widest mb-3">PRINCIPLES</p>
+        <h2 class="h-sec font-black text-slate-900">ビジネス活用の3原則</h2>
+        <p class="mt-4 text-slate-600 max-w-2xl mx-auto">ジャンルを問わず、この3つを守れば AI は安全に・確実に戦力になります。</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="card p-7 fade-up text-center">
+          <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white text-2xl font-black mb-4">1</div>
+          <h3 class="font-bold text-slate-900 mb-2">たたき台はAI、仕上げは人</h3>
+          <p class="text-sm text-slate-600">ゼロから作らず、AIの初稿を直す。最終品質の責任だけは必ず人間が持つ。</p>
+        </div>
+        <div class="card p-7 fade-up text-center">
+          <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white text-2xl font-black mb-4">2</div>
+          <h3 class="font-bold text-slate-900 mb-2">やり直しコストで線を引く</h3>
+          <p class="text-sm text-slate-600">間違えても安い仕事は任せる。信用に関わる対外的な成果物は人が握る。</p>
+        </div>
+        <div class="card p-7 fade-up text-center">
+          <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white text-2xl font-black mb-4">3</div>
+          <h3 class="font-bold text-slate-900 mb-2">事実と機密は必ず確認</h3>
+          <p class="text-sm text-slate-600">数字・固有名詞は裏取り。機密は学習オフ・ローカルで。境界は定期的に見直す。</p>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-12 card p-8 sm:p-10 text-center fade-up relative overflow-hidden">
+        <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-500"></div>
+        <h3 class="text-xl sm:text-2xl font-black text-slate-900 mb-3">「うちの業務だとどこに効く？」をAIに相談</h3>
+        <p class="text-slate-600 max-w-2xl mx-auto mb-7">得意・苦手の境界が分かったら、あとは自分の仕事に当てはめるだけ。ogalabo の AI 役員会議が、具体的な使いどころと進め方を一緒に整理します。</p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a href="ogalabo_organization.html" class="inline-flex items-center justify-center gap-2 rounded-lg px-7 py-4 bg-violet-600 text-white font-bold hover:bg-violet-700 transition-colors">AI経営組織を見る</a>
+          <a href="portfolio_ai_proposals.html" class="inline-flex items-center justify-center rounded-lg px-7 py-4 border border-slate-200 bg-white font-bold text-slate-700 hover:bg-slate-50 transition-colors">実績（ポートフォリオ）を見る</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="py-10 border-t border-slate-200 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+    <a href="ogalabo_organization.html" class="font-bold text-slate-800" style="font-family:Inter,sans-serif">ogalabo</a>
+    <p class="text-xs text-slate-400 text-center">AI得意・苦手マップ | 「何ができるか」より「どこまで任せていいか」</p>
+    <p class="text-xs text-slate-400">&copy; 2026 ogalabo</p>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      e.target.style.transitionDelay = Math.min((i % 5) * 60, 240) + 'ms';
+      e.target.classList.add('visible');
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
