@@ -23,365 +23,328 @@
     --ink:#EAF2F7;
     --ink-dim:rgba(234,242,247,.62);
     --line:rgba(255,255,255,.10);
+    --head-h:60px;
   }
   *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
   html,body{ margin:0; padding:0; }
   body{
     font-family:'Noto Sans JP','Inter',sans-serif;
-    background:
-      radial-gradient(1100px 700px at 78% 12%, rgba(63,216,182,.13), transparent 55%),
-      radial-gradient(900px 700px at 6% 92%, rgba(63,216,182,.07), transparent 55%),
-      linear-gradient(158deg, var(--navy-deep) 0%, var(--navy) 58%, #16233F 100%);
+    background:var(--navy-deep);
     color:var(--ink);
     font-feature-settings:"palt";
     letter-spacing:.02em;
     overflow-x:hidden;
   }
-  /* 方眼グリッド（バナー画像のモチーフ） */
-  .grid-bg{
-    position:fixed; inset:0; pointer-events:none; z-index:0;
-    background:
-      repeating-linear-gradient(0deg, transparent 0 63px, rgba(255,255,255,.035) 63px 64px),
-      repeating-linear-gradient(90deg, transparent 0 63px, rgba(255,255,255,.035) 63px 64px);
-    mask-image:radial-gradient(120% 100% at 50% 40%, #000 55%, transparent 100%);
-  }
-  .page{
-    position:relative; z-index:1;
-    min-height:100svh;
-    display:flex; flex-direction:column;
-    max-width:1440px; margin:0 auto;
-    padding:clamp(12px,2vh,24px) clamp(20px,4vw,64px);
-  }
+  .wrap{ width:min(1240px, 92vw); margin-inline:auto; }
 
-  /* ================= ヘッダー ================= */
-  header{
-    display:flex; align-items:center; justify-content:space-between;
-    padding-bottom:clamp(8px,1.4vh,16px);
+  /* ================= 固定ヘッダー ================= */
+  .site-head{
+    position:fixed; top:0; inset-inline:0; z-index:50; height:var(--head-h);
+    display:flex; align-items:center;
+    background:rgba(12,23,48,.72); backdrop-filter:blur(14px);
     border-bottom:1px solid var(--line);
   }
-  .logo-img{ height:clamp(30px,4.6vh,44px); width:auto; display:block; filter:drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
-  .head-right{ display:flex; align-items:center; gap:clamp(12px,1.6vw,24px); }
-  .yomi{ font-size:clamp(10px,1.4vh,12.5px); color:var(--ink-dim); letter-spacing:.14em; }
-  .cta-mini{
-    font-size:clamp(11px,1.5vh,13px); font-weight:700; color:var(--mint-bright);
-    border:1px solid rgba(63,216,182,.5); border-radius:999px;
-    padding:.5em 1.3em; text-decoration:none; transition:all .3s ease;
-    white-space:nowrap;
+  .site-head .wrap{ display:flex; align-items:center; justify-content:space-between; }
+  .logo-img{ height:30px; width:auto; display:block; filter:drop-shadow(0 3px 10px rgba(0,0,0,.4)); }
+  .head-cta{
+    font-size:13px; font-weight:800; letter-spacing:.04em; color:var(--navy-deep); text-decoration:none;
+    background:linear-gradient(135deg,var(--mint-bright),var(--mint)); border-radius:999px;
+    padding:.6em 1.4em; transition:transform .3s ease, box-shadow .3s ease;
+    box-shadow:0 6px 18px rgba(63,216,182,.28);
   }
-  .cta-mini:hover{ background:rgba(63,216,182,.12); transform:translateY(-1px); }
+  .head-cta:hover{ transform:translateY(-2px); box-shadow:0 10px 24px rgba(63,216,182,.4); }
 
-  /* ================= メイン ================= */
-  main{
-    flex:1; min-height:0;
-    display:grid; grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
-    gap:clamp(24px,3.6vw,64px);
-    align-items:center;
-    padding:clamp(10px,1.8vh,20px) 0;
+  /* ================= 共通セクション ================= */
+  section{ position:relative; }
+  .kicker{
+    display:inline-flex; align-items:center; gap:.6em;
+    font-size:12px; font-weight:700; letter-spacing:.2em; color:var(--mint-bright);
+    text-transform:uppercase;
   }
-  .col-copy{ display:flex; flex-direction:column; justify-content:center; gap:clamp(10px,2vh,20px); }
-
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:.7em; align-self:flex-start;
-    font-size:clamp(10.5px,1.5vh,13px); font-weight:700; letter-spacing:.18em;
-    color:var(--mint-bright);
-    border:1px solid rgba(63,216,182,.35); background:rgba(63,216,182,.07);
-    border-radius:999px; padding:.5em 1.4em;
-  }
-  .eyebrow::before{ content:""; width:7px; height:7px; border-radius:50%; background:var(--mint); box-shadow:0 0 10px var(--mint); }
-
-  h1{
-    margin:0; font-weight:900; line-height:1.28; letter-spacing:.045em;
-    font-size:clamp(28px, 2.9vh + 1.9vw, 56px);
-    text-wrap:balance;
-  }
+  .kicker::before{ content:""; width:26px; height:2px; background:linear-gradient(90deg,var(--mint),transparent); }
   .grad{
-    background:linear-gradient(92deg, var(--mint-bright) 10%, var(--mint) 60%, #37C7ED 130%);
+    background:linear-gradient(92deg, var(--mint-bright) 8%, var(--mint) 55%, #37C7ED 130%);
     -webkit-background-clip:text; background-clip:text; color:transparent;
   }
-  .lead{
-    margin:0; font-size:clamp(12.5px,1.85vh,15.5px); line-height:1.9; color:var(--ink-dim);
-    max-width:34em;
+
+  /* ================= HERO ================= */
+  .hero{
+    min-height:100svh; display:flex; align-items:center;
+    padding:calc(var(--head-h) + 2.4vh) 0 4vh;
+    background:
+      radial-gradient(1100px 720px at 80% 6%, rgba(63,216,182,.14), transparent 55%),
+      radial-gradient(900px 720px at 2% 96%, rgba(63,216,182,.06), transparent 55%),
+      linear-gradient(158deg, var(--navy-deep) 0%, var(--navy) 60%, #16233F 100%);
   }
+  .hero .wrap{
+    display:grid; grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);
+    gap:clamp(28px,4vw,68px); align-items:center; width:100%;
+  }
+  .hero-grid{
+    position:absolute; inset:0; pointer-events:none; z-index:0;
+    background:
+      repeating-linear-gradient(0deg, transparent 0 63px, rgba(255,255,255,.03) 63px 64px),
+      repeating-linear-gradient(90deg, transparent 0 63px, rgba(255,255,255,.03) 63px 64px);
+    mask-image:radial-gradient(120% 90% at 50% 30%, #000 55%, transparent 100%);
+  }
+  .hero .wrap{ position:relative; z-index:1; }
+  .col-copy{ display:flex; flex-direction:column; gap:clamp(14px,2.2vh,24px); }
+
+  h1{
+    margin:0; font-weight:900; line-height:1.26; letter-spacing:.045em;
+    font-size:clamp(30px, 1.6rem + 2.3vw, 58px); text-wrap:balance;
+  }
+  .lead{ margin:0; font-size:clamp(13px,.55rem + .5vw,16px); line-height:1.95; color:var(--ink-dim); max-width:35em; }
   .lead b{ color:var(--ink); font-weight:700; }
 
-  /* 収集→検証→…のフロー */
-  .flow{ display:flex; align-items:center; flex-wrap:wrap; gap:.45em; }
+  .flow{ display:flex; align-items:center; flex-wrap:wrap; gap:.4em .5em; }
   .flow .step{
-    font-size:clamp(10.5px,1.5vh,12.5px); font-weight:700; letter-spacing:.1em;
-    color:var(--ink); background:rgba(255,255,255,.06);
-    border:1px solid var(--line); border-radius:8px; padding:.45em 1em;
+    font-size:clamp(11px,.4rem + .3vw,13px); font-weight:700; letter-spacing:.08em; color:var(--ink);
+    background:rgba(255,255,255,.06); border:1px solid var(--line); border-radius:9px; padding:.5em 1em;
   }
   .flow .step.on{ color:var(--navy-deep); background:linear-gradient(135deg,var(--mint-bright),var(--mint)); border-color:transparent; }
   .flow .arw{ color:rgba(94,234,200,.7); font-size:11px; font-weight:800; }
 
-  /* 価格 */
   .price-box{
-    display:flex; align-items:flex-end; flex-wrap:wrap; gap:clamp(10px,1.6vw,22px);
-    padding:clamp(12px,1.9vh,18px) clamp(16px,1.8vw,24px);
+    display:flex; align-items:center; flex-wrap:wrap; gap:clamp(10px,1.6vw,22px);
+    padding:clamp(14px,1.8vh,20px) clamp(16px,1.6vw,24px);
     background:linear-gradient(160deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
-    border:1px solid var(--line); border-radius:18px;
-    backdrop-filter:blur(10px);
-    position:relative; overflow:hidden;
+    border:1px solid var(--line); border-radius:18px; backdrop-filter:blur(10px);
+    position:relative; overflow:hidden; align-self:flex-start;
   }
-  .price-box::after{
-    content:""; position:absolute; inset:0; pointer-events:none;
-    background:radial-gradient(300px 120px at 85% 0%, rgba(63,216,182,.14), transparent 70%);
-  }
-  .p-was{ font-size:clamp(10.5px,1.5vh,12.5px); color:var(--ink-dim); line-height:1.6; }
-  .p-was s{ font-size:1.35em; font-weight:700; color:rgba(234,242,247,.75); font-family:'Inter'; font-style:italic; }
-  .p-now{ display:flex; align-items:baseline; gap:.18em; line-height:1; }
-  .p-now .label{ font-size:clamp(10.5px,1.5vh,13px); font-weight:700; color:var(--ink); margin-right:.6em; }
-  .p-now .num{
-    font-family:'Inter'; font-style:italic; font-weight:900;
-    font-size:clamp(34px, 3.4vh + 1.4vw, 56px);
-    background:linear-gradient(120deg, var(--mint-bright), var(--mint));
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-    filter:drop-shadow(0 6px 22px rgba(63,216,182,.3));
-  }
-  .p-now .unit{ font-size:clamp(13px,1.9vh,17px); font-weight:900; color:var(--mint-bright); }
-  .p-note{ font-size:clamp(9.5px,1.35vh,11.5px); color:var(--ink-dim); }
-  .badge-off{
-    align-self:center;
-    font-family:'Inter'; font-style:italic; font-weight:900; font-size:clamp(11px,1.6vh,14px);
-    color:var(--navy-deep); background:linear-gradient(135deg,#FFD66B,#FFB84D);
-    border-radius:999px; padding:.45em 1em; letter-spacing:.02em;
-    box-shadow:0 6px 18px rgba(255,183,77,.3); transform:rotate(-3deg);
-  }
+  .price-box::after{ content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(300px 120px at 88% 0%, rgba(63,216,182,.14), transparent 70%); }
+  .p-was{ font-size:12px; color:var(--ink-dim); line-height:1.6; }
+  .p-was s{ font-size:1.3em; font-weight:700; color:rgba(234,242,247,.75); font-family:'Inter'; font-style:italic; }
+  .p-now{ display:flex; align-items:baseline; gap:.1em; line-height:1; }
+  .p-now .num{ font-family:'Inter'; font-style:italic; font-weight:900; font-size:clamp(36px,2rem + 1.2vw,54px);
+    background:linear-gradient(120deg,var(--mint-bright),var(--mint)); -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter:drop-shadow(0 6px 20px rgba(63,216,182,.3)); }
+  .p-now .unit{ font-size:16px; font-weight:900; color:var(--mint-bright); }
+  .p-note{ font-size:11.5px; color:var(--ink-dim); line-height:1.7; }
+  .badge-off{ font-family:'Inter'; font-style:italic; font-weight:900; font-size:13px; color:var(--navy-deep);
+    background:linear-gradient(135deg,#FFD66B,#FFB84D); border-radius:999px; padding:.45em 1em;
+    box-shadow:0 6px 18px rgba(255,183,77,.3); transform:rotate(-3deg); }
 
-  /* CTA */
-  .cta-row{ display:flex; align-items:center; gap:clamp(14px,1.8vw,24px); flex-wrap:wrap; }
+  .cta-row{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
   .cta{
-    position:relative; overflow:hidden;
-    display:inline-flex; align-items:center; gap:.7em;
-    font-size:clamp(14px,2.1vh,17px); font-weight:900; letter-spacing:.08em;
-    color:var(--navy-deep); text-decoration:none;
-    background:linear-gradient(135deg, var(--mint-bright), var(--mint) 70%);
-    border-radius:999px; padding:clamp(.85em,1.6vh,1em) clamp(1.8em,2.4vw,2.6em);
+    position:relative; overflow:hidden; display:inline-flex; align-items:center; gap:.7em;
+    font-size:clamp(14px,.6rem + .4vw,17px); font-weight:900; letter-spacing:.08em; color:var(--navy-deep); text-decoration:none;
+    background:linear-gradient(135deg,var(--mint-bright),var(--mint) 70%); border-radius:999px;
+    padding:clamp(.85em,1.5vh,1.05em) clamp(1.9em,2.4vw,2.7em);
     box-shadow:0 14px 36px rgba(63,216,182,.35), inset 0 1px 0 rgba(255,255,255,.5);
     transition:transform .3s ease, box-shadow .3s ease;
   }
-  .cta:hover{ transform:translateY(-3px); box-shadow:0 20px 44px rgba(63,216,182,.45), inset 0 1px 0 rgba(255,255,255,.5); }
+  .cta:hover{ transform:translateY(-3px); box-shadow:0 20px 46px rgba(63,216,182,.46), inset 0 1px 0 rgba(255,255,255,.5); }
   .cta .ar{ transition:transform .3s ease; }
   .cta:hover .ar{ transform:translateX(4px); }
-  .cta::after{
-    content:""; position:absolute; top:0; left:-80%; width:50%; height:100%;
-    background:linear-gradient(100deg, transparent, rgba(255,255,255,.55), transparent);
-    transform:skewX(-20deg); animation:glare 3.6s ease-in-out infinite;
-  }
+  .cta::after{ content:""; position:absolute; top:0; left:-80%; width:50%; height:100%;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent); transform:skewX(-20deg); animation:glare 3.8s ease-in-out infinite; }
   @keyframes glare{ 0%,55%{ left:-80%; } 85%,100%{ left:130%; } }
-  .micro{ font-size:clamp(9.5px,1.4vh,11.5px); color:var(--ink-dim); line-height:1.9; }
-  .micro .dot{ color:var(--mint); margin:0 .5em; }
 
-  /* ================= 右カラム：AI社員名鑑 ================= */
-  .col-staff{ display:flex; flex-direction:column; gap:clamp(10px,1.6vh,16px); min-height:0; }
-  .staff-head{
-    display:flex; align-items:baseline; justify-content:space-between; gap:1em;
-    padding:0 .2em;
-  }
-  .staff-head .t{ font-size:clamp(11px,1.6vh,13.5px); font-weight:900; letter-spacing:.22em; color:var(--ink); }
+  /* ---- 右カラム：メンバー ---- */
+  .staff{ display:flex; flex-direction:column; gap:clamp(10px,1.4vh,15px); }
+  .staff-head{ display:flex; align-items:baseline; justify-content:space-between; gap:1em; }
+  .staff-head .t{ font-size:14px; font-weight:900; letter-spacing:.16em; color:var(--ink); }
   .staff-head .t i{ color:var(--mint); font-style:normal; }
-  .staff-head .s{ font-size:clamp(9px,1.3vh,11px); color:var(--ink-dim); letter-spacing:.1em; }
+  .staff-head .s{ font-size:10.5px; color:var(--ink-dim); letter-spacing:.14em; }
 
-  .staff-grid{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(10px,1.7vh,18px); }
-  .card{
-    position:relative;
-    background:linear-gradient(165deg, rgba(255,255,255,.09), rgba(255,255,255,.025));
-    border:1px solid var(--line); border-radius:20px;
-    padding:clamp(10px,1.6vh,16px) clamp(12px,1.2vw,18px) clamp(10px,1.5vh,14px);
-    backdrop-filter:blur(12px);
-    box-shadow:0 22px 44px rgba(4,10,25,.35);
-    display:flex; flex-direction:column; align-items:center; text-align:center; gap:.35em;
-    transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  .staff-grid{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(12px,1.4vw,16px); }
+  .mcard{
+    position:relative; background:linear-gradient(165deg, rgba(255,255,255,.085), rgba(255,255,255,.025));
+    border:1px solid var(--line); border-radius:20px; padding:clamp(12px,1.2vw,16px);
+    backdrop-filter:blur(12px); box-shadow:0 20px 40px rgba(4,10,25,.32);
+    display:flex; flex-direction:column; align-items:center; gap:.6em;
+    transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
   }
-  .card:hover{ transform:translateY(-5px); border-color:rgba(63,216,182,.4); box-shadow:0 30px 54px rgba(4,10,25,.45), 0 0 0 1px rgba(63,216,182,.15); }
-  .card .no{
-    position:absolute; top:10px; left:14px;
-    font-family:'Inter'; font-style:italic; font-weight:900; font-size:clamp(13px,2vh,17px);
-    color:rgba(94,234,200,.45);
+  .mcard:hover{ transform:translateY(-6px); border-color:rgba(63,216,182,.4);
+    box-shadow:0 30px 56px rgba(4,10,25,.46), 0 0 0 1px rgba(63,216,182,.16); }
+  .mcard .no{ position:absolute; top:10px; left:14px; font-family:'Inter'; font-style:italic; font-weight:900; font-size:15px; color:rgba(94,234,200,.5); }
+  .mcard .tag{ position:absolute; top:11px; right:12px; font-size:10px; font-weight:700; letter-spacing:.08em;
+    color:var(--mint-bright); background:rgba(63,216,182,.1); border:1px solid rgba(63,216,182,.3); border-radius:999px; padding:.32em .9em; }
+  .mcard .tile{
+    width:100%; aspect-ratio:5/4; border-radius:14px; background:#FEFEFE; overflow:hidden;
+    display:flex; align-items:flex-end; justify-content:center; box-shadow:0 8px 20px rgba(4,10,25,.28);
   }
-  .card .tag{
-    position:absolute; top:10px; right:12px;
-    font-size:clamp(8.5px,1.2vh,10px); font-weight:700; letter-spacing:.12em;
-    color:var(--mint-bright); background:rgba(63,216,182,.1);
-    border:1px solid rgba(63,216,182,.3); border-radius:999px; padding:.3em .9em;
-  }
-  .card img{
-    height:clamp(76px, 13.5vh, 138px); width:auto; margin-top:clamp(8px,1.2vh,12px);
-    filter:drop-shadow(0 14px 22px rgba(4,10,25,.5));
-    animation:float 5.5s ease-in-out infinite;
-  }
-  .card:nth-child(2) img{ animation-delay:-1.4s; }
-  .card:nth-child(3) img{ animation-delay:-2.8s; }
-  .card:nth-child(4) img{ animation-delay:-4.2s; }
-  @keyframes float{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-6px); } }
-  .card .nm{ font-size:clamp(13px,2vh,17px); font-weight:900; letter-spacing:.3em; text-indent:.3em; }
-  .card .rl{ font-size:clamp(9px,1.35vh,11px); color:var(--ink-dim); line-height:1.55; }
+  .mcard .tile img{ width:100%; height:100%; object-fit:contain; object-position:bottom;
+    padding:8% 8% 0; transition:transform .4s ease; }
+  .mcard:hover .tile img{ transform:scale(1.05); }
+  .mcard .nm{ font-size:clamp(14px,.6rem + .3vw,17px); font-weight:900; letter-spacing:.3em; text-indent:.3em; }
 
-  /* タスクボード（設備）バー */
-  .board{
-    display:flex; align-items:center; gap:clamp(12px,1.6vw,20px);
+  /* ---- タスクボード（設備）バー ---- */
+  .board-bar{
+    display:flex; align-items:center; gap:clamp(12px,1.4vw,18px);
     background:linear-gradient(165deg, rgba(63,216,182,.12), rgba(63,216,182,.03));
-    border:1px solid rgba(63,216,182,.28); border-radius:18px;
-    padding:clamp(10px,1.5vh,14px) clamp(14px,1.6vw,20px);
-    backdrop-filter:blur(12px);
-    transition:transform .3s ease, border-color .3s ease;
+    border:1px solid rgba(63,216,182,.28); border-radius:18px; padding:clamp(12px,1.4vh,15px) clamp(14px,1.4vw,20px);
+    backdrop-filter:blur(12px); transition:transform .3s ease, border-color .3s ease;
   }
-  .board:hover{ transform:translateY(-3px); border-color:rgba(63,216,182,.5); }
+  .board-bar:hover{ transform:translateY(-3px); border-color:rgba(63,216,182,.5); }
   .kanban{ display:flex; gap:6px; flex-shrink:0; }
   .kanban .kcol{ display:flex; flex-direction:column; gap:4px; }
-  .kanban .kcell{ width:clamp(18px,2.2vh,26px); height:clamp(5px,0.8vh,7px); border-radius:3px; background:rgba(255,255,255,.18); }
+  .kanban .kcell{ width:22px; height:6px; border-radius:3px; background:rgba(255,255,255,.18); }
   .kanban .kcell.m{ background:var(--mint); box-shadow:0 0 8px rgba(63,216,182,.5); }
-  .board .bt{ flex:1; min-width:0; }
-  .board .bt .nm{ font-size:clamp(12px,1.8vh,15px); font-weight:900; letter-spacing:.12em; }
-  .board .bt .nm i{ font-style:normal; font-size:.72em; font-weight:700; color:var(--mint-bright); margin-left:.9em; letter-spacing:.14em; }
-  .board .bt .rl{ font-size:clamp(9px,1.35vh,11px); color:var(--ink-dim); margin-top:.2em; line-height:1.5; }
+  .board-bar .bt .nm{ font-size:14px; font-weight:900; letter-spacing:.1em; }
+  .board-bar .bt .nm i{ font-style:normal; font-size:.72em; font-weight:700; color:var(--mint-bright); margin-left:.8em; letter-spacing:.12em; }
+  .board-bar .bt .rl{ font-size:11px; color:var(--ink-dim); margin-top:.25em; line-height:1.5; }
 
-  /* ================= フッター帯 ================= */
-  footer{
-    display:flex; align-items:center; justify-content:space-between; gap:1.5em; flex-wrap:wrap;
+  /* スクロールキュー */
+  .scroll-cue{ position:absolute; left:50%; bottom:18px; transform:translateX(-50%); z-index:2;
+    display:flex; flex-direction:column; align-items:center; gap:6px; color:var(--ink-dim); font-size:10px; letter-spacing:.24em; }
+  .scroll-cue .mouse{ width:20px; height:32px; border:1.5px solid rgba(234,242,247,.4); border-radius:11px; position:relative; }
+  .scroll-cue .mouse::before{ content:""; position:absolute; left:50%; top:6px; width:3px; height:6px; border-radius:2px; background:var(--mint-bright); transform:translateX(-50%); animation:wheel 1.7s ease-in-out infinite; }
+  @keyframes wheel{ 0%{ opacity:0; transform:translate(-50%,0); } 30%{ opacity:1; } 70%{ opacity:1; transform:translate(-50%,8px); } 100%{ opacity:0; transform:translate(-50%,10px); } }
+
+  /* ================= セクション2：タスクボード ================= */
+  .board-sec{
+    padding:clamp(60px,10vh,120px) 0;
+    background:linear-gradient(180deg, #16233F 0%, var(--navy-deep) 55%, #0A1226 100%);
     border-top:1px solid var(--line);
-    padding-top:clamp(8px,1.4vh,14px);
   }
-  .foot-brand{
-    font-family:'Inter'; font-style:italic; font-weight:900; letter-spacing:.04em;
-    font-size:clamp(12px,1.7vh,15px); color:var(--ink);
-  }
-  .foot-brand .mint{ color:var(--mint-bright); }
-  .copyright{ font-size:clamp(8.5px,1.25vh,10px); color:rgba(234,242,247,.4); letter-spacing:.1em; }
+  .sec-head{ text-align:center; max-width:40em; margin:0 auto clamp(30px,5vh,54px); display:flex; flex-direction:column; align-items:center; gap:14px; }
+  .sec-head .kicker{ justify-content:center; }
+  .sec-head h2{ margin:0; font-weight:900; line-height:1.3; letter-spacing:.03em; font-size:clamp(23px,1.2rem + 1.5vw,40px); }
+  .sec-head p{ margin:0; font-size:clamp(13px,.55rem + .4vw,15.5px); line-height:1.9; color:var(--ink-dim); }
 
-  /* ================= 登場アニメ ================= */
-  .rise{ opacity:0; transform:translateY(22px); animation:rise .9s cubic-bezier(.22,.9,.3,1) forwards; }
-  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
-  .d1{ animation-delay:.05s; } .d2{ animation-delay:.15s; } .d3{ animation-delay:.25s; }
-  .d4{ animation-delay:.35s; } .d5{ animation-delay:.45s; } .d6{ animation-delay:.55s; }
-  .d7{ animation-delay:.65s; } .d8{ animation-delay:.75s; }
+  .board-frame{
+    position:relative; border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,.14);
+    background:#0f1830; box-shadow:0 40px 90px rgba(2,7,20,.6), 0 0 0 1px rgba(63,216,182,.08);
+  }
+  .board-frame::after{ content:""; position:absolute; inset:0; pointer-events:none; border-radius:16px;
+    box-shadow:inset 0 0 60px rgba(63,216,182,.06); }
+  .browser-bar{ display:flex; align-items:center; gap:14px; padding:11px 16px; background:rgba(255,255,255,.05); border-bottom:1px solid var(--line); }
+  .dots{ display:flex; gap:7px; }
+  .dots i{ width:11px; height:11px; border-radius:50%; display:block; }
+  .dots i:nth-child(1){ background:#FF5F57; } .dots i:nth-child(2){ background:#FEBC2E; } .dots i:nth-child(3){ background:#28C840; }
+  .url{ font-size:12px; color:var(--ink-dim); font-family:'Inter'; letter-spacing:.02em;
+    background:rgba(255,255,255,.06); border-radius:8px; padding:.35em 1.2em; flex:1; max-width:360px; }
+  .board-frame img{ display:block; width:100%; height:auto; }
+
+  .board-feats{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(14px,1.6vw,22px); margin-top:clamp(24px,4vh,40px); }
+  .feat{ background:linear-gradient(165deg, rgba(255,255,255,.07), rgba(255,255,255,.02)); border:1px solid var(--line);
+    border-radius:16px; padding:clamp(16px,1.6vw,22px); display:flex; flex-direction:column; gap:9px;
+    transition:transform .3s ease, border-color .3s ease; }
+  .feat:hover{ transform:translateY(-4px); border-color:rgba(63,216,182,.35); }
+  .feat .ic{ width:40px; height:40px; border-radius:11px; display:flex; align-items:center; justify-content:center;
+    background:rgba(63,216,182,.12); border:1px solid rgba(63,216,182,.3); color:var(--mint-bright); }
+  .feat .ft{ font-size:15px; font-weight:800; letter-spacing:.03em; }
+  .feat .fd{ font-size:12.5px; color:var(--ink-dim); line-height:1.75; }
+
+  /* ================= セクション3：クロージング ================= */
+  .close-sec{ padding:clamp(64px,11vh,130px) 0; text-align:center;
+    background:radial-gradient(700px 380px at 50% 0%, rgba(63,216,182,.12), transparent 70%), #0A1226; }
+  .close-sec .wrap{ display:flex; flex-direction:column; align-items:center; gap:22px; }
+  .close-sec h2{ margin:0; font-weight:900; line-height:1.3; letter-spacing:.04em; font-size:clamp(26px,1.3rem + 1.8vw,46px); }
+  .close-sec p{ margin:0; font-size:clamp(13px,.55rem + .4vw,16px); color:var(--ink-dim); line-height:1.9; max-width:32em; }
+  .close-note{ font-size:12px; color:var(--ink-dim); letter-spacing:.04em; }
+  .close-note b{ color:var(--mint-bright); font-weight:800; }
+
+  /* ================= フッター ================= */
+  footer{ border-top:1px solid var(--line); background:#0A1226; }
+  footer .wrap{ display:flex; align-items:center; justify-content:space-between; gap:1.5em; flex-wrap:wrap; padding:22px 0; }
+  .foot-brand{ font-family:'Inter'; font-style:italic; font-weight:900; letter-spacing:.04em; font-size:15px; color:var(--ink); }
+  .foot-brand .mint{ color:var(--mint-bright); }
+  .copyright{ font-size:10px; color:rgba(234,242,247,.4); letter-spacing:.1em; }
+
+  /* ================= スクロール登場 ================= */
+  .reveal{ opacity:0; transform:translateY(28px); transition:opacity .8s cubic-bezier(.22,.9,.3,1), transform .8s cubic-bezier(.22,.9,.3,1); }
+  .reveal.in{ opacity:1; transform:none; }
+  .reveal.d1{ transition-delay:.08s; } .reveal.d2{ transition-delay:.16s; } .reveal.d3{ transition-delay:.24s; }
+  .reveal.d4{ transition-delay:.32s; } .reveal.d5{ transition-delay:.4s; }
   @media (prefers-reduced-motion: reduce){
-    .rise{ animation:none; opacity:1; transform:none; }
-    .card img{ animation:none; }
-    .cta::after{ animation:none; }
+    html{ scroll-behavior:auto; }
+    .reveal{ opacity:1; transform:none; transition:none; }
+    .cta::after,.scroll-cue .mouse::before{ animation:none; }
   }
 
   /* ================= レスポンシブ ================= */
-  .motif{ display:none; }
-  @media (min-width: 1640px){ .motif{ display:block; } }
-  @media (max-width: 960px){
-    .page{ min-height:auto; }
-    main{ grid-template-columns:1fr; gap:34px; padding:26px 0; }
+  @media (max-width: 940px){
+    .hero{ padding-top:calc(var(--head-h) + 26px); }
+    .hero .wrap{ grid-template-columns:1fr; gap:34px; }
     .col-copy{ text-align:center; align-items:center; }
-    .eyebrow{ align-self:center; }
-    .lead{ max-width:100%; }
+    .kicker{ justify-content:center; }
     .flow{ justify-content:center; }
-    .price-box{ justify-content:center; text-align:left; }
+    .lead{ max-width:100%; }
     .cta-row{ justify-content:center; }
-    .yomi{ display:none; }
-    footer{ justify-content:center; text-align:center; }
-    .ticks{ justify-content:center; }
+    .scroll-cue{ display:none; }
+    .board-feats{ grid-template-columns:1fr; }
+    footer .wrap{ justify-content:center; text-align:center; }
   }
-  @media (max-width: 480px){
+  @media (max-width: 460px){
     .staff-grid{ gap:10px; }
-    .card .rl{ display:none; }
-    .card img{ height:96px; }
+    .mcard .nm{ letter-spacing:.2em; }
+    .price-box{ justify-content:center; }
+    .url{ display:none; }
   }
 </style>
 </head>
 <body>
-<div class="grid-bg"></div>
 
-<!-- 背景モチーフ: 吹き出し(会話) → ブロック(資産) ※広い画面でだけ余白に表示 -->
-<svg class="motif" style="position:fixed;left:calc(50% - 780px);top:16%;width:200px;opacity:.5;z-index:0;pointer-events:none;" viewBox="0 0 200 260" fill="none">
-  <g stroke="rgba(255,255,255,.16)" stroke-width="2.5">
-    <rect x="8" y="12" width="76" height="46" rx="10"/><path d="M28 58 l0 14 14 -14"/>
-    <rect x="104" y="66" width="62" height="40" rx="9"/><path d="M120 106 l0 12 12 -12"/>
-    <rect x="26" y="140" width="70" height="44" rx="10"/><path d="M44 184 l0 13 13 -13"/>
-  </g>
-  <g fill="rgba(255,255,255,.2)">
-    <circle cx="32" cy="35" r="3.4"/><circle cx="46" cy="35" r="3.4"/><circle cx="60" cy="35" r="3.4"/>
-    <circle cx="124" cy="86" r="3"/><circle cx="135" cy="86" r="3"/><circle cx="146" cy="86" r="3"/>
-    <circle cx="48" cy="162" r="3.2"/><circle cx="61" cy="162" r="3.2"/><circle cx="74" cy="162" r="3.2"/>
-  </g>
-  <g fill="rgba(63,216,182,.4)">
-    <circle cx="176" cy="30" r="2.4"/><circle cx="188" cy="30" r="2.4"/>
-    <circle cx="12" cy="216" r="2.4"/><circle cx="24" cy="216" r="2.4"/><circle cx="36" cy="216" r="2.4"/>
-  </g>
-</svg>
-<svg class="motif" style="position:fixed;right:calc(50% - 790px);bottom:12%;width:170px;opacity:.55;z-index:0;pointer-events:none;" viewBox="0 0 190 210" fill="none">
-  <g stroke="rgba(63,216,182,.5)" stroke-width="2.5">
-    <rect x="8"   y="168" width="34" height="24" rx="5"/>
-    <rect x="50"  y="168" width="34" height="24" rx="5"/><rect x="50"  y="136" width="34" height="24" rx="5"/>
-    <rect x="92"  y="168" width="34" height="24" rx="5"/><rect x="92"  y="136" width="34" height="24" rx="5"/><rect x="92" y="104" width="34" height="24" rx="5"/>
-    <rect x="134" y="168" width="34" height="24" rx="5"/><rect x="134" y="136" width="34" height="24" rx="5"/><rect x="134" y="104" width="34" height="24" rx="5"/><rect x="134" y="72" width="34" height="24" rx="5"/>
-  </g>
-  <path d="M151 58 l0 -34 m0 0 l-9 10 m9 -10 l9 10" stroke="rgba(94,234,200,.8)" stroke-width="3" stroke-linecap="round"/>
-</svg>
-
-<div class="page">
-
-  <!-- ヘッダー -->
-  <header class="rise d1">
+<!-- 固定ヘッダー -->
+<header class="site-head">
+  <div class="wrap">
     <img class="logo-img" src="assets/aifice/logo_white.png" alt="AI × OFFICE ─ AIFICE">
-    <div class="head-right">
-      <span class="yomi">アイフィス ── AIが働く、もう一つのオフィス</span>
-      <a class="cta-mini" href="#cta">相談してみる</a>
-    </div>
-  </header>
+    <a class="head-cta" href="#contact">無料相談</a>
+  </div>
+</header>
 
-  <!-- メイン -->
-  <main>
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="wrap">
     <!-- 左：コピー -->
     <div class="col-copy">
-      <h1 class="rise d3">日々の会話を、<br>会社の<span class="grad">未来資産</span>へ。</h1>
-      <p class="lead rise d4">AIツールは、来年には入れ替わっています。AIFICEが納品するのは、どのAIが来ても使える<b>「御社の情報の集まり方」</b>。会議も、雑談も、社長の頭の中も──<b>集めた資産は、AIの進化とともに出力が増え続けます。</b></p>
-      <div class="flow rise d5">
+      <span class="kicker reveal">AI × OFFICE ─ もう一つのオフィス</span>
+      <h1 class="reveal d1">日々の会話を、<br>会社の<span class="grad">未来資産</span>へ。</h1>
+      <p class="lead reveal d2">AIツールは、来年には入れ替わっています。AIFICEが納品するのは、どのAIが来ても使える<b>「御社の情報の集まり方」</b>。会議も、雑談も、社長の頭の中も──<b>集めた資産は、AIの進化とともに出力が増え続けます。</b></p>
+      <div class="flow reveal d3">
         <span class="step on">収集</span><span class="arw">▶</span>
-        <span class="step">検証</span><span class="arw">▶</span>
+        <span class="step">整形</span><span class="arw">▶</span>
+        <span class="step">蓄積</span><span class="arw">▶</span>
         <span class="step">タスク化</span><span class="arw">▶</span>
         <span class="step">共有</span><span class="arw">▶</span>
-        <span class="step on">蓄積・進化</span>
+        <span class="step on">進化</span>
       </div>
-      <div class="price-box rise d6">
+      <div class="price-box reveal d4">
         <div class="p-was">単品合計 <s>¥187,000</s><br>のところ、まるごと</div>
         <div class="p-now"><span class="num">98,000</span><span class="unit">円</span></div>
-        <div class="p-note">税込・買い切り<br>導入3時間／30日サポート付き</div>
+        <div class="p-note">税込 ／ 導入3時間<br>別途サポート30分 5,000円</div>
         <div class="badge-off">約47%OFF</div>
       </div>
-      <div class="cta-row rise d7" id="cta">
-        <a class="cta" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談">無料相談してみる<span class="ar">→</span></a>
+      <div class="cta-row reveal d5">
+        <a class="cta" href="#contact">無料相談してみる<span class="ar">→</span></a>
       </div>
     </div>
 
-    <!-- 右：AI社員名鑑 -->
-    <div class="col-staff">
-      <div class="staff-head rise d3">
+    <!-- 右：AI社員 -->
+    <div class="staff">
+      <div class="staff-head reveal d1">
         <span class="t">AIFICEで働く<i>メンバー</i></span>
         <span class="s">STAFF &amp; BOARD</span>
       </div>
       <div class="staff-grid">
-        <div class="card rise d4">
-          <span class="no">01</span><span class="tag">収集</span>
-          <img src="assets/aifice/char_shoki.png" alt="書記">
+        <div class="mcard reveal d2">
+          <span class="no">01</span><span class="tag">整形</span>
+          <div class="tile"><img src="assets/aifice/mem_shoki.png" alt="書記"></div>
           <div class="nm">書 記</div>
-          <div class="rl">会議終了10分後、<br>読みやすい議事録が届く</div>
         </div>
-        <div class="card rise d5">
+        <div class="mcard reveal d3">
           <span class="no">02</span><span class="tag">収集</span>
-          <img src="assets/aifice/char_kisha.png" alt="記者">
+          <div class="tile"><img src="assets/aifice/mem_kisha.png" alt="記者"></div>
           <div class="nm">記 者</div>
-          <div class="rl">会議の外の言葉・思考を取材。<br>話すほど分身が育つ</div>
         </div>
-        <div class="card rise d6">
+        <div class="mcard reveal d3">
           <span class="no">03</span><span class="tag">検証</span>
-          <img src="assets/aifice/char_henshu.png" alt="編集者">
+          <div class="tile"><img src="assets/aifice/mem_henshu.png" alt="編集者"></div>
           <div class="nm">編集者</div>
-          <div class="rl">「それ、本当に？」と深掘りし、<br>資産の質を守る</div>
         </div>
-        <div class="card rise d7">
+        <div class="mcard reveal d4">
           <span class="no">04</span><span class="tag">タスク化</span>
-          <img src="assets/aifice/char_hisho.png" alt="秘書">
+          <div class="tile"><img src="assets/aifice/mem_hisho.png" alt="秘書"></div>
           <div class="nm">秘 書</div>
-          <div class="rl">誰が・何を・いつまでにを抽出。<br>相手待ちも区別</div>
         </div>
       </div>
-      <div class="board rise d8">
+      <div class="board-bar reveal d4">
         <div class="kanban" aria-hidden="true">
           <div class="kcol"><span class="kcell m"></span><span class="kcell"></span><span class="kcell"></span></div>
           <div class="kcol"><span class="kcell"></span><span class="kcell m"></span></div>
@@ -393,28 +356,77 @@
         </div>
       </div>
     </div>
-  </main>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><div class="mouse"></div><span>SCROLL</span></div>
+</section>
 
-  <!-- フッター帯 -->
-  <footer class="rise d8">
+<!-- ============ セクション2：タスクボード実機 ============ -->
+<section class="board-sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker">TASKBOARD ─ 共有</span>
+      <h2>そして、すべてのタスクは<br><span class="grad">一枚の板</span>に集まる。</h2>
+      <p>書記・記者・編集者・秘書が見つけた仕事は、AI社員と担当者へ自動で振り分け。朝ボードを開けば、今日やることがもう並んでいます。</p>
+    </div>
+
+    <div class="board-frame reveal d1">
+      <div class="browser-bar">
+        <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+        <span class="url">ogalabo.vercel.app ／ タスクボード</span>
+      </div>
+      <img src="assets/aifice/taskboard.png" alt="AIFICEのタスクボード：案件ごとのタスクをChatGPT・Claude Code・Codex・手作業・外部メンバーへ振り分けて管理する画面">
+    </div>
+
+    <div class="board-feats">
+      <div class="feat reveal d1">
+        <span class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></span>
+        <div class="ft">AI・社員へ自動で振り分け</div>
+        <div class="fd">ChatGPT・Claude Code・Codex・手作業・外部メンバー。誰に任せるかまで、秘書が仕分けます。</div>
+      </div>
+      <div class="feat reveal d2">
+        <span class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span>
+        <div class="ft">期限切れ・放置を自動で警告</div>
+        <div class="fd">「超過」「相手待ち」をボードが赤く教えてくれる。抜け漏れに、開いた瞬間に気づけます。</div>
+      </div>
+      <div class="feat reveal d3">
+        <span class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+        <div class="ft">案件別・進捗別・今日で切替</div>
+        <div class="fd">見たい切り口にワンタップで切り替え。個人でも、チームで同じ板を共有しても使えます。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ セクション3：クロージング ============ -->
+<section class="close-sec" id="contact">
+  <div class="wrap">
+    <span class="kicker reveal">START TODAY</span>
+    <h2 class="reveal d1">日々の会話を、<br>会社の<span class="grad">未来資産</span>へ。</h2>
+    <p class="reveal d2">集め始めた会社だけが、AIが進化するたびに、同じ資産から新しい出力を手に入れます。始めるなら、資産がいちばん多く貯められる「今日」です。</p>
+    <div class="cta-row reveal d3" style="justify-content:center">
+      <a class="cta" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談">無料相談してみる<span class="ar">→</span></a>
+    </div>
+    <div class="close-note reveal d4"><b>まるごと 98,000円</b>（税込・買い切り）／ 導入3時間 ／ 別途サポート30分 5,000円</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
     <span class="foot-brand"><span class="mint">AI</span>FICE ── アイフィス</span>
     <span class="copyright">© 2026 AIFICE ── 日々の会話を、会社の未来資産へ</span>
-  </footer>
-</div>
+  </div>
+</footer>
 
 <script>
-  // キャラクターの微パララックス（マウス追従・控えめ）
   (function(){
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (matchMedia('(hover: none)').matches) return;
-    var imgs = document.querySelectorAll('.card img');
-    document.addEventListener('mousemove', function(e){
-      var dx = (e.clientX / innerWidth - .5), dy = (e.clientY / innerHeight - .5);
-      imgs.forEach(function(im, i){
-        var k = (i % 2 ? 6 : 9);
-        im.style.translate = (dx * k) + 'px ' + (dy * k * .6) + 'px';
-      });
-    }, { passive: true });
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches){
+      els.forEach(function(e){ e.classList.add('in'); }); return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold:.16, rootMargin:'0px 0px -8% 0px' });
+    els.forEach(function(e){ io.observe(e); });
   })();
 </script>
 </body>
