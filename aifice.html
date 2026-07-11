@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIFICE（アイフィス）｜日々の会話を、会社の未来資産へ</title>
+<meta name="description" content="AI社員4人とタスクボード1枚が御社の中で働く、もう一つのオフィス。ツールではなく、情報が集まり続ける仕組みを納品します。まるごと98,000円（税込・買い切り）。">
+<meta property="og:title" content="AIFICE（アイフィス）｜日々の会話を、会社の未来資産へ">
+<meta property="og:description" content="AI社員4人＋タスクボード1枚。どのAIが来ても使える「御社の情報の集まり方」を、まるごと98,000円で。">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231B2A4A'/%3E%3Ctext x='32' y='45' font-size='38' font-weight='900' font-style='italic' text-anchor='middle' fill='%233FD8B6' font-family='Arial'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,600;0,800;1,700;1,900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  /* ================= AIFICE ブランドトークン ================= */
+  :root{
+    --navy-deep:#0C1730;
+    --navy:#1B2A4A;
+    --navy-soft:#24365C;
+    --mint:#3FD8B6;
+    --mint-bright:#5EEAC8;
+    --ink:#EAF2F7;
+    --ink-dim:rgba(234,242,247,.62);
+    --line:rgba(255,255,255,.10);
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family:'Noto Sans JP','Inter',sans-serif;
+    background:
+      radial-gradient(1100px 700px at 78% 12%, rgba(63,216,182,.13), transparent 55%),
+      radial-gradient(900px 700px at 6% 92%, rgba(63,216,182,.07), transparent 55%),
+      linear-gradient(158deg, var(--navy-deep) 0%, var(--navy) 58%, #16233F 100%);
+    color:var(--ink);
+    font-feature-settings:"palt";
+    letter-spacing:.02em;
+    overflow-x:hidden;
+  }
+  /* 方眼グリッド（バナー画像のモチーフ） */
+  .grid-bg{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background:
+      repeating-linear-gradient(0deg, transparent 0 63px, rgba(255,255,255,.035) 63px 64px),
+      repeating-linear-gradient(90deg, transparent 0 63px, rgba(255,255,255,.035) 63px 64px);
+    mask-image:radial-gradient(120% 100% at 50% 40%, #000 55%, transparent 100%);
+  }
+  .page{
+    position:relative; z-index:1;
+    min-height:100svh;
+    display:flex; flex-direction:column;
+    max-width:1440px; margin:0 auto;
+    padding:clamp(12px,2vh,24px) clamp(20px,4vw,64px);
+  }
+
+  /* ================= ヘッダー ================= */
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-bottom:clamp(8px,1.4vh,16px);
+    border-bottom:1px solid var(--line);
+  }
+  .logo-img{ height:clamp(30px,4.6vh,44px); width:auto; display:block; filter:drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
+  .head-right{ display:flex; align-items:center; gap:clamp(12px,1.6vw,24px); }
+  .yomi{ font-size:clamp(10px,1.4vh,12.5px); color:var(--ink-dim); letter-spacing:.14em; }
+  .cta-mini{
+    font-size:clamp(11px,1.5vh,13px); font-weight:700; color:var(--mint-bright);
+    border:1px solid rgba(63,216,182,.5); border-radius:999px;
+    padding:.5em 1.3em; text-decoration:none; transition:all .3s ease;
+    white-space:nowrap;
+  }
+  .cta-mini:hover{ background:rgba(63,216,182,.12); transform:translateY(-1px); }
+
+  /* ================= メイン ================= */
+  main{
+    flex:1; min-height:0;
+    display:grid; grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+    gap:clamp(24px,3.6vw,64px);
+    align-items:center;
+    padding:clamp(10px,1.8vh,20px) 0;
+  }
+  .col-copy{ display:flex; flex-direction:column; justify-content:center; gap:clamp(10px,2vh,20px); }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:.7em; align-self:flex-start;
+    font-size:clamp(10.5px,1.5vh,13px); font-weight:700; letter-spacing:.18em;
+    color:var(--mint-bright);
+    border:1px solid rgba(63,216,182,.35); background:rgba(63,216,182,.07);
+    border-radius:999px; padding:.5em 1.4em;
+  }
+  .eyebrow::before{ content:""; width:7px; height:7px; border-radius:50%; background:var(--mint); box-shadow:0 0 10px var(--mint); }
+
+  h1{
+    margin:0; font-weight:900; line-height:1.28; letter-spacing:.045em;
+    font-size:clamp(28px, 2.9vh + 1.9vw, 56px);
+    text-wrap:balance;
+  }
+  .grad{
+    background:linear-gradient(92deg, var(--mint-bright) 10%, var(--mint) 60%, #37C7ED 130%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .lead{
+    margin:0; font-size:clamp(12.5px,1.85vh,15.5px); line-height:1.9; color:var(--ink-dim);
+    max-width:34em;
+  }
+  .lead b{ color:var(--ink); font-weight:700; }
+
+  /* 収集→検証→…のフロー */
+  .flow{ display:flex; align-items:center; flex-wrap:wrap; gap:.45em; }
+  .flow .step{
+    font-size:clamp(10.5px,1.5vh,12.5px); font-weight:700; letter-spacing:.1em;
+    color:var(--ink); background:rgba(255,255,255,.06);
+    border:1px solid var(--line); border-radius:8px; padding:.45em 1em;
+  }
+  .flow .step.on{ color:var(--navy-deep); background:linear-gradient(135deg,var(--mint-bright),var(--mint)); border-color:transparent; }
+  .flow .arw{ color:rgba(94,234,200,.7); font-size:11px; font-weight:800; }
+
+  /* 価格 */
+  .price-box{
+    display:flex; align-items:flex-end; flex-wrap:wrap; gap:clamp(10px,1.6vw,22px);
+    padding:clamp(12px,1.9vh,18px) clamp(16px,1.8vw,24px);
+    background:linear-gradient(160deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+    border:1px solid var(--line); border-radius:18px;
+    backdrop-filter:blur(10px);
+    position:relative; overflow:hidden;
+  }
+  .price-box::after{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(300px 120px at 85% 0%, rgba(63,216,182,.14), transparent 70%);
+  }
+  .p-was{ font-size:clamp(10.5px,1.5vh,12.5px); color:var(--ink-dim); line-height:1.6; }
+  .p-was s{ font-size:1.35em; font-weight:700; color:rgba(234,242,247,.75); font-family:'Inter'; font-style:italic; }
+  .p-now{ display:flex; align-items:baseline; gap:.18em; line-height:1; }
+  .p-now .label{ font-size:clamp(10.5px,1.5vh,13px); font-weight:700; color:var(--ink); margin-right:.6em; }
+  .p-now .num{
+    font-family:'Inter'; font-style:italic; font-weight:900;
+    font-size:clamp(34px, 3.4vh + 1.4vw, 56px);
+    background:linear-gradient(120deg, var(--mint-bright), var(--mint));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter:drop-shadow(0 6px 22px rgba(63,216,182,.3));
+  }
+  .p-now .unit{ font-size:clamp(13px,1.9vh,17px); font-weight:900; color:var(--mint-bright); }
+  .p-note{ font-size:clamp(9.5px,1.35vh,11.5px); color:var(--ink-dim); }
+  .badge-off{
+    align-self:center;
+    font-family:'Inter'; font-style:italic; font-weight:900; font-size:clamp(11px,1.6vh,14px);
+    color:var(--navy-deep); background:linear-gradient(135deg,#FFD66B,#FFB84D);
+    border-radius:999px; padding:.45em 1em; letter-spacing:.02em;
+    box-shadow:0 6px 18px rgba(255,183,77,.3); transform:rotate(-3deg);
+  }
+
+  /* CTA */
+  .cta-row{ display:flex; align-items:center; gap:clamp(14px,1.8vw,24px); flex-wrap:wrap; }
+  .cta{
+    position:relative; overflow:hidden;
+    display:inline-flex; align-items:center; gap:.7em;
+    font-size:clamp(14px,2.1vh,17px); font-weight:900; letter-spacing:.08em;
+    color:var(--navy-deep); text-decoration:none;
+    background:linear-gradient(135deg, var(--mint-bright), var(--mint) 70%);
+    border-radius:999px; padding:clamp(.85em,1.6vh,1em) clamp(1.8em,2.4vw,2.6em);
+    box-shadow:0 14px 36px rgba(63,216,182,.35), inset 0 1px 0 rgba(255,255,255,.5);
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .cta:hover{ transform:translateY(-3px); box-shadow:0 20px 44px rgba(63,216,182,.45), inset 0 1px 0 rgba(255,255,255,.5); }
+  .cta .ar{ transition:transform .3s ease; }
+  .cta:hover .ar{ transform:translateX(4px); }
+  .cta::after{
+    content:""; position:absolute; top:0; left:-80%; width:50%; height:100%;
+    background:linear-gradient(100deg, transparent, rgba(255,255,255,.55), transparent);
+    transform:skewX(-20deg); animation:glare 3.6s ease-in-out infinite;
+  }
+  @keyframes glare{ 0%,55%{ left:-80%; } 85%,100%{ left:130%; } }
+  .micro{ font-size:clamp(9.5px,1.4vh,11.5px); color:var(--ink-dim); line-height:1.9; }
+  .micro .dot{ color:var(--mint); margin:0 .5em; }
+
+  /* ================= 右カラム：AI社員名鑑 ================= */
+  .col-staff{ display:flex; flex-direction:column; gap:clamp(10px,1.6vh,16px); min-height:0; }
+  .staff-head{
+    display:flex; align-items:baseline; justify-content:space-between; gap:1em;
+    padding:0 .2em;
+  }
+  .staff-head .t{ font-size:clamp(11px,1.6vh,13.5px); font-weight:900; letter-spacing:.22em; color:var(--ink); }
+  .staff-head .t i{ color:var(--mint); font-style:normal; }
+  .staff-head .s{ font-size:clamp(9px,1.3vh,11px); color:var(--ink-dim); letter-spacing:.1em; }
+
+  .staff-grid{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(10px,1.7vh,18px); }
+  .card{
+    position:relative;
+    background:linear-gradient(165deg, rgba(255,255,255,.09), rgba(255,255,255,.025));
+    border:1px solid var(--line); border-radius:20px;
+    padding:clamp(10px,1.6vh,16px) clamp(12px,1.2vw,18px) clamp(10px,1.5vh,14px);
+    backdrop-filter:blur(12px);
+    box-shadow:0 22px 44px rgba(4,10,25,.35);
+    display:flex; flex-direction:column; align-items:center; text-align:center; gap:.35em;
+    transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .card:hover{ transform:translateY(-5px); border-color:rgba(63,216,182,.4); box-shadow:0 30px 54px rgba(4,10,25,.45), 0 0 0 1px rgba(63,216,182,.15); }
+  .card .no{
+    position:absolute; top:10px; left:14px;
+    font-family:'Inter'; font-style:italic; font-weight:900; font-size:clamp(13px,2vh,17px);
+    color:rgba(94,234,200,.45);
+  }
+  .card .tag{
+    position:absolute; top:10px; right:12px;
+    font-size:clamp(8.5px,1.2vh,10px); font-weight:700; letter-spacing:.12em;
+    color:var(--mint-bright); background:rgba(63,216,182,.1);
+    border:1px solid rgba(63,216,182,.3); border-radius:999px; padding:.3em .9em;
+  }
+  .card img{
+    height:clamp(76px, 13.5vh, 138px); width:auto; margin-top:clamp(8px,1.2vh,12px);
+    filter:drop-shadow(0 14px 22px rgba(4,10,25,.5));
+    animation:float 5.5s ease-in-out infinite;
+  }
+  .card:nth-child(2) img{ animation-delay:-1.4s; }
+  .card:nth-child(3) img{ animation-delay:-2.8s; }
+  .card:nth-child(4) img{ animation-delay:-4.2s; }
+  @keyframes float{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-6px); } }
+  .card .nm{ font-size:clamp(13px,2vh,17px); font-weight:900; letter-spacing:.3em; text-indent:.3em; }
+  .card .rl{ font-size:clamp(9px,1.35vh,11px); color:var(--ink-dim); line-height:1.55; }
+
+  /* タスクボード（設備）バー */
+  .board{
+    display:flex; align-items:center; gap:clamp(12px,1.6vw,20px);
+    background:linear-gradient(165deg, rgba(63,216,182,.12), rgba(63,216,182,.03));
+    border:1px solid rgba(63,216,182,.28); border-radius:18px;
+    padding:clamp(10px,1.5vh,14px) clamp(14px,1.6vw,20px);
+    backdrop-filter:blur(12px);
+    transition:transform .3s ease, border-color .3s ease;
+  }
+  .board:hover{ transform:translateY(-3px); border-color:rgba(63,216,182,.5); }
+  .kanban{ display:flex; gap:6px; flex-shrink:0; }
+  .kanban .kcol{ display:flex; flex-direction:column; gap:4px; }
+  .kanban .kcell{ width:clamp(18px,2.2vh,26px); height:clamp(5px,0.8vh,7px); border-radius:3px; background:rgba(255,255,255,.18); }
+  .kanban .kcell.m{ background:var(--mint); box-shadow:0 0 8px rgba(63,216,182,.5); }
+  .board .bt{ flex:1; min-width:0; }
+  .board .bt .nm{ font-size:clamp(12px,1.8vh,15px); font-weight:900; letter-spacing:.12em; }
+  .board .bt .nm i{ font-style:normal; font-size:.72em; font-weight:700; color:var(--mint-bright); margin-left:.9em; letter-spacing:.14em; }
+  .board .bt .rl{ font-size:clamp(9px,1.35vh,11px); color:var(--ink-dim); margin-top:.2em; line-height:1.5; }
+
+  /* ================= フッター帯 ================= */
+  footer{
+    display:flex; align-items:center; justify-content:space-between; gap:1.5em; flex-wrap:wrap;
+    border-top:1px solid var(--line);
+    padding-top:clamp(8px,1.4vh,14px);
+  }
+  .foot-brand{
+    font-family:'Inter'; font-style:italic; font-weight:900; letter-spacing:.04em;
+    font-size:clamp(12px,1.7vh,15px); color:var(--ink);
+  }
+  .foot-brand .mint{ color:var(--mint-bright); }
+  .copyright{ font-size:clamp(8.5px,1.25vh,10px); color:rgba(234,242,247,.4); letter-spacing:.1em; }
+
+  /* ================= 登場アニメ ================= */
+  .rise{ opacity:0; transform:translateY(22px); animation:rise .9s cubic-bezier(.22,.9,.3,1) forwards; }
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+  .d1{ animation-delay:.05s; } .d2{ animation-delay:.15s; } .d3{ animation-delay:.25s; }
+  .d4{ animation-delay:.35s; } .d5{ animation-delay:.45s; } .d6{ animation-delay:.55s; }
+  .d7{ animation-delay:.65s; } .d8{ animation-delay:.75s; }
+  @media (prefers-reduced-motion: reduce){
+    .rise{ animation:none; opacity:1; transform:none; }
+    .card img{ animation:none; }
+    .cta::after{ animation:none; }
+  }
+
+  /* ================= レスポンシブ ================= */
+  .motif{ display:none; }
+  @media (min-width: 1640px){ .motif{ display:block; } }
+  @media (max-width: 960px){
+    .page{ min-height:auto; }
+    main{ grid-template-columns:1fr; gap:34px; padding:26px 0; }
+    .col-copy{ text-align:center; align-items:center; }
+    .eyebrow{ align-self:center; }
+    .lead{ max-width:100%; }
+    .flow{ justify-content:center; }
+    .price-box{ justify-content:center; text-align:left; }
+    .cta-row{ justify-content:center; }
+    .yomi{ display:none; }
+    footer{ justify-content:center; text-align:center; }
+    .ticks{ justify-content:center; }
+  }
+  @media (max-width: 480px){
+    .staff-grid{ gap:10px; }
+    .card .rl{ display:none; }
+    .card img{ height:96px; }
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<!-- 背景モチーフ: 吹き出し(会話) → ブロック(資産) ※広い画面でだけ余白に表示 -->
+<svg class="motif" style="position:fixed;left:calc(50% - 780px);top:16%;width:200px;opacity:.5;z-index:0;pointer-events:none;" viewBox="0 0 200 260" fill="none">
+  <g stroke="rgba(255,255,255,.16)" stroke-width="2.5">
+    <rect x="8" y="12" width="76" height="46" rx="10"/><path d="M28 58 l0 14 14 -14"/>
+    <rect x="104" y="66" width="62" height="40" rx="9"/><path d="M120 106 l0 12 12 -12"/>
+    <rect x="26" y="140" width="70" height="44" rx="10"/><path d="M44 184 l0 13 13 -13"/>
+  </g>
+  <g fill="rgba(255,255,255,.2)">
+    <circle cx="32" cy="35" r="3.4"/><circle cx="46" cy="35" r="3.4"/><circle cx="60" cy="35" r="3.4"/>
+    <circle cx="124" cy="86" r="3"/><circle cx="135" cy="86" r="3"/><circle cx="146" cy="86" r="3"/>
+    <circle cx="48" cy="162" r="3.2"/><circle cx="61" cy="162" r="3.2"/><circle cx="74" cy="162" r="3.2"/>
+  </g>
+  <g fill="rgba(63,216,182,.4)">
+    <circle cx="176" cy="30" r="2.4"/><circle cx="188" cy="30" r="2.4"/>
+    <circle cx="12" cy="216" r="2.4"/><circle cx="24" cy="216" r="2.4"/><circle cx="36" cy="216" r="2.4"/>
+  </g>
+</svg>
+<svg class="motif" style="position:fixed;right:calc(50% - 790px);bottom:12%;width:170px;opacity:.55;z-index:0;pointer-events:none;" viewBox="0 0 190 210" fill="none">
+  <g stroke="rgba(63,216,182,.5)" stroke-width="2.5">
+    <rect x="8"   y="168" width="34" height="24" rx="5"/>
+    <rect x="50"  y="168" width="34" height="24" rx="5"/><rect x="50"  y="136" width="34" height="24" rx="5"/>
+    <rect x="92"  y="168" width="34" height="24" rx="5"/><rect x="92"  y="136" width="34" height="24" rx="5"/><rect x="92" y="104" width="34" height="24" rx="5"/>
+    <rect x="134" y="168" width="34" height="24" rx="5"/><rect x="134" y="136" width="34" height="24" rx="5"/><rect x="134" y="104" width="34" height="24" rx="5"/><rect x="134" y="72" width="34" height="24" rx="5"/>
+  </g>
+  <path d="M151 58 l0 -34 m0 0 l-9 10 m9 -10 l9 10" stroke="rgba(94,234,200,.8)" stroke-width="3" stroke-linecap="round"/>
+</svg>
+
+<div class="page">
+
+  <!-- ヘッダー -->
+  <header class="rise d1">
+    <img class="logo-img" src="assets/aifice/logo_white.png" alt="AI × OFFICE ─ AIFICE">
+    <div class="head-right">
+      <span class="yomi">アイフィス ── AIが働く、もう一つのオフィス</span>
+      <a class="cta-mini" href="#cta">相談してみる</a>
+    </div>
+  </header>
+
+  <!-- メイン -->
+  <main>
+    <!-- 左：コピー -->
+    <div class="col-copy">
+      <h1 class="rise d3">日々の会話を、<br>会社の<span class="grad">未来資産</span>へ。</h1>
+      <p class="lead rise d4">AIツールは、来年には入れ替わっています。AIFICEが納品するのは、どのAIが来ても使える<b>「御社の情報の集まり方」</b>。会議も、雑談も、社長の頭の中も──<b>集めた資産は、AIの進化とともに出力が増え続けます。</b></p>
+      <div class="flow rise d5">
+        <span class="step on">収集</span><span class="arw">▶</span>
+        <span class="step">検証</span><span class="arw">▶</span>
+        <span class="step">タスク化</span><span class="arw">▶</span>
+        <span class="step">共有</span><span class="arw">▶</span>
+        <span class="step on">蓄積・進化</span>
+      </div>
+      <div class="price-box rise d6">
+        <div class="p-was">単品合計 <s>¥187,000</s><br>のところ、まるごと</div>
+        <div class="p-now"><span class="num">98,000</span><span class="unit">円</span></div>
+        <div class="p-note">税込・買い切り<br>導入3時間／30日サポート付き</div>
+        <div class="badge-off">約47%OFF</div>
+      </div>
+      <div class="cta-row rise d7" id="cta">
+        <a class="cta" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談">無料相談してみる<span class="ar">→</span></a>
+      </div>
+    </div>
+
+    <!-- 右：AI社員名鑑 -->
+    <div class="col-staff">
+      <div class="staff-head rise d3">
+        <span class="t">AIFICEで働く<i>メンバー</i></span>
+        <span class="s">STAFF &amp; BOARD</span>
+      </div>
+      <div class="staff-grid">
+        <div class="card rise d4">
+          <span class="no">01</span><span class="tag">収集</span>
+          <img src="assets/aifice/char_shoki.png" alt="書記">
+          <div class="nm">書 記</div>
+          <div class="rl">会議終了10分後、<br>読みやすい議事録が届く</div>
+        </div>
+        <div class="card rise d5">
+          <span class="no">02</span><span class="tag">収集</span>
+          <img src="assets/aifice/char_kisha.png" alt="記者">
+          <div class="nm">記 者</div>
+          <div class="rl">会議の外の言葉・思考を取材。<br>話すほど分身が育つ</div>
+        </div>
+        <div class="card rise d6">
+          <span class="no">03</span><span class="tag">検証</span>
+          <img src="assets/aifice/char_henshu.png" alt="編集者">
+          <div class="nm">編集者</div>
+          <div class="rl">「それ、本当に？」と深掘りし、<br>資産の質を守る</div>
+        </div>
+        <div class="card rise d7">
+          <span class="no">04</span><span class="tag">タスク化</span>
+          <img src="assets/aifice/char_hisho.png" alt="秘書">
+          <div class="nm">秘 書</div>
+          <div class="rl">誰が・何を・いつまでにを抽出。<br>相手待ちも区別</div>
+        </div>
+      </div>
+      <div class="board rise d8">
+        <div class="kanban" aria-hidden="true">
+          <div class="kcol"><span class="kcell m"></span><span class="kcell"></span><span class="kcell"></span></div>
+          <div class="kcol"><span class="kcell"></span><span class="kcell m"></span></div>
+          <div class="kcol"><span class="kcell m"></span><span class="kcell"></span><span class="kcell"></span><span class="kcell m"></span></div>
+        </div>
+        <div class="bt">
+          <div class="nm">タスクボード<i>─ 設備</i></div>
+          <div class="rl">朝、板を開くだけ。期限切れ・放置・相手待ちを自動で警告。</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- フッター帯 -->
+  <footer class="rise d8">
+    <span class="foot-brand"><span class="mint">AI</span>FICE ── アイフィス</span>
+    <span class="copyright">© 2026 AIFICE ── 日々の会話を、会社の未来資産へ</span>
+  </footer>
+</div>
+
+<script>
+  // キャラクターの微パララックス（マウス追従・控えめ）
+  (function(){
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (matchMedia('(hover: none)').matches) return;
+    var imgs = document.querySelectorAll('.card img');
+    document.addEventListener('mousemove', function(e){
+      var dx = (e.clientX / innerWidth - .5), dy = (e.clientY / innerHeight - .5);
+      imgs.forEach(function(im, i){
+        var k = (i % 2 ? 6 : 9);
+        im.style.translate = (dx * k) + 'px ' + (dy * k * .6) + 'px';
+      });
+    }, { passive: true });
+  })();
+</script>
+</body>
+</html>
