@@ -257,6 +257,42 @@
     .cta::after,.scroll-cue .mouse::before{ animation:none; }
   }
 
+  /* ================= PC画像LP（>768px・画像＋ネオンCTA＋流れ星） ================= */
+  .lp-desktop{ position:relative; background:var(--navy-deep); }
+  .pc-stack .pc-fig{ position:relative; margin:0; line-height:0; font-size:0; }
+  .pc-stack .pc-fig img{ display:block; width:100%; height:auto; }
+  .pc-cta{ position:absolute; z-index:3; border-radius:999px; cursor:pointer; display:block;
+    -webkit-tap-highlight-color:transparent; animation:ctaNeon 1.8s ease-in-out infinite; }
+  @keyframes ctaNeon{
+    0%,100%{ box-shadow:0 0 10px 2px rgba(63,216,182,.45), 0 0 26px 5px rgba(63,216,182,.28), inset 0 0 10px rgba(94,234,200,.16); }
+    50%{ box-shadow:0 0 18px 3px rgba(120,255,230,.92), 0 0 46px 10px rgba(63,216,182,.55), 0 0 86px 16px rgba(63,216,182,.30), inset 0 0 16px rgba(94,234,200,.34); }
+  }
+  .pc-cta.sm{ animation-name:ctaNeonSm; }
+  @keyframes ctaNeonSm{
+    0%,100%{ box-shadow:0 0 8px 1px rgba(63,216,182,.5), 0 0 18px 3px rgba(63,216,182,.32); }
+    50%{ box-shadow:0 0 14px 2px rgba(120,255,230,.92), 0 0 32px 6px rgba(63,216,182,.5); }
+  }
+  .pc-cta:hover{ transform:scale(1.02); box-shadow:0 0 24px 5px rgba(160,255,235,.98), 0 0 66px 14px rgba(63,216,182,.62), inset 0 0 18px rgba(94,234,200,.4); }
+  .pc-cta:focus-visible{ outline:2px solid var(--mint-bright); outline-offset:3px; }
+  /* 流れ星 */
+  .pc-stars{ position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:2; }
+  .pc-stars .s{ position:absolute; width:3px; height:3px; border-radius:50%; background:#eafcff;
+    box-shadow:0 0 8px 2px rgba(150,225,255,.85); opacity:0;
+    animation-name:shoot; animation-timing-function:linear; animation-iteration-count:infinite; }
+  .pc-stars .s::before{ content:""; position:absolute; top:50%; left:2px; width:150px; height:1.6px;
+    transform:translateY(-50%); border-radius:2px;
+    background:linear-gradient(90deg, rgba(190,240,255,.95), rgba(120,220,255,.18) 55%, transparent); }
+  @keyframes shoot{
+    0%{ transform:translate(0,0) rotate(-27deg); opacity:0; }
+    3%{ opacity:1; } 15%{ opacity:1; }
+    21%{ transform:translate(-1180px,600px) rotate(-27deg); opacity:0; }
+    100%{ transform:translate(-1180px,600px) rotate(-27deg); opacity:0; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .pc-cta{ animation:none; box-shadow:0 0 16px 3px rgba(94,234,200,.75); }
+    .pc-stars{ display:none; }
+  }
+
   /* ================= モバイル画像LP（≤768pxで表示） ================= */
   .lp-mobile{ display:none; background:var(--navy-deep); }
   .lp-mobile .m-fig{ position:relative; margin:0; line-height:0; font-size:0; }
@@ -299,142 +335,38 @@
 <!-- ================= デスクトップLP（>768px） ================= -->
 <div class="lp-desktop">
 
-<!-- 固定ヘッダー -->
-<header class="site-head">
-  <div class="wrap">
-    <img class="logo-img" src="assets/aifice/logo_white.png" alt="AI × OFFICE ─ AIFICE">
-    <a class="head-cta" href="#contact">無料相談</a>
+  <!-- 流れ星レイヤー(固定・全面) -->
+  <div class="pc-stars" aria-hidden="true">
+    <span class="s" style="top:-3%;left:78%;animation-duration:8s;animation-delay:0s"></span>
+    <span class="s" style="top:7%;left:97%;animation-duration:10s;animation-delay:1.8s"></span>
+    <span class="s" style="top:-5%;left:61%;animation-duration:8.5s;animation-delay:3.4s"></span>
+    <span class="s" style="top:15%;left:90%;animation-duration:11s;animation-delay:5s"></span>
+    <span class="s" style="top:3%;left:71%;animation-duration:9s;animation-delay:6.6s"></span>
+    <span class="s" style="top:22%;left:101%;animation-duration:10.5s;animation-delay:8.4s"></span>
+    <span class="s" style="top:-6%;left:85%;animation-duration:8s;animation-delay:10.2s"></span>
   </div>
-</header>
 
-<!-- ============ HERO ============ -->
-<section class="hero">
-  <div class="hero-grid"></div>
-  <div class="wrap">
-    <!-- 左：コピー -->
-    <div class="col-copy">
-      <span class="kicker reveal">AI × OFFICE ─ もう一つのオフィス</span>
-      <h1 class="reveal d1">日々の会話を、<br>会社の<span class="grad">未来資産</span>へ。</h1>
-      <p class="lead reveal d2">AIツールは、来年には入れ替わっています。AIFICEが納品するのは、どのAIが来ても使える<b>「御社の情報の集まり方」</b>。会議も、雑談も、社長の頭の中も──<b>集めた資産は、AIの進化とともに出力が増え続けます。</b></p>
-      <div class="flow reveal d3">
-        <span class="step on">収集</span><span class="arw">▶</span>
-        <span class="step">整形</span><span class="arw">▶</span>
-        <span class="step">蓄積</span><span class="arw">▶</span>
-        <span class="step">タスク化</span><span class="arw">▶</span>
-        <span class="step">共有</span><span class="arw">▶</span>
-        <span class="step on">進化</span>
-      </div>
-      <div class="price-box reveal d4">
-        <div class="p-was">単品合計 <s>¥187,000</s><br>のところ、まるごと</div>
-        <div class="p-now"><span class="num">98,000</span><span class="unit">円</span></div>
-        <div class="p-note">税込 ／ 導入3時間<br>別途サポート30分 5,000円</div>
-        <div class="badge-off">約47%OFF</div>
-      </div>
-      <div class="cta-row reveal d5">
-        <a class="cta" href="#contact">無料相談してみる<span class="ar">→</span></a>
-      </div>
-    </div>
-
-    <!-- 右：AI社員 -->
-    <div class="staff">
-      <div class="staff-head reveal d1">
-        <span class="t">AIFICEで働く<i>メンバー</i></span>
-        <span class="s">STAFF &amp; BOARD</span>
-      </div>
-      <div class="staff-grid">
-        <div class="mcard reveal d2">
-          <span class="no">01</span><span class="tag">整形</span>
-          <div class="tile"><img src="assets/aifice/mem_shoki.png" alt="書記"></div>
-          <div class="nm">書 記</div>
-        </div>
-        <div class="mcard reveal d3">
-          <span class="no">02</span><span class="tag">収集</span>
-          <div class="tile"><img src="assets/aifice/mem_kisha.png" alt="記者"></div>
-          <div class="nm">記 者</div>
-        </div>
-        <div class="mcard reveal d3">
-          <span class="no">03</span><span class="tag">検証</span>
-          <div class="tile"><img src="assets/aifice/mem_henshu.png" alt="編集者"></div>
-          <div class="nm">編集者</div>
-        </div>
-        <div class="mcard reveal d4">
-          <span class="no">04</span><span class="tag">タスク化</span>
-          <div class="tile"><img src="assets/aifice/mem_hisho.png" alt="秘書"></div>
-          <div class="nm">秘 書</div>
-        </div>
-      </div>
-      <div class="board-bar reveal d4">
-        <div class="kanban" aria-hidden="true">
-          <div class="kcol"><span class="kcell m"></span><span class="kcell"></span><span class="kcell"></span></div>
-          <div class="kcol"><span class="kcell"></span><span class="kcell m"></span></div>
-          <div class="kcol"><span class="kcell m"></span><span class="kcell"></span><span class="kcell"></span><span class="kcell m"></span></div>
-        </div>
-        <div class="bt">
-          <div class="nm">タスクボード<i>─ 設備</i></div>
-          <div class="rl">朝、板を開くだけ。期限切れ・放置・相手待ちを自動で警告。</div>
-        </div>
-      </div>
-    </div>
+  <div class="pc-stack">
+    <!-- 1: ヒーロー -->
+    <figure class="pc-fig">
+      <img src="assets/aifice/pc/pc1_hero.webp" alt="AIFICE ── 日々の会話を、会社の未来資産へ。収集→整形→蓄積→タスク化→共有→進化。まるごと98,000円（税込・買い切り）">
+      <a class="pc-cta sm" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談" aria-label="無料相談" style="left:85.0%;top:3.2%;width:12.2%;height:8.6%"></a>
+      <a class="pc-cta" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談" aria-label="無料相談してみる" style="left:30.7%;top:84.8%;width:38.7%;height:11.6%"></a>
+    </figure>
+    <!-- 2: メンバー -->
+    <figure class="pc-fig">
+      <img src="assets/aifice/pc/pc2_members.webp" alt="AIFICEで働くメンバー：書記（整形）・記者（収集）・編集者（検証）・秘書（タスク化）">
+    </figure>
+    <!-- 3: 3つの特長 -->
+    <figure class="pc-fig">
+      <img src="assets/aifice/pc/pc3_features.webp" alt="データを適切に収集・蓄積／データを読み取りタスク整理／AIと一緒に進化する仕組み">
+    </figure>
+    <!-- 4: クロージング -->
+    <figure class="pc-fig">
+      <img src="assets/aifice/pc/pc4_close.webp" alt="START TODAY ── 日々の会話を、会社の未来資産へ。まるごと98,000円（税込・買い切り）／導入3時間／別途サポート30分5,000円">
+      <a class="pc-cta" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談" aria-label="無料相談してみる" style="left:28.7%;top:45.7%;width:42.8%;height:13.3%"></a>
+    </figure>
   </div>
-  <div class="scroll-cue" aria-hidden="true"><div class="mouse"></div><span>SCROLL</span></div>
-</section>
-
-<!-- ============ セクション2：タスクボード実機 ============ -->
-<section class="board-sec">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="kicker">TASKBOARD ─ 共有</span>
-      <h2>そして、すべてのタスクは<br><span class="grad">一枚の板</span>に集まる。</h2>
-      <p>書記・記者・編集者・秘書が見つけた仕事は、AI社員と担当者へ自動で振り分け。朝ボードを開けば、今日やることがもう並んでいます。</p>
-    </div>
-
-    <div class="board-frame reveal d1">
-      <div class="browser-bar">
-        <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
-        <span class="url">ogalabo.vercel.app ／ タスクボード</span>
-      </div>
-      <img src="assets/aifice/taskboard.png" alt="AIFICEのタスクボード：案件ごとのタスクをChatGPT・Claude Code・Codex・手作業・外部メンバーへ振り分けて管理する画面">
-    </div>
-
-    <div class="board-feats">
-      <div class="feat reveal d1">
-        <span class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></span>
-        <div class="ft">AI・社員へ自動で振り分け</div>
-        <div class="fd">ChatGPT・Claude Code・Codex・手作業・外部メンバー。誰に任せるかまで、秘書が仕分けます。</div>
-      </div>
-      <div class="feat reveal d2">
-        <span class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span>
-        <div class="ft">期限切れ・放置を自動で警告</div>
-        <div class="fd">「超過」「相手待ち」をボードが赤く教えてくれる。抜け漏れに、開いた瞬間に気づけます。</div>
-      </div>
-      <div class="feat reveal d3">
-        <span class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
-        <div class="ft">案件別・進捗別・今日で切替</div>
-        <div class="fd">見たい切り口にワンタップで切り替え。個人でも、チームで同じ板を共有しても使えます。</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ セクション3：クロージング ============ -->
-<section class="close-sec" id="contact">
-  <div class="wrap">
-    <span class="kicker reveal">START TODAY</span>
-    <h2 class="reveal d1">日々の会話を、<br>会社の<span class="grad">未来資産</span>へ。</h2>
-    <p class="reveal d2">集め始めた会社だけが、AIが進化するたびに、同じ資産から新しい出力を手に入れます。始めるなら、資産がいちばん多く貯められる「今日」です。</p>
-    <div class="cta-row reveal d3" style="justify-content:center">
-      <a class="cta" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談">無料相談してみる<span class="ar">→</span></a>
-    </div>
-    <div class="close-note reveal d4"><b>まるごと 98,000円</b>（税込・買い切り）／ 導入3時間 ／ 別途サポート30分 5,000円</div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <span class="foot-brand"><span class="mint">AI</span>FICE ── アイフィス</span>
-    <span class="copyright">© 2026 AIFICE ── 日々の会話を、会社の未来資産へ</span>
-  </div>
-</footer>
 
 </div><!-- /lp-desktop -->
 
