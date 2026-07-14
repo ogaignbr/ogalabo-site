@@ -25,6 +25,13 @@
   .stack .fig{ position:relative; margin:0; line-height:0; font-size:0; }
   .stack .fig img{ display:block; width:100%; height:auto; }
 
+  /* ===== 動画セクション（画像4と5の間） ===== */
+  .vid{ background:#01030c; padding:clamp(30px,6vw,84px) clamp(16px,5vw,40px); text-align:center; line-height:1.55; font-size:16px; }
+  .vid .vlabel{ display:block; color:var(--mint-bright); font-weight:700; letter-spacing:.08em;
+    font-size:clamp(13px,2.8vw,18px); margin-bottom:clamp(14px,2.6vw,24px); text-shadow:0 0 18px rgba(63,216,182,.5); }
+  .vid video{ width:100%; max-width:1040px; height:auto; border-radius:18px; background:#000;
+    border:1px solid rgba(63,216,182,.35); box-shadow:0 0 50px rgba(63,216,182,.28), 0 20px 60px rgba(0,0,0,.55); }
+
   /* ===== CTA(画像上に重ねる・ネオン発光) ===== */
   .cta{
     position:absolute; z-index:3; display:block; border-radius:999px; cursor:pointer;
@@ -96,6 +103,10 @@
       <img src="assets/aifice/pc/pc3_board.webp" alt="すべてのタスクを、ひとつのボードに集約。AIFICE TASKBOARD">
     </figure>
     <figure class="fig"><img src="assets/aifice/pc/pc4_feats.webp" alt="AIFICEのここが凄い：収集・蓄積／タスク整理／AIと一緒に進化"></figure>
+    <figure class="fig vid">
+      <span class="vlabel">▶ 30秒で、まるっと分かる。</span>
+      <video src="assets/aifice/aifice_100x.mp4" poster="assets/aifice/aifice_100x_poster.jpg" controls playsinline preload="metadata"></video>
+    </figure>
     <figure class="fig">
       <img src="assets/aifice/pc/pc5_close.webp" alt="5年前の、あの会議。一語一句覚えてますか？ まるごと98,000円（税込）">
       <a class="cta" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談" aria-label="無料相談してみる" style="left:27.7%;top:52.1%;width:44.8%;height:14.0%"></a>
@@ -123,6 +134,10 @@
       <img src="assets/aifice/mobile/m3_board.webp" alt="すべてのタスクを、ひとつのボードに集約。AIFICE TASKBOARD">
     </figure>
     <figure class="fig"><img src="assets/aifice/mobile/m4_feats.webp" alt="AIFICEのここが凄い：収集・蓄積／タスク整理／AIと一緒に進化"></figure>
+    <figure class="fig vid">
+      <span class="vlabel">▶ 30秒で、まるっと分かる。</span>
+      <video src="assets/aifice/aifice_100x.mp4" poster="assets/aifice/aifice_100x_poster.jpg" controls playsinline preload="metadata"></video>
+    </figure>
     <figure class="fig">
       <img src="assets/aifice/mobile/m5_close.webp" alt="5年前の、あの会議。一語一句覚えてますか？ まるごと98,000円（税込）">
       <a class="cta" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談" aria-label="無料相談してみる" style="left:16.6%;top:51.2%;width:68.8%;height:10.0%"></a>
