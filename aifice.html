@@ -14,56 +14,40 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230C1730'/%3E%3Ctext x='32' y='45' font-size='38' font-weight='900' font-style='italic' text-anchor='middle' fill='%233FD8B6' font-family='Arial'%3EA%3C/text%3E%3C/svg%3E">
 <style>
   :root{
-    --navy-deep:#0C1730; --mint:#3FD8B6; --mint-bright:#5EEAC8;
+    --mint:#2FA060; --mint-deep:#1E7E62; --sky:#E4EEF3;
   }
   *{ box-sizing:border-box; }
   html,body{ margin:0; padding:0; }
   html{ scroll-behavior:smooth; }
-  body{ background:#05070E; color:#EAF2F7; font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif; overflow-x:hidden; }
+  body{ background:#E4EEF3; color:#1f3b33; font-family:'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif; overflow-x:hidden; }
 
   /* ===== 画像スタック共通 ===== */
   .stack .fig{ position:relative; margin:0; line-height:0; font-size:0; }
   .stack .fig img{ display:block; width:100%; height:auto; }
 
   /* ===== 動画セクション（画像4と5の間） ===== */
-  .vid{ background:#01030c; padding:clamp(30px,6vw,84px) clamp(16px,5vw,40px); text-align:center; line-height:1.55; font-size:16px; }
-  .vid .vlabel{ display:block; color:var(--mint-bright); font-weight:700; letter-spacing:.08em;
-    font-size:clamp(13px,2.8vw,18px); margin-bottom:clamp(14px,2.6vw,24px); text-shadow:0 0 18px rgba(63,216,182,.5); }
+  .vid{ background:#EAF4F3; padding:clamp(30px,6vw,84px) clamp(16px,5vw,40px); text-align:center; line-height:1.55; font-size:16px; }
+  .vid .vlabel{ display:block; color:var(--mint-deep); font-weight:700; letter-spacing:.08em;
+    font-size:clamp(13px,2.8vw,18px); margin-bottom:clamp(14px,2.6vw,24px); }
   .vid video{ width:100%; max-width:1040px; height:auto; border-radius:18px; background:#000;
-    border:1px solid rgba(63,216,182,.35); box-shadow:0 0 50px rgba(63,216,182,.28), 0 20px 60px rgba(0,0,0,.55); }
+    border:1px solid rgba(47,160,96,.28); box-shadow:0 18px 50px rgba(30,70,60,.22); }
 
-  /* ===== CTA(画像上に重ねる・ネオン発光) ===== */
+  /* ===== CTA(画像上に重ねる・柔らかな浮遊演出) ===== */
   .cta{
     position:absolute; z-index:3; display:block; border-radius:999px; cursor:pointer;
-    -webkit-tap-highlight-color:transparent; animation:ctaNeon 1.8s ease-in-out infinite;
+    -webkit-tap-highlight-color:transparent; animation:ctaPulse 1.9s ease-in-out infinite;
   }
-  @keyframes ctaNeon{
-    0%,100%{ box-shadow:0 0 10px 2px rgba(63,216,182,.5), 0 0 28px 6px rgba(63,216,182,.30), inset 0 0 12px rgba(94,234,200,.18); }
-    50%{ box-shadow:0 0 20px 4px rgba(120,255,230,.95), 0 0 50px 12px rgba(63,216,182,.6), 0 0 92px 20px rgba(63,216,182,.32), inset 0 0 18px rgba(94,234,200,.4); }
+  @keyframes ctaPulse{
+    0%,100%{ box-shadow:0 8px 20px rgba(30,70,60,.16); transform:translateY(0); }
+    50%{ box-shadow:0 12px 30px rgba(30,70,60,.26), 0 0 20px 5px rgba(255,255,255,.55); transform:translateY(-1px); }
   }
-  .cta.sm{ animation-name:ctaNeonSm; }
-  @keyframes ctaNeonSm{
-    0%,100%{ box-shadow:0 0 8px 1px rgba(63,216,182,.55), 0 0 20px 4px rgba(63,216,182,.32); }
-    50%{ box-shadow:0 0 15px 2px rgba(120,255,230,.95), 0 0 34px 7px rgba(63,216,182,.55); }
+  .cta.sm{ animation-name:ctaPulseSm; }
+  @keyframes ctaPulseSm{
+    0%,100%{ box-shadow:0 4px 12px rgba(30,70,60,.14); }
+    50%{ box-shadow:0 8px 20px rgba(30,70,60,.24), 0 0 14px 3px rgba(255,255,255,.5); }
   }
-  .cta:hover{ transform:scale(1.02); box-shadow:0 0 26px 6px rgba(160,255,235,1), 0 0 70px 16px rgba(63,216,182,.65), inset 0 0 20px rgba(94,234,200,.45); }
-  .cta:focus-visible{ outline:2px solid var(--mint-bright); outline-offset:3px; }
-
-  /* ===== 流れ星 ===== */
-  .stars{ position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:2; }
-  .stars .s{ position:absolute; width:3px; height:3px; border-radius:50%; background:#eafcff;
-    box-shadow:0 0 8px 2px rgba(150,225,255,.85); opacity:0;
-    animation-name:shoot; animation-timing-function:linear; animation-iteration-count:infinite; }
-  .stars .s::before{ content:""; position:absolute; top:50%; left:2px; width:150px; height:1.6px;
-    transform:translateY(-50%); border-radius:2px;
-    background:linear-gradient(90deg, rgba(190,240,255,.95), rgba(120,220,255,.18) 55%, transparent); }
-  @keyframes shoot{
-    0%{ transform:translate(0,0) rotate(-27deg); opacity:0; }
-    3%{ opacity:1; } 15%{ opacity:1; }
-    21%{ transform:translate(-1180px,600px) rotate(-27deg); opacity:0; }
-    100%{ transform:translate(-1180px,600px) rotate(-27deg); opacity:0; }
-  }
-  .lp-mobile .stars .s::before{ width:110px; }
+  .cta:hover{ transform:scale(1.02); }
+  .cta:focus-visible{ outline:2px solid var(--mint); outline-offset:3px; }
 
   /* ===== 表示切替 ===== */
   .lp-mobile{ display:none; }
@@ -74,8 +58,7 @@
 
   @media (prefers-reduced-motion: reduce){
     html{ scroll-behavior:auto; }
-    .cta{ animation:none; box-shadow:0 0 16px 3px rgba(94,234,200,.8); }
-    .stars{ display:none; }
+    .cta{ animation:none; box-shadow:0 8px 22px rgba(30,70,60,.22); }
   }
 </style>
 </head>
@@ -83,20 +66,11 @@
 
 <!-- ============ PC（>768px） ============ -->
 <div class="lp-desktop">
-  <div class="stars" aria-hidden="true">
-    <span class="s" style="top:-3%;left:78%;animation-duration:8s;animation-delay:0s"></span>
-    <span class="s" style="top:7%;left:97%;animation-duration:10s;animation-delay:1.8s"></span>
-    <span class="s" style="top:-5%;left:61%;animation-duration:8.5s;animation-delay:3.4s"></span>
-    <span class="s" style="top:15%;left:90%;animation-duration:11s;animation-delay:5s"></span>
-    <span class="s" style="top:3%;left:71%;animation-duration:9s;animation-delay:6.6s"></span>
-    <span class="s" style="top:22%;left:101%;animation-duration:10.5s;animation-delay:8.4s"></span>
-    <span class="s" style="top:-6%;left:85%;animation-duration:8s;animation-delay:10.2s"></span>
-  </div>
   <div class="stack">
     <figure class="fig">
       <img src="assets/aifice/pc/pc1_hero.webp" alt="AIFICE（アイフィス）── 5年前の、あの会議。一語一句覚えてますか？ 導入プランは2種類">
-      <a class="cta sm" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談" aria-label="無料相談" style="left:84.3%;top:2.2%;width:13.0%;height:7.5%"></a>
-      <a class="cta" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談" aria-label="無料相談してみる" style="left:30.0%;top:87.4%;width:40.1%;height:10.5%"></a>
+      <a class="cta sm" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談" aria-label="無料相談" style="left:83.5%;top:3.0%;width:15.0%;height:8.0%"></a>
+      <a class="cta" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談" aria-label="無料相談してみる" style="left:31.8%;top:87.2%;width:36.8%;height:10.1%"></a>
     </figure>
     <figure class="fig"><img src="assets/aifice/pc/pc2_members.webp" alt="AIFICEで働くAI社員：書記AI・記者AI・編集者AI・秘書AI"></figure>
     <figure class="fig"><img src="assets/aifice/pc/pc3_board.webp" alt="すべてのタスクを、ひとつのボードに集約。AIFICE TASKBOARD"></figure>
@@ -105,28 +79,21 @@
       <span class="vlabel">▶ 30秒で、まるっと分かる。</span>
       <video src="assets/aifice/aifice_100x.mp4" poster="assets/aifice/aifice_100x_poster.jpg" controls playsinline preload="metadata"></video>
     </figure>
-    <figure class="fig"><img src="assets/aifice/pc/pc5_plan.webp" alt="AIFICE 導入プラン ── 単品プラン／セットプラン（個人事業主98,000円・法人198,000円・法人チーム298,000円）"></figure>
+    <figure class="fig"><img src="assets/aifice/pc/pc5_plan.webp" alt="AIFICE 導入プラン ── 単品プラン（各18,000円〜）／フル導入セット 先着100名様限定58,000円（税込）"></figure>
     <figure class="fig">
       <img src="assets/aifice/pc/pc6_close.webp" alt="今日からの会議。導入以降、会議の内容を一語一句すべて覚えます。日々の会話を、会社の未来資産へ">
-      <a class="cta" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談" aria-label="無料相談してみる" style="left:28.6%;top:57.8%;width:42.9%;height:13.1%"></a>
+      <a class="cta" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談" aria-label="無料相談してみる" style="left:24.8%;top:60.5%;width:50.6%;height:13.9%"></a>
     </figure>
   </div>
 </div>
 
 <!-- ============ モバイル（≤768px） ============ -->
 <div class="lp-mobile">
-  <div class="stars" aria-hidden="true">
-    <span class="s" style="top:-2%;left:70%;animation-duration:8s;animation-delay:0s"></span>
-    <span class="s" style="top:8%;left:92%;animation-duration:10s;animation-delay:2.2s"></span>
-    <span class="s" style="top:2%;left:55%;animation-duration:9s;animation-delay:4.4s"></span>
-    <span class="s" style="top:16%;left:84%;animation-duration:11s;animation-delay:6.6s"></span>
-    <span class="s" style="top:-4%;left:100%;animation-duration:8.5s;animation-delay:9s"></span>
-  </div>
   <div class="stack">
     <figure class="fig">
       <img src="assets/aifice/mobile/m1_hero.webp" alt="AIFICE（アイフィス）── 5年前の、あの会議。一語一句覚えてますか？ 導入プランは2種類">
-      <a class="cta sm" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談" aria-label="無料相談" style="left:72.5%;top:1.6%;width:24.5%;height:5.0%"></a>
-      <a class="cta" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談" aria-label="無料相談してみる" style="left:5.1%;top:87.5%;width:89.8%;height:9.2%"></a>
+      <a class="cta sm" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談" aria-label="無料相談" style="left:79.4%;top:3.3%;width:18.5%;height:7.0%"></a>
+      <a class="cta" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談" aria-label="無料相談してみる" style="left:23.0%;top:84.6%;width:53.7%;height:9.6%"></a>
     </figure>
     <figure class="fig"><img src="assets/aifice/mobile/m2_members.webp" alt="AIFICEで働くAI社員：書記AI・記者AI・編集者AI・秘書AI"></figure>
     <figure class="fig"><img src="assets/aifice/mobile/m3_board.webp" alt="すべてのタスクを、ひとつのボードに集約。AIFICE TASKBOARD"></figure>
@@ -135,10 +102,10 @@
       <span class="vlabel">▶ 30秒で、まるっと分かる。</span>
       <video src="assets/aifice/aifice_100x.mp4" poster="assets/aifice/aifice_100x_poster.jpg" controls playsinline preload="metadata"></video>
     </figure>
-    <figure class="fig"><img src="assets/aifice/mobile/m5_plan.webp" alt="AIFICE 導入プラン ── 単品プラン／セットプラン（個人事業主98,000円・法人198,000円・法人チーム298,000円）"></figure>
+    <figure class="fig"><img src="assets/aifice/mobile/m5_plan.webp" alt="AIFICE 導入プラン ── 単品プラン（各18,000円〜）／フル導入セット 先着100名様限定58,000円（税込）"></figure>
     <figure class="fig">
       <img src="assets/aifice/mobile/m6_close.webp" alt="今日からの会議。導入以降、会議の内容を一語一句すべて覚えます。日々の会話を、会社の未来資産へ">
-      <a class="cta" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談" aria-label="無料相談してみる" style="left:10.0%;top:57.1%;width:80.4%;height:10.2%"></a>
+      <a class="cta" href="mailto:ogaignbr@gmail.com?subject=AIFICE%20無料相談" aria-label="無料相談してみる" style="left:17.7%;top:67.5%;width:65.9%;height:12.0%"></a>
     </figure>
   </div>
 </div>
